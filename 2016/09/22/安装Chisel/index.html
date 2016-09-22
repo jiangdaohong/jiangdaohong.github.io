@@ -15,22 +15,16 @@
 
 
 
-<meta name="description" content="12// 主线程if (pthread_main_np() == 0) returnnil;
-1234567//处于开发阶段#ifdef DEBUG#define DHLog(...) NSLog(VA_ARGS)#else//处于发布阶段#define DHLog(...)#endif
-12//Format#define F(string, args...)                  [">
+<meta name="description" content="记录一下使用Chisel的安装过程以及基本的命令">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Tips">
-<meta property="og:url" content="http://yoursite.com/2016/08/19/tips/index.html">
+<meta property="og:title" content="安装Chisel">
+<meta property="og:url" content="http://yoursite.com/2016/09/22/安装Chisel/index.html">
 <meta property="og:site_name" content="见习魔法师">
-<meta property="og:description" content="12// 主线程if (pthread_main_np() == 0) returnnil;
-1234567//处于开发阶段#ifdef DEBUG#define DHLog(...) NSLog(VA_ARGS)#else//处于发布阶段#define DHLog(...)#endif
-12//Format#define F(string, args...)                  [">
-<meta property="og:updated_time" content="2016-08-20T11:18:50.000Z">
+<meta property="og:description" content="记录一下使用Chisel的安装过程以及基本的命令">
+<meta property="og:updated_time" content="2016-09-22T03:05:52.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tips">
-<meta name="twitter:description" content="12// 主线程if (pthread_main_np() == 0) returnnil;
-1234567//处于开发阶段#ifdef DEBUG#define DHLog(...) NSLog(VA_ARGS)#else//处于发布阶段#define DHLog(...)#endif
-12//Format#define F(string, args...)                  [">
+<meta name="twitter:title" content="安装Chisel">
+<meta name="twitter:description" content="记录一下使用Chisel的安装过程以及基本的命令">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -62,7 +56,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Tips | 见习魔法师</title>
+<title>安装Chisel | 见习魔法师</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -212,11 +206,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-tips" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-安装Chisel" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/08/19/tips/" class="article-date">
-      <time datetime="2016-08-19T09:59:16.000Z" itemprop="datePublished">2016-08-19</time>
+      <a href="/2016/09/22/安装Chisel/" class="article-date">
+      <time datetime="2016-09-22T02:53:22.000Z" itemprop="datePublished">2016-09-22</time>
 </a>
 
 
@@ -231,7 +225,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Tips
+      安装Chisel
     </h1>
   
 
@@ -248,9 +242,18 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 主线程</div><div class="line">if (pthread_main_np() == 0) returnnil;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//处于开发阶段</div><div class="line">#ifdef DEBUG</div><div class="line">#define DHLog(...) NSLog(VA_ARGS)</div><div class="line">#else</div><div class="line">//处于发布阶段</div><div class="line">#define DHLog(...)</div><div class="line">#endif</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//Format</div><div class="line">#define F(string, args...)                  [NSString stringWithFormat:string, args]</div></pre></td></tr></table></figure>
+        <p>记录一下使用Chisel的安装过程以及基本的命令<br><a id="more"></a></p>
+<ol>
+<li>使用 brew install chisel</li>
+<li>记录默认命令的安装路径,默认路径是 /usr/local/opt/chisel/libexec/fblldb.py</li>
+<li>用vim打开 <code>~./lldbinit</code> 文件,如果不存在,新建此文件</li>
+<li><p>在文件中添加命令</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">command script <span class="keyword">import</span> 安装路径</div></pre></td></tr></table></figure>
+</li>
+<li><p>重启Xcode</p>
+</li>
+</ol>
+<p>官方地址以及常用命令参考:<a href="https://github.com/facebook/chisel" target="_blank" rel="external">https://github.com/facebook/chisel</a></p>
 
       
     </div>
@@ -259,13 +262,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/08/19/tips/">Tips</a></p>
+        <p><span>本文标题:</span><a href="/2016/09/22/安装Chisel/">安装Chisel</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">jiangdaohong</a></p>
-        <p><span>发布时间:</span>2016-08-19, 17:59:16</p>
-        <p><span>最后更新:</span>2016-08-20, 19:18:50</p>
+        <p><span>发布时间:</span>2016-09-22, 10:53:22</p>
+        <p><span>最后更新:</span>2016-09-22, 11:05:52</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/08/19/tips/" title="Tips">http://yoursite.com/2016/08/19/tips/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/08/19/tips/　　作者: jiangdaohong" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/09/22/安装Chisel/" title="安装Chisel">http://yoursite.com/2016/09/22/安装Chisel/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/09/22/安装Chisel/　　作者: jiangdaohong" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -277,16 +280,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/09/22/安装Chisel/">
-                    安装Chisel
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/08/19/hello world/">
-                    123
+                <a href="/2016/08/19/tips/">
+                    Tips
                 </a>
             </div>
         
@@ -329,15 +326,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/09/22/安装Chisel/" title="上一篇: 安装Chisel">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/08/19/hello world/" title="下一篇: 123">
+            <a href="/2016/08/19/tips/" title="下一篇: Tips">
                 <i class="fa fa-angle-right"></i>
             </a>
         
