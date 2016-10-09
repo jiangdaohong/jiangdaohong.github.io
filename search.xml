@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+    
+    <entry>
+      <title><![CDATA[项目开发中KVC的简单应用]]></title>
+      <url>https://jiangdaohong.github.io/2016/10/03/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E4%B8%ADKVC%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8/</url>
+      <content type="html"><![CDATA[<p>项目中有些时候使用KVC,可以节省很多的时间精力,实现快速开发</p>
+<a id="more"></a>
+<p>前一段时间有同学问我,能不能在不自定义UI的情况下,修改ActionSheet指定title的颜色,当时说很简单啊,Runtime获取实例变量列表,找到设置标题颜色的key,使用KVC就可以搞定.</p>
+<h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><p>编译条件: Xcode7.3.1;Project Deployment Target:iOS8.0.</p>
+<h3 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h3><ol>
+<li><p>初始化一个ActionSheet.</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">UIActionSheet</span> *actionSheet = [[<span class="built_in">UIActionSheet</span> alloc] initWithTitle:<span class="string">@"title"</span> delegate:<span class="literal">nil</span> cancelButtonTitle:<span class="string">@"cancle"</span> destructiveButtonTitle:<span class="string">@"destructive"</span> otherButtonTitles:<span class="string">@"other"</span>,<span class="string">@"other1"</span>, <span class="literal">nil</span>];</div></pre></td></tr></table></figure>
+</li>
+<li><p>获取实例变量列表,可以为NSObject添加一个Category方法,用于打印列表,具体实现如下:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)printIvarList</div><div class="line">&#123;</div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">    Ivar *ivars = class_copyIvarList([<span class="keyword">self</span> <span class="keyword">class</span>], &amp;count);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;count; i++) &#123;</div><div class="line">        Ivar ivar = ivars[i];</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"name:%s------type:%s"</span>, ivar_getName(ivar),ivar_getTypeEncoding(ivar));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>结果如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">name:_alertController------type:@<span class="string">"UIAlertController"</span></div><div class="line">name:_presenter------type:@<span class="string">"_UIAlertControllerShimPresenter"</span></div><div class="line">name:_retainedSelf------type:@<span class="string">"UIActionSheet"</span></div><div class="line">name:_actions------type:@<span class="string">"NSMutableArray"</span></div><div class="line">name:_cancelIndex------type:q</div><div class="line">name:_firstOtherButtonIndex------type:q</div><div class="line">name:_destructiveButtonIndex------type:q</div><div class="line">name:_actionSheetStyle------type:q</div><div class="line">name:_context------type:@</div><div class="line">name:_hasPreparedAlertActions------type:B</div><div class="line">name:_isPresented------type:B</div><div class="line">name:_alertControllerShouldDismiss------type:B</div><div class="line">name:_handlingAlertActionShouldDismiss------type:B</div><div class="line">name:_dismissingAlertController------type:B</div><div class="line">name:_delegate------type:@<span class="string">"&lt;UIActionSheetDelegate&gt;"</span>**</div></pre></td></tr></table></figure>
+<p> 一看结果,好气哦,<code>UIAlertController</code>这个类是iOS8之后才允许使用的,算了,换用这个类重新打印一下吧,经过测试,<code>UIAlertAction</code>这个类含有可以设置标题的属性,属性列表大概是酱紫的:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">name:_checked------type:B</div><div class="line">name:_isPreferred------type:B</div><div class="line">name:_imageTintColor------type:@"UIColor"</div><div class="line">name:_titleTextColor------type:@"UIColor"</div><div class="line">name:_style------type:q</div><div class="line">name:_handler------type:@?</div><div class="line">name:_simpleHandler------type:@?</div><div class="line">name:_image------type:@"UIImage"</div><div class="line">name:_shouldDismissHandler------type:@?</div><div class="line">name:__descriptiveText------type:@"NSString"</div><div class="line">name:_contentViewController------type:@"UIViewController"</div><div class="line">name:_keyCommandInput------type:@"NSString"</div><div class="line">name:_keyCommandModifierFlags------type:q</div><div class="line">name:__representer------type:@"&lt;UIAlertActionViewRepresentation_Internal&gt;"</div><div class="line">name:__alertController------type:@"UIAlertController"</div></pre></td></tr></table></figure>
+<p> 里面找一下,_titleTextColor就是它了.</p>
+</li>
+<li><p>找到了就试一下喽.</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[ac1 setValue:[<span class="built_in">UIColor</span> redColor] forKeyPath:<span class="string">@"_titleTextColor"</span>];</div></pre></td></tr></table></figure>
+</li>
+<li><p>run一下,完美.</p>
+</li>
+<li>其他.<br> 通过第2步,可以看到在iOS8上使用<code>UIActionSheet</code>也是可以达到同样的效果的,因为其中有_actions可以得到一个<code>UIAlertAction</code>的数组,重复上述步骤即可完成,以后适配iOS7的应用越来越少了,不考虑iOS7的适配,使用KVC可以便捷地实现这种UI效果,还是不错的.</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[每到深夜,总是有话想说说]]></title>
+      <url>https://jiangdaohong.github.io/2016/10/02/%E6%AF%8F%E5%88%B0%E6%B7%B1%E5%A4%9C-%E6%80%BB%E6%98%AF%E6%9C%89%E8%AF%9D%E6%83%B3%E8%AF%B4%E8%AF%B4/</url>
+      <content type="html"><![CDATA[<p>随便写写字<br><a id="more"></a></p>
+<p>来杭州工作一年多了,记得上次十一,还在加班搞这个项目,一年过去了,还是这个项目,心累…做了很久的东西,没来得及上线就被砍了,虽说是搬砖,心里总还是不爽的.之前一直想写博客,但是网上大牛很多,博客写的很好,我写出来有什么用呢?内心还是希望记录一些东西.直到前一段时间比较空闲,就搭建了这个博客.</p>
+<p>除了想有个地方说说话,之前记录多很多零散的东西,都保存在笔记软件里面,前一段才发现,里面实在太乱了,正好借着整理一下,以后查阅也方便.</p>
+<p>就这样,话唠.</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[记一次关于null_resettable的性能优化]]></title>
+      <url>https://jiangdaohong.github.io/2016/10/02/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%85%B3%E4%BA%8Enull-resettable%E7%9A%84%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</url>
+      <content type="html"><![CDATA[<p>最近在进行项目优化的时候遇到了关于null_resettable的坑,记录一下,由于之前代码不在了,简单模拟一下当时的情况.<br><a id="more"></a></p>
+<p>最近项目要正式上线,需要进行一定的性能方面的测试,由于之前的数据加载的方案几经变化,都没有出现严重的性能问题,也没有在意,结果一测试,结果让我大跌眼镜:性能简直差到天边d(･｀ω´･d*)!!!简单log一下看看那里耗时严重.</p>
+<h3 id="测试环境"><a href="#测试环境" class="headerlink" title="测试环境"></a>测试环境</h3><p>硬件:iPhone5C,系统,iOS9.0.2(越狱)<br>网络:辣鸡WiFi…<br>没有模拟器,之前引入第三方蓝牙库,只有真机包,坑…,要不然直接Instruments查看了,不过当时预测不是大问题,就直接log查看了.</p>
+<h3 id="主要过程"><a href="#主要过程" class="headerlink" title="主要过程"></a>主要过程</h3><p>思路:由于之前是采取分段加载数据,之后采取一次性加载数据,同时进行4个网络请求,可能在网络方面有耗时操作,包括请求数据,解析数据;另一个就是存在频繁调用方法的低性能,导致运行慢.<br>测试数据是血糖数据,数据时间跨度为两年,模拟数据3600条,主要包括空腹血糖数据,以及数据记录时间等,用于绘制曲线图,曲线图以四小时为单位进行绘制,可知共有<code>365 * 2 * 6 = 4380</code>个点需要绘制,其中包括大量的时间比较,因为在同一时间区间,比如4:00-8:00只允许有一个数据进行绘制,因此这里还有一个数据去重操作.大概过程理清之后,打印一下时间:<br><img src="http://ww4.sinaimg.cn/large/006y8lVagw1f8e88oerjmj312e0megzu.jpg" alt=""></p>
+<h3 id="定位问题"><a href="#定位问题" class="headerlink" title="定位问题"></a>定位问题</h3><p>简单看了一下时间分布,总共有18s,网络部分,网络请求7s,其中有接近1s的数据解析耗时;绘图部分,空腹血糖数据生成耗时10s.<br>耗时代码:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">DHLog(<span class="string">@"-----------fbg数据开始------------"</span>);</div><div class="line">   __block <span class="built_in">NSMutableArray</span> *fbgVals = [<span class="built_in">NSMutableArray</span> array];</div><div class="line">   __block <span class="built_in">NSInteger</span> didAddIndex = <span class="number">-1</span>; <span class="comment">// 标记是否被添加过</span></div><div class="line">   <span class="built_in">NSInteger</span> listCount = (<span class="built_in">NSInteger</span>)<span class="keyword">self</span>.weekRecords.count;</div><div class="line">   <span class="keyword">for</span> (<span class="built_in">NSInteger</span> i = listCount<span class="number">-1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">       <span class="comment">// 从远到近取出时间</span></div><div class="line">       RecordBG *bg = <span class="keyword">self</span>.weekRecords[i];</div><div class="line">       <span class="built_in">NSDate</span> *currentDate = [bg.happenTime dotString2Date];</div><div class="line">       <span class="built_in">NSInteger</span> xPosition = [DHChartTool getXAxisPointWithHour:currentDate.hour];</div><div class="line">       </div><div class="line">       <span class="built_in">NSInteger</span> index = [<span class="built_in">NSDate</span> daysWithinEraFromDate:from toDate:currentDate] * <span class="number">6</span> + xPosition + <span class="number">6</span>;</div><div class="line">       <span class="keyword">if</span> (didAddIndex != index) &#123;</div><div class="line">           didAddIndex = index;</div><div class="line">           [fbgVals addObject:[[ChartDataEntry alloc] initWithValue:bg.fbg xIndex:index data:bg]];</div><div class="line">       &#125;</div><div class="line">       </div><div class="line">   &#125;</div><div class="line">   DHLog(<span class="string">@"-----------fbg数据OK------------"</span>);</div></pre></td></tr></table></figure></p>
+<p>按照以上思路,继续打印时间,最后定位问题代码<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSInteger</span> index = [<span class="built_in">NSDate</span> daysWithinEraFromDate:from toDate:currentDate] * <span class="number">6</span> + xPosition + <span class="number">6</span>;</div></pre></td></tr></table></figure></p>
+<p>进入看一下这行代码的功能,主要用于计算两个日期之间的整数天.代码实现如下:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">+ (<span class="built_in">NSInteger</span>)daysWithinEraFromDate:(<span class="built_in">NSDate</span> *) startDate toDate:(<span class="built_in">NSDate</span> *) endDate</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSCalendar</span> *cal = [<span class="built_in">NSCalendar</span> currentCalendar];</div><div class="line">    <span class="built_in">NSDate</span> *s = [[startDate dateStringWithFormatString:<span class="string">@"yyyy-MM-dd"</span>] string2DateWithFormat:<span class="string">@"yyyy-MM-dd"</span>];</div><div class="line">    <span class="built_in">NSDate</span> *e = [[endDate dateStringWithFormatString:<span class="string">@"yyyy-MM-dd"</span>] string2DateWithFormat:<span class="string">@"yyyy-MM-dd"</span>];</div><div class="line">    <span class="built_in">NSInteger</span> startDay=[cal ordinalityOfUnit:<span class="built_in">NSDayCalendarUnit</span></div><div class="line">                                      inUnit: <span class="built_in">NSEraCalendarUnit</span> forDate:s];</div><div class="line">    <span class="built_in">NSInteger</span> endDay=[cal ordinalityOfUnit:<span class="built_in">NSDayCalendarUnit</span></div><div class="line">                                    inUnit: <span class="built_in">NSEraCalendarUnit</span> forDate:e];</div><div class="line">    <span class="keyword">return</span> (endDay-startDay);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>看了一下这几行代码,<code>[endDate dateStringWithFormatString:@&quot;yyyy-MM-dd&quot;]</code>主要用于去掉日期的时分秒时间,<code>[cal ordinalityOfUnit:NSDayCalendarUnit inUnit:NSEraCalendarUnit forDate:s]</code>是系统提供的方法,进行单独测试,没发现问题.上面的方法实现如下:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">NSString</span> *)dateStringWithFormatString:(<span class="built_in">NSString</span> *)formatString &#123;</div><div class="line">    <span class="built_in">NSDateFormatter</span> *dateFormatter = [[<span class="built_in">NSDateFormatter</span> alloc] init];</div><div class="line">    [dateFormatter setDateFormat:formatString];</div><div class="line">    <span class="keyword">return</span> [dateFormatter stringFromDate:<span class="keyword">self</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里只是对系统方法进行简单调用,单看代码没问题,每个方法进入头文件看一下,其中一个关键字引起注意,想起了之前听说过<code>NSDate</code>有性能问题,当时没注意,现在看到这个关键字,猜测是这个属性引起的性能问题:</p>
+<blockquote>
+<p>NSDateFormatter.h<br>@property (null_resettable, copy) NSString *dateFormat;<br>使用null_resettable修饰的属性,字面意义,不可重置的,官方默认使用这个关键字,就是告诉开发者尽量不要重置这个属性的值,因为重置需要重写set和get,防止为空的情况下没有默认值,好了,就是这个坑.</p>
+</blockquote>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>定位到问题代码,优化考虑从两方面入手,一是避免调用这个方法,二是替换这个方法的实现,换用更好性能的实现.在原先的代码中,有很多地方调用<code>[NSDate daysWithinEraFromDate: toDate:]</code>,还有很多地方调用日期转字符串的方法.<br>首先,把简单调用日期转字符串的方法改为字符串截取方法,比如,只需要获取年月日的地方可以这样调用:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSString</span> *dateStr = [[[[date dateByAddingDays:i] description] substringToIndex:<span class="number">10</span>] stringByReplacingOccurrencesOfString:<span class="string">@"-"</span> withString:<span class="string">@"/"</span>];</div></pre></td></tr></table></figure></p>
+<p>这样就可以把日期转换为yyyy-MM-dd格式,注意,需要保证date的<code>description</code>返回标准格式,防止他人重写<code>description</code>带来隐患,<br>其次,把需要进行计算日期差的方法改为下面的实现:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">+ (<span class="built_in">NSInteger</span>)dh_daysWithinEraFromDate:(<span class="built_in">NSString</span> *)startDate toDate:(<span class="built_in">NSString</span> *)endDate</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSCalendar</span> *cal = [<span class="built_in">NSCalendar</span> currentCalendar];</div><div class="line">    <span class="comment">// 截取年月日</span></div><div class="line">    <span class="built_in">NSString</span> *start = [startDate substringToIndex:<span class="number">10</span>];</div><div class="line">    <span class="built_in">NSString</span> *end = [endDate substringToIndex:<span class="number">10</span>];</div><div class="line">    </div><div class="line">    <span class="keyword">static</span> <span class="built_in">NSDateFormatter</span> *formatter;</div><div class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</div><div class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</div><div class="line">        formatter = [[<span class="built_in">NSDateFormatter</span> alloc] init];</div><div class="line">        [formatter setDateFormat:<span class="string">@"yyyy-MM-dd"</span>];</div><div class="line">        [formatter setLocale:[<span class="built_in">NSLocale</span> currentLocale]];</div><div class="line">    &#125;);</div><div class="line">    </div><div class="line">    <span class="comment">// 转成去掉时分秒的日期</span></div><div class="line">    <span class="built_in">NSDate</span> *s = [formatter dateFromString:start];</div><div class="line">    <span class="built_in">NSDate</span> *e = [formatter dateFromString:end];</div><div class="line">    </div><div class="line">    <span class="built_in">NSInteger</span> startDay=[cal ordinalityOfUnit:<span class="built_in">NSDayCalendarUnit</span></div><div class="line">                                      inUnit: <span class="built_in">NSEraCalendarUnit</span> forDate:s];</div><div class="line">    <span class="built_in">NSInteger</span> endDay=[cal ordinalityOfUnit:<span class="built_in">NSDayCalendarUnit</span></div><div class="line">                                    inUnit: <span class="built_in">NSEraCalendarUnit</span> forDate:e];</div><div class="line">    <span class="keyword">return</span> (endDay-startDay);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>经过这一番修改,绘制时间缩短到了1.5s,但是网络请求时间太久,接下来就是进行数据本地缓存,网络分段加载数据等方面网络部分的优化了.</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Xcode命令行打包]]></title>
+      <url>https://jiangdaohong.github.io/2016/09/25/Xcode%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%89%93%E5%8C%85/</url>
+      <content type="html"><![CDATA[<p>记录一下使用命令行进行打包<br><a id="more"></a></p>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>最近公司进行内部测试,要求每天进行App打包上传,本来想搭建一个CI系统,但是实在没有精力(好吧,是没有成功╮(╯_╰)╭,搭建到一半下载git等插件的时候一直出问题,下次有时间再搞了),项目不大,但是每次打包要10分钟(里面有Swift混编,大坑),忍不了了,上网查了一下看到有一些编译优化指令,然后看CI的时候看到了自动打包命令,试了一下,打包时间可以缩短到3分钟以内,记录一下过程吧.</p>
+<h3 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h3><ol>
+<li>Xcode中修改编译选项,修改为发布版证书和描述文件,或者修改编译Target</li>
+<li>终端进入项目所在文件夹</li>
+<li>执行命令xcodebuild clean</li>
+<li><p>继续执行命令</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xcodebuild -workspace appname.xcworkspace -scheme appname -configuration Release -derivedDataPath build</div></pre></td></tr></table></figure>
+<p>这是有workspace的项目的指令,需要将appname替换为你的项目名<br>如果未使用workspace,用下面的命令就可以了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xcrun -sdk iphoneos PackageApplication -v build/Release-iphoneos/app.app -o /path/appname.ipa</div></pre></td></tr></table></figure>
+<p>后面的是输出路径以及打包app的名字</p>
+</li>
+<li><p>项目使用workspace,进行ipa输出,执行命令</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xcrun -sdk iphoneos PackageApplication -v /ProjectPath/build/Build/Products/Release-iphoneos/appname.app -o /path/appname.ipa</div></pre></td></tr></table></figure>
+<p>ProjectPath替换为你项目的路径,保证此路径下面有Release-iphoneos目录</p>
+</li>
+<li>发布项目,暂时手动发布😢</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Reveal真机查看app]]></title>
+      <url>https://jiangdaohong.github.io/2016/09/23/Reveal%E7%9C%9F%E6%9C%BA%E6%9F%A5%E7%9C%8Bapp/</url>
+      <content type="html"><![CDATA[<p>记录一下使用Reveal的基本使用<br><a id="more"></a></p>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ol>
+<li>使用设备:iPhone5C,系统版本iOS9.0.2</li>
+<li>Reveal版本:1.6.3</li>
+<li>Cydia版本:1.1.26;Reveal Loader版本:1.0.0-1</li>
+<li>Xcode版本:7.3.1</li>
+</ol>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ol>
+<li>一台越狱iOS设备</li>
+<li>Cydia下载Reveal Loader,如果你是iOS最新的操作系统,建议下载最新的插件,<a href="https://github.com/heardrwt/RevealLoader" target="_blank" rel="external">下载地址</a></li>
+<li>下载<a href="http://revealapp.com/download/" target="_blank" rel="external">Reveal</a>,查看官方使用说明</li>
+<li>一定保证Reveal和越狱设备在同一网络环境下</li>
+</ol>
+<h3 id="真机查看app步骤"><a href="#真机查看app步骤" class="headerlink" title="真机查看app步骤"></a>真机查看app步骤</h3><ol>
+<li>下载需要查看的app,这里演示查看系统的播客app</li>
+<li>打开系统设置,找到Reveal,在里面找到需要查看的app, enable,界面如下图所示.<br><img src="http://ww1.sinaimg.cn/large/72f96cbajw1f861nvo8guj20hs0vkjt2.jpg" alt="Reveal界面"><br><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f861ldv4ozj20hs0vkq5w.jpg" alt="reveal插件界面"></li>
+<li>打开app</li>
+<li>打开Reveal,选择连接查看的app,如下图<br><img src="http://ww1.sinaimg.cn/large/72f96cbajw1f861pa9znxj20ia03qaam.jpg" alt="连接Reveal"></li>
+<li>这样就可以查看app了,可以看到,播客app中间部分使用的控件名称以及布局方式<br><img src="http://ww2.sinaimg.cn/large/72f96cbagw1f861qucaq1j21kw0v213g.jpg" alt="查看app界面"></li>
+</ol>
+<h3 id="使用Reveal查看自己的app的简单方式"><a href="#使用Reveal查看自己的app的简单方式" class="headerlink" title="使用Reveal查看自己的app的简单方式"></a>使用Reveal查看自己的app的简单方式</h3><p>使用Reveal查看自己的app的方式很简单,只需要配置一下断点即可,官方给出了教程,可以点击<a href="http://support.revealapp.com/kb/getting-started/load-the-reveal-server-via-an-xcode-breakpoint" target="_blank" rel="external">这里</a>查看.</p>
+<h3 id="简单记录利用符号断点查看App步骤"><a href="#简单记录利用符号断点查看App步骤" class="headerlink" title="简单记录利用符号断点查看App步骤"></a>简单记录利用符号断点查看App步骤</h3><ol>
+<li>打开Xcode,选择<strong>View</strong> <strong>→ Navigators</strong> <strong>→ Show Breakpoint Navigator</strong></li>
+<li>点击 <strong>+</strong> 按钮,选择<strong>Add Symbolic Breakpoint</strong>,如下图<br><img src="http://ww1.sinaimg.cn/large/72f96cbagw1f862aw5twjj20ea06wabf.jpg" alt="添加图片"></li>
+<li><p>进行断点编辑,如下图<br><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f862cendfrj20q40egq6w.jpg" alt="编辑断点"><br>  断点命令:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">expr (Class)NSClassFromString(@"IBARevealLoader") == nil ? (void )dlopen("/Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/RevealServer.framework/RevealServer", 0x2) : ((void)0)</div></pre></td></tr></table></figure>
+<p>如果命令无效,参看<a href="http://support.revealapp.com/kb/getting-started/load-the-reveal-server-via-an-xcode-breakpoint" target="_blank" rel="external">官方教程</a></p>
+</li>
+<li>进行断点设置,如下图<br><img src="http://ww1.sinaimg.cn/large/72f96cbagw1f862fq6wfbj20s80ccgpf.jpg" alt="断点设置"></li>
+<li>运行Xcode,接下来的步骤是重复真机查看app步骤4-5步.</li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[安装Chisel]]></title>
+      <url>https://jiangdaohong.github.io/2016/09/22/%E5%AE%89%E8%A3%85Chisel/</url>
+      <content type="html"><![CDATA[<p>记录一下使用Chisel的安装过程以及基本的命令<br><a id="more"></a></p>
+<ol>
+<li>使用 brew install chisel</li>
+<li>记录默认命令的安装路径,默认路径是 /usr/local/opt/chisel/libexec/fblldb.py</li>
+<li>用vim打开 <code>~./lldbinit</code> 文件,如果不存在,新建此文件</li>
+<li><p>在文件中添加命令</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">command script <span class="keyword">import</span> 安装路径</div></pre></td></tr></table></figure>
+</li>
+<li><p>重启Xcode</p>
+</li>
+</ol>
+<p>官方地址以及常用命令参考:<a href="https://github.com/facebook/chisel" target="_blank" rel="external">https://github.com/facebook/chisel</a></p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Tips]]></title>
+      <url>https://jiangdaohong.github.io/2016/08/19/tips/</url>
+      <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 主线程</div><div class="line">if (pthread_main_np() == 0) returnnil;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//处于开发阶段</div><div class="line">#ifdef DEBUG</div><div class="line">#define DHLog(...) NSLog(VA_ARGS)</div><div class="line">#else</div><div class="line">//处于发布阶段</div><div class="line">#define DHLog(...)</div><div class="line">#endif</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//Format</div><div class="line">#define F(string, args...)                  [NSString stringWithFormat:string, args]</div></pre></td></tr></table></figure>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[123]]></title>
+      <url>https://jiangdaohong.github.io/2016/08/19/hello%20world/</url>
+      <content type="html"><![CDATA[<p>hello world</p>
+]]></content>
+    </entry>
+    
+  
+  
+</search>
