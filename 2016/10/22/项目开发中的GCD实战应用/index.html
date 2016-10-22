@@ -21,7 +21,7 @@
 <meta property="og:url" content="https://jiangdaohong.github.io/2016/10/22/项目开发中的GCD实战应用/index.html">
 <meta property="og:site_name" content="见习魔法师">
 <meta property="og:description" content="整理一下项目中GCD的应用">
-<meta property="og:updated_time" content="2016-10-22T12:53:10.000Z">
+<meta property="og:updated_time" content="2016-10-22T13:04:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="项目开发中的GCD实战应用">
 <meta name="twitter:description" content="整理一下项目中GCD的应用">
@@ -206,7 +206,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap"><article id="post-项目开发中的GCD实战应用" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -252,6 +252,7 @@
 <h3 id="顺序执行代码-相当于使用NSOperationQueue的Dependency"><a href="#顺序执行代码-相当于使用NSOperationQueue的Dependency" class="headerlink" title="顺序执行代码(相当于使用NSOperationQueue的Dependency)"></a>顺序执行代码(相当于使用<code>NSOperationQueue</code>的<code>Dependency</code>)</h3><p>1,2,3同时执行,4最后打印<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">dispatch_group_t serviceGroup = dispatch_group_create();</div><div class="line">   </div><div class="line">    dispatch_group_enter(serviceGroup);</div><div class="line">    <span class="built_in">dispatch_async</span>(dispatch_get_global_queue(<span class="number">0</span>, <span class="number">0</span>), ^&#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"1---%@"</span>, [<span class="built_in">NSThread</span> currentThread]);</div><div class="line">        dispatch_group_leave(serviceGroup);</div><div class="line">    &#125;);</div><div class="line">   </div><div class="line">    dispatch_group_enter(serviceGroup);</div><div class="line">    <span class="built_in">dispatch_async</span>(dispatch_get_global_queue(<span class="number">0</span>, <span class="number">0</span>), ^&#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"2---%@"</span>, [<span class="built_in">NSThread</span> currentThread]);</div><div class="line">        dispatch_group_leave(serviceGroup);</div><div class="line">    &#125;);</div><div class="line">   </div><div class="line">    dispatch_group_enter(serviceGroup);</div><div class="line">    <span class="built_in">dispatch_async</span>(dispatch_get_global_queue(<span class="number">0</span>, <span class="number">0</span>), ^&#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"3---%@"</span>, [<span class="built_in">NSThread</span> currentThread]);</div><div class="line">        dispatch_group_leave(serviceGroup);</div><div class="line">    &#125;);</div><div class="line">   </div><div class="line">    dispatch_group_notify(serviceGroup, dispatch_get_main_queue(), ^&#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"4----%@"</span>, [<span class="built_in">NSThread</span> currentThread]); </div><div class="line">    &#125;);</div></pre></td></tr></table></figure></p>
 <p>1,2异步执行完毕再异步执行3,4<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">dispatch_queue_t</span> barrierQueue = dispatch_queue_create(<span class="string">"jiangdaohong.github.io"</span>, DISPATCH_QUEUE_CONCURRENT);</div><div class="line">    <span class="built_in">dispatch_async</span>(barrierQueue, ^()&#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"1"</span>);</div><div class="line">    &#125;);</div><div class="line">    <span class="built_in">dispatch_async</span>(barrierQueue, ^()&#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"2"</span>);</div><div class="line">    &#125;);</div><div class="line">    dispatch_barrier_async(barrierQueue, ^()&#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"dispatch_barrier_async test"</span>);</div><div class="line">    &#125;);</div><div class="line">    <span class="built_in">dispatch_async</span>(barrierQueue, ^()&#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"3"</span>);</div><div class="line">    &#125;);</div><div class="line">    <span class="built_in">dispatch_async</span>(barrierQueue, ^()&#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"4"</span>);</div><div class="line">    &#125;);</div></pre></td></tr></table></figure></p>
 <h3 id="同步请求"><a href="#同步请求" class="headerlink" title="同步请求"></a>同步请求</h3><p>由于NSURLSession没有提供同步请求,可以利用<code>semaphore</code>实现同步请求.<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSURLSession</span> *session = [<span class="built_in">NSURLSession</span> sharedSession];</div><div class="line"><span class="comment">// 创建信号</span></div><div class="line">dispatch_semaphore_t semaphore = dispatch_semaphore_create(<span class="number">0</span>);</div><div class="line"><span class="built_in">NSURLSessionDataTask</span> *task = [session dataTaskWithRequest:request completionHandler:^(<span class="built_in">NSData</span> *data, <span class="built_in">NSURLResponse</span> *response, <span class="built_in">NSError</span> *error) &#123;</div><div class="line">    <span class="comment">// 设置信号量</span></div><div class="line">    dispatch_semaphore_signal(semaphore);</div><div class="line">&#125;];</div><div class="line"></div><div class="line">[task resume];</div><div class="line"><span class="comment">// 等待</span></div><div class="line">dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</div></pre></td></tr></table></figure></p>
+<h3 id="定时器-NSTimer不准"><a href="#定时器-NSTimer不准" class="headerlink" title="定时器(NSTimer不准)"></a>定时器(NSTimer不准)</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//倒计时时间</span></div><div class="line">__block <span class="keyword">int</span> timeout = <span class="number">60</span>;</div><div class="line"><span class="built_in">dispatch_queue_t</span> queue = dispatch_get_global_queue(<span class="number">0</span>, <span class="number">0</span>);</div><div class="line">dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, <span class="number">0</span>, <span class="number">0</span>, queue);</div><div class="line"><span class="comment">// 执行间隔1s</span></div><div class="line">dispatch_source_set_timer(timer, dispatch_walltime(<span class="literal">NULL</span>, <span class="number">0</span>),<span class="number">1.0</span> * <span class="built_in">NSEC_PER_SEC</span>, <span class="number">0</span>);</div><div class="line">dispatch_source_set_event_handler(timer, ^&#123;</div><div class="line">    <span class="keyword">if</span>(timeout &lt;= <span class="number">0</span>)&#123;</div><div class="line">        <span class="comment">// 倒计时结束，关闭</span></div><div class="line">        dispatch_source_cancel(timer);</div><div class="line">        <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</div><div class="line">            <span class="comment">// 主线程刷新UI</span></div><div class="line">        &#125;);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">int</span> minutes = timeout / <span class="number">60</span>;</div><div class="line">        <span class="keyword">int</span> seconds = timeout % <span class="number">60</span>;</div><div class="line">        <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</div><div class="line">            <span class="comment">// 主线程刷新UI</span></div><div class="line">        &#125;);</div><div class="line">        timeout--;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">dispatch_resume(timer);</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -260,17 +261,17 @@
   
     
     <div class="copyright">
-        <p><span>Title:</span><a href="/2016/10/22/项目开发中的GCD实战应用/">项目开发中的GCD实战应用</a></p>
-        <p><span>Author:</span><a href="/" title="Back to Homepage">jiangdaohong</a></p>
-        <p><span>Created:</span>2016-10-22, 19:08:13</p>
-        <p><span>Updated:</span>2016-10-22, 20:53:10</p>
+        <p><span>本文标题:</span><a href="/2016/10/22/项目开发中的GCD实战应用/">项目开发中的GCD实战应用</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">jiangdaohong</a></p>
+        <p><span>发布时间:</span>2016-10-22, 19:08:13</p>
+        <p><span>最后更新:</span>2016-10-22, 21:04:36</p>
         <p>
-            <span>Full URL:</span><a class="post-url" href="/2016/10/22/项目开发中的GCD实战应用/" title="项目开发中的GCD实战应用">https://jiangdaohong.github.io/2016/10/22/项目开发中的GCD实战应用/</a>
-            <span class="copy-path" data-clipboard-text="From https://jiangdaohong.github.io/2016/10/22/项目开发中的GCD实战应用/　　By jiangdaohong" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/10/22/项目开发中的GCD实战应用/" title="项目开发中的GCD实战应用">https://jiangdaohong.github.io/2016/10/22/项目开发中的GCD实战应用/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://jiangdaohong.github.io/2016/10/22/项目开发中的GCD实战应用/　　作者: jiangdaohong" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
         </p>
     </div>
 
@@ -291,9 +292,9 @@
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">Contents</strong>
+        <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#延迟执行"><span class="toc-number">1.</span> <span class="toc-text">延迟执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#快速创建单例"><span class="toc-number">2.</span> <span class="toc-text">快速创建单例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#异步执行代码"><span class="toc-number">3.</span> <span class="toc-text">异步执行代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#顺序执行代码-相当于使用NSOperationQueue的Dependency"><span class="toc-number">4.</span> <span class="toc-text">顺序执行代码(相当于使用NSOperationQueue的Dependency)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#同步请求"><span class="toc-number">5.</span> <span class="toc-text">同步请求</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#延迟执行"><span class="toc-number">1.</span> <span class="toc-text">延迟执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#快速创建单例"><span class="toc-number">2.</span> <span class="toc-text">快速创建单例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#异步执行代码"><span class="toc-number">3.</span> <span class="toc-text">异步执行代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#顺序执行代码-相当于使用NSOperationQueue的Dependency"><span class="toc-number">4.</span> <span class="toc-text">顺序执行代码(相当于使用NSOperationQueue的Dependency)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#同步请求"><span class="toc-number">5.</span> <span class="toc-text">同步请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定时器-NSTimer不准"><span class="toc-number">6.</span> <span class="toc-text">定时器(NSTimer不准)</span></a></li></ol>
         
     </div>
     <style>
@@ -307,10 +308,10 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
     <script>
-        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
     </script>
 
 
@@ -324,13 +325,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="Back to Homepage"><i class="fa fa-home"></i></a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
-        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/10/03/项目开发中KVC的简单应用/" title="Next: 项目开发中KVC的简单应用">
+            <a href="/2016/10/03/项目开发中KVC的简单应用/" title="下一篇: 项目开发中KVC的简单应用">
                 <i class="fa fa-angle-right"></i>
             </a>
         
@@ -353,14 +354,14 @@
                 2016 jiangdaohong
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -369,7 +370,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -402,9 +403,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window
