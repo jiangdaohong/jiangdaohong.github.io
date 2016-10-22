@@ -15,16 +15,16 @@
 
 
 
-<meta name="description" content="项目中有些时候使用KVC,可以节省很多的时间精力,实现快速开发">
+<meta name="description" content="webview清理缓存的正确姿势">
 <meta property="og:type" content="article">
-<meta property="og:title" content="项目开发中KVC的简单应用">
-<meta property="og:url" content="https://jiangdaohong.github.io/2016/10/03/项目开发中KVC的简单应用/index.html">
+<meta property="og:title" content="UIWebView清除缓存">
+<meta property="og:url" content="https://jiangdaohong.github.io/2016/10/22/UIWebView清除缓存/index.html">
 <meta property="og:site_name" content="见习魔法师">
-<meta property="og:description" content="项目中有些时候使用KVC,可以节省很多的时间精力,实现快速开发">
-<meta property="og:updated_time" content="2016-10-06T07:47:19.000Z">
+<meta property="og:description" content="webview清理缓存的正确姿势">
+<meta property="og:updated_time" content="2016-10-22T14:50:03.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="项目开发中KVC的简单应用">
-<meta name="twitter:description" content="项目中有些时候使用KVC,可以节省很多的时间精力,实现快速开发">
+<meta name="twitter:title" content="UIWebView清除缓存">
+<meta name="twitter:description" content="webview清理缓存的正确姿势">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -56,7 +56,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>项目开发中KVC的简单应用 | 见习魔法师</title>
+<title>UIWebView清除缓存 | 见习魔法师</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -208,11 +208,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-项目开发中KVC的简单应用" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-UIWebView清除缓存" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/10/03/项目开发中KVC的简单应用/" class="article-date">
-      <time datetime="2016-10-03T09:38:25.000Z" itemprop="datePublished">2016-10-03</time>
+      <a href="/2016/10/22/UIWebView清除缓存/" class="article-date">
+      <time datetime="2016-10-22T14:41:53.000Z" itemprop="datePublished">2016-10-22</time>
 </a>
 
 
@@ -227,7 +227,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      项目开发中KVC的简单应用
+      UIWebView清除缓存
     </h1>
   
 
@@ -238,7 +238,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/skill/">skill</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DEBUG/">DEBUG</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -248,29 +248,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>项目中有些时候使用KVC,可以节省很多的时间精力,实现快速开发</p>
-<a id="more"></a>
-<p>前一段时间有同学问我,能不能在不自定义UI的情况下,修改ActionSheet指定title的颜色,当时说很简单啊,Runtime获取实例变量列表,找到设置标题颜色的key,使用KVC就可以搞定.</p>
-<h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><p>编译条件: Xcode7.3.1;Project Deployment Target:iOS8.0.</p>
-<h3 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h3><ol>
-<li><p>初始化一个ActionSheet.</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">UIActionSheet</span> *actionSheet = [[<span class="built_in">UIActionSheet</span> alloc] initWithTitle:<span class="string">@"title"</span> delegate:<span class="literal">nil</span> cancelButtonTitle:<span class="string">@"cancle"</span> destructiveButtonTitle:<span class="string">@"destructive"</span> otherButtonTitles:<span class="string">@"other"</span>,<span class="string">@"other1"</span>, <span class="literal">nil</span>];</div></pre></td></tr></table></figure>
-</li>
-<li><p>获取实例变量列表,可以为NSObject添加一个Category方法,用于打印列表,具体实现如下:</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)printIvarList</div><div class="line">&#123;</div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">    Ivar *ivars = class_copyIvarList([<span class="keyword">self</span> <span class="keyword">class</span>], &amp;count);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;count; i++) &#123;</div><div class="line">        Ivar ivar = ivars[i];</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"name:%s------type:%s"</span>, ivar_getName(ivar),ivar_getTypeEncoding(ivar));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>结果如下:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">name:_alertController------type:@<span class="string">"UIAlertController"</span></div><div class="line">name:_presenter------type:@<span class="string">"_UIAlertControllerShimPresenter"</span></div><div class="line">name:_retainedSelf------type:@<span class="string">"UIActionSheet"</span></div><div class="line">name:_actions------type:@<span class="string">"NSMutableArray"</span></div><div class="line">name:_cancelIndex------type:q</div><div class="line">name:_firstOtherButtonIndex------type:q</div><div class="line">name:_destructiveButtonIndex------type:q</div><div class="line">name:_actionSheetStyle------type:q</div><div class="line">name:_context------type:@</div><div class="line">name:_hasPreparedAlertActions------type:B</div><div class="line">name:_isPresented------type:B</div><div class="line">name:_alertControllerShouldDismiss------type:B</div><div class="line">name:_handlingAlertActionShouldDismiss------type:B</div><div class="line">name:_dismissingAlertController------type:B</div><div class="line">name:_delegate------type:@<span class="string">"&lt;UIActionSheetDelegate&gt;"</span>**</div></pre></td></tr></table></figure>
-<p> 一看结果,好气哦,<code>UIAlertController</code>这个类是iOS8之后才允许使用的,算了,换用这个类重新打印一下吧,经过测试,<code>UIAlertAction</code>这个类含有可以设置标题的属性,属性列表大概是酱紫的:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">name:_checked------type:B</div><div class="line">name:_isPreferred------type:B</div><div class="line">name:_imageTintColor------type:@"UIColor"</div><div class="line">name:_titleTextColor------type:@"UIColor"</div><div class="line">name:_style------type:q</div><div class="line">name:_handler------type:@?</div><div class="line">name:_simpleHandler------type:@?</div><div class="line">name:_image------type:@"UIImage"</div><div class="line">name:_shouldDismissHandler------type:@?</div><div class="line">name:__descriptiveText------type:@"NSString"</div><div class="line">name:_contentViewController------type:@"UIViewController"</div><div class="line">name:_keyCommandInput------type:@"NSString"</div><div class="line">name:_keyCommandModifierFlags------type:q</div><div class="line">name:__representer------type:@"&lt;UIAlertActionViewRepresentation_Internal&gt;"</div><div class="line">name:__alertController------type:@"UIAlertController"</div></pre></td></tr></table></figure>
-<p> 里面找一下,_titleTextColor就是它了.</p>
-</li>
-<li><p>找到了就试一下喽.</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[ac1 setValue:[<span class="built_in">UIColor</span> redColor] forKeyPath:<span class="string">@"_titleTextColor"</span>];</div></pre></td></tr></table></figure>
-</li>
-<li><p>run一下,完美.</p>
-</li>
-<li>其他.<br> 通过第2步,可以看到在iOS8上使用<code>UIActionSheet</code>也是可以达到同样的效果的,因为其中有_actions可以得到一个<code>UIAlertAction</code>的数组,重复上述步骤即可完成,以后适配iOS7的应用越来越少了,不考虑iOS7的适配,使用KVC可以便捷地实现这种UI效果,还是不错的.</li>
-</ol>
+        <p>webview清理缓存的正确姿势<br><a id="more"></a></p>
+<p>最近项目中加了不少网页,有一些内容经常变动,未能及时刷新,网上找了一些方法,包括清除<code>NSURLCache</code>和写<code>js</code>进行清除,或者加载之前进行<code>reload</code>操作,发现都没效果,关掉网络还是可以加载出来😶后来发现想的复杂了,直接初始化<code>request</code>的时候缓存策略选择忽略本地缓存就好了,一声叹息…<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSURLRequest</span> *request = [[<span class="built_in">NSURLRequest</span> alloc] initWithURL:[<span class="built_in">NSURL</span> URLWithString:urlStr] cachePolicy:<span class="built_in">NSURLRequestReloadIgnoringLocalCacheData</span> timeoutInterval:HTTP_REQUSET_TIMEOUT_INTERVAL];</div><div class="line">[webView loadRequest:request];</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -279,13 +258,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/10/03/项目开发中KVC的简单应用/">项目开发中KVC的简单应用</a></p>
+        <p><span>本文标题:</span><a href="/2016/10/22/UIWebView清除缓存/">UIWebView清除缓存</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">jiangdaohong</a></p>
-        <p><span>发布时间:</span>2016-10-03, 17:38:25</p>
-        <p><span>最后更新:</span>2016-10-06, 15:47:19</p>
+        <p><span>发布时间:</span>2016-10-22, 22:41:53</p>
+        <p><span>最后更新:</span>2016-10-22, 22:50:03</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/10/03/项目开发中KVC的简单应用/" title="项目开发中KVC的简单应用">https://jiangdaohong.github.io/2016/10/03/项目开发中KVC的简单应用/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://jiangdaohong.github.io/2016/10/03/项目开发中KVC的简单应用/　　作者: jiangdaohong" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/10/22/UIWebView清除缓存/" title="UIWebView清除缓存">https://jiangdaohong.github.io/2016/10/22/UIWebView清除缓存/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://jiangdaohong.github.io/2016/10/22/UIWebView清除缓存/　　作者: jiangdaohong" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -297,16 +276,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/10/22/项目开发中的GCD实战应用/">
-                    项目开发中的GCD实战应用
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/10/02/每到深夜-总是有话想说说/">
-                    每到深夜,总是有话想说说
+                <a href="/2016/10/22/项目开发中的GCD实战应用/">
+                    项目开发中的GCD实战应用
                 </a>
             </div>
         
@@ -318,7 +291,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#备注"><span class="toc-number">1.</span> <span class="toc-text">备注</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主要步骤"><span class="toc-number">2.</span> <span class="toc-text">主要步骤</span></a></li></ol>
+            
         
     </div>
     <style>
@@ -349,15 +322,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/10/22/项目开发中的GCD实战应用/" title="上一篇: 项目开发中的GCD实战应用">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/10/02/每到深夜-总是有话想说说/" title="下一篇: 每到深夜,总是有话想说说">
+            <a href="/2016/10/22/项目开发中的GCD实战应用/" title="下一篇: 项目开发中的GCD实战应用">
                 <i class="fa fa-angle-right"></i>
             </a>
         

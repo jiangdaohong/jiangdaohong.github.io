@@ -4,6 +4,14 @@
   
     
     <entry>
+      <title><![CDATA[UIWebView清除缓存]]></title>
+      <url>https://jiangdaohong.github.io/2016/10/22/UIWebView%E6%B8%85%E9%99%A4%E7%BC%93%E5%AD%98/</url>
+      <content type="html"><![CDATA[<p>webview清理缓存的正确姿势<br><a id="more"></a></p>
+<p>最近项目中加了不少网页,有一些内容经常变动,未能及时刷新,网上找了一些方法,包括清除<code>NSURLCache</code>和写<code>js</code>进行清除,或者加载之前进行<code>reload</code>操作,发现都没效果,关掉网络还是可以加载出来😶后来发现想的复杂了,直接初始化<code>request</code>的时候缓存策略选择忽略本地缓存就好了,一声叹息…<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSURLRequest</span> *request = [[<span class="built_in">NSURLRequest</span> alloc] initWithURL:[<span class="built_in">NSURL</span> URLWithString:urlStr] cachePolicy:<span class="built_in">NSURLRequestReloadIgnoringLocalCacheData</span> timeoutInterval:HTTP_REQUSET_TIMEOUT_INTERVAL];</div><div class="line">[webView loadRequest:request];</div></pre></td></tr></table></figure></p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[项目开发中的GCD实战应用]]></title>
       <url>https://jiangdaohong.github.io/2016/10/22/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E4%B8%AD%E7%9A%84GCD%E5%AE%9E%E6%88%98%E5%BA%94%E7%94%A8/</url>
       <content type="html"><![CDATA[<p>整理一下项目中GCD的应用<br><a id="more"></a></p>
