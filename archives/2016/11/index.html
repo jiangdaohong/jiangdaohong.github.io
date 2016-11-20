@@ -15,16 +15,12 @@
 
 
 
-<meta name="description" content="记录一下使用命令行进行打包">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Xcode命令行打包">
-<meta property="og:url" content="https://jiangdaohong.github.io/2016/09/25/Xcode命令行打包/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="见习魔法师">
+<meta property="og:url" content="https://jiangdaohong.github.io/archives/2016/11/index.html">
 <meta property="og:site_name" content="见习魔法师">
-<meta property="og:description" content="记录一下使用命令行进行打包">
-<meta property="og:updated_time" content="2016-09-25T13:36:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Xcode命令行打包">
-<meta name="twitter:description" content="记录一下使用命令行进行打包">
+<meta name="twitter:title" content="见习魔法师">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -56,7 +52,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Xcode命令行打包 | 见习魔法师</title>
+<title>Archives: 2016/11 | 见习魔法师</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -66,8 +62,8 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: true,
-        isArchive: false,
+        isPost: false,
+        isArchive: true,
         isTag: false,
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
@@ -208,164 +204,56 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-Xcode命令行打包" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap">
   
-    <div class="article-meta">
-      <a href="/2016/09/25/Xcode命令行打包/" class="article-date">
-      <time datetime="2016-09-25T12:59:52.000Z" itemprop="datePublished">2016-09-25</time>
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2016" class="archive-year">2016</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+          <div class="article-meta">
+              <a href="/2016/11/20/初窥JSPatch/" class="archive-article-date">
+      <time datetime="2016-11-20T09:28:23.000Z" itemprop="datePublished">11-20</time>
 </a>
 
 
-    </div>
+        </div>
+         
   
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Xcode命令行打包
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/11/20/初窥JSPatch/">初窥JSPatch</a>
     </h1>
   
 
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-
-        
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tips/">Tips</a></li></ul>
-    </div>
-
-        <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
+        <div class="article-info info-on-archive">
           
-        <p>记录一下使用命令行进行打包<br><a id="more"></a></p>
-<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>最近公司进行内部测试,要求每天进行App打包上传,本来想搭建一个CI系统,但是实在没有精力(好吧,是没有成功╮(╯_╰)╭,搭建到一半下载git等插件的时候一直出问题,下次有时间再搞了),项目不大,但是每次打包要10分钟(里面有Swift混编,大坑),忍不了了,上网查了一下看到有一些编译优化指令,然后看CI的时候看到了自动打包命令,试了一下,打包时间可以缩短到3分钟以内,记录一下过程吧.</p>
-<h3 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h3><ol>
-<li>Xcode中修改编译选项,修改为发布版证书和描述文件,或者修改编译Target</li>
-<li>终端进入项目所在文件夹</li>
-<li>执行命令xcodebuild clean</li>
-<li><p>继续执行命令</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xcodebuild -workspace appname.xcworkspace -scheme appname -configuration Release -derivedDataPath build</div></pre></td></tr></table></figure>
-<p>这是有workspace的项目的指令,需要将appname替换为你的项目名<br>如果未使用workspace,用下面的命令就可以了</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xcrun -sdk iphoneos PackageApplication -v build/Release-iphoneos/app.app -o /path/appname.ipa</div></pre></td></tr></table></figure>
-<p>后面的是输出路径以及打包app的名字</p>
-</li>
-<li><p>项目使用workspace,进行ipa输出,执行命令</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xcrun -sdk iphoneos PackageApplication -v /ProjectPath/build/Build/Products/Release-iphoneos/appname.app -o /path/appname.ipa</div></pre></td></tr></table></figure>
-<p>ProjectPath替换为你项目的路径,保证此路径下面有Release-iphoneos目录</p>
-</li>
-<li>发布项目,暂时手动发布😢</li>
-</ol>
 
-      
+          
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/skill/">skill</a></li></ul>
     </div>
-    
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
-  
-    
-    <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/09/25/Xcode命令行打包/">Xcode命令行打包</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">jiangdaohong</a></p>
-        <p><span>发布时间:</span>2016-09-25, 20:59:52</p>
-        <p><span>最后更新:</span>2016-09-25, 21:36:16</p>
-        <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/09/25/Xcode命令行打包/" title="Xcode命令行打包">https://jiangdaohong.github.io/2016/09/25/Xcode命令行打包/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://jiangdaohong.github.io/2016/09/25/Xcode命令行打包/　　作者: jiangdaohong" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
-            <script> var clipboard = new Clipboard('.copy-path'); </script>
-        </p>
-        <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
-        </p>
-    </div>
-
-
-
-    <nav id="article-nav">
-        
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/10/02/记一次关于null-resettable的性能优化/">
-                    记一次关于null_resettable的性能优化
-                </a>
-            </div>
-        
-        
-            <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/09/23/Reveal真机查看app/">
-                    Reveal真机查看app
-                </a>
-            </div>
-        
-    </nav>
-
-  
 </article>
-
-    <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
-        
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#说明"><span class="toc-number">1.</span> <span class="toc-text">说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主要步骤"><span class="toc-number">2.</span> <span class="toc-text">主要步骤</span></a></li></ol>
-        
-    </div>
-    <style>
-        .left-col .switch-btn,
-        .left-col .switch-area {
-            display: none;
-        }
-        .toc-level-3 i,
-        .toc-level-3 ol {
-            display: none !important;
-        }
-    </style>
-
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
-
-    <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
-    </script>
-
-
-
-
+  
+  
+    </div></section>
+  
 
     
 
-
-
-
-    <div class="scroll" id="post-nav-button">
-        
-            <a href="/2016/10/02/记一次关于null-resettable的性能优化/" title="上一篇: 记一次关于null_resettable的性能优化">
-                <i class="fa fa-angle-left"></i>
-            </a>
-        
-
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
-
-        
-            <a href="/2016/09/23/Reveal真机查看app/" title="下一篇: Reveal真机查看app">
-                <i class="fa fa-angle-right"></i>
-            </a>
-        
-    </div>
-
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/初窥JSPatch/">初窥JSPatch</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/22/iOS开发常用UI小技巧/">iOS开发常用UI小技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/22/UIWebView清除缓存/">UIWebView清除缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/22/项目开发中的GCD实战应用/">项目开发中的GCD实战应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/03/项目开发中KVC的简单应用/">项目开发中KVC的简单应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/02/每到深夜-总是有话想说说/">每到深夜,总是有话想说说</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/02/记一次关于null-resettable的性能优化/">记一次关于null_resettable的性能优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/Xcode命令行打包/">Xcode命令行打包</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/23/Reveal真机查看app/">Reveal真机查看app</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/22/安装Chisel/">安装Chisel</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/19/tips/">Tips</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/19/hello world/">123</a></li></ul>
-
-
-
-
-    <script>
-        
-    </script>
 </div>
       <footer id="footer">
     <div class="outer">
