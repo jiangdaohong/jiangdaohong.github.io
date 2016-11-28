@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="jiangdaohong" />
+
+
+
+<meta name="description" content="好久不用的东西,复习一下,先写一下转场动画吧O(∩_∩)O">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义转场动画">
+<meta property="og:url" content="https://jiangdaohong.github.io/2016/11/28/自定义转场动画/index.html">
+<meta property="og:site_name" content="见习魔法师">
+<meta property="og:description" content="好久不用的东西,复习一下,先写一下转场动画吧O(∩_∩)O">
+<meta property="og:updated_time" content="2016-11-28T13:43:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义转场动画">
+<meta name="twitter:description" content="好久不用的东西,复习一下,先写一下转场动画吧O(∩_∩)O">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="见习魔法师" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>自定义转场动画 | 见习魔法师</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/avatar.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">jiangdaohong</a></h1>
+        </hgroup>
+
+        
+
+        
+
+
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:ijiangdaohong@gmail.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" href="http://weibo.com/jiangdaohong/" title="新浪微博"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/jiangdaohong" title="GitHub"></a>
+                            
+                                <a class="fa V2EX" href="https://www.v2ex.com/member/jiangdaohong" title="V2EX"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">见习魔法师</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">jiangdaohong</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/avatar.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">jiangdaohong</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:ijiangdaohong@gmail.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" target="_blank" href="http://weibo.com/jiangdaohong/" title="新浪微博"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/jiangdaohong" title="GitHub"></a>
+                            
+                                <a class="fa V2EX" target="_blank" href="https://www.v2ex.com/member/jiangdaohong" title="V2EX"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-自定义转场动画" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/28/自定义转场动画/" class="article-date">
+      <time datetime="2016-11-28T12:43:58.000Z" itemprop="datePublished">2016-11-28</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      自定义转场动画
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Animation/">Animation</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>好久不用的东西,复习一下,先写一下转场动画吧O(∩_∩)O<br><a id="more"></a></p>
+<p>直接开始,这篇博客分三部分,第一部分记述自定义modal动画,第二部记述自定义push动画,第三部分记一下常见动画的实现.</p>
+<h3 id="modal动画"><a href="#modal动画" class="headerlink" title="modal动画"></a>modal动画</h3><p>下面简要写一下以modal的形式实现系统的push动画<br>主要步骤:</p>
+<ol>
+<li>新建两个view controller,记做FromVC,ToVC;</li>
+<li>在FromVC中,实现<code>presentViewController:animated:completion</code>,ToVC对象设置<code>toVC.transitioningDelegate = self;</code>,fromVC遵守协议<code>UIViewControllerTransitioningDelegate</code>;</li>
+<li><p>看一下<code>UIViewControllerTransitioningDelegate</code></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Asks your delegate for the transition animator object to use when presenting a view controller.</span></div><div class="line">- (<span class="keyword">nullable</span> <span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerAnimatedTransitioning</span>&gt;)animationControllerForPresentedController:(<span class="built_in">UIViewController</span> *)presented presentingController:(<span class="built_in">UIViewController</span> *)presenting sourceController:(<span class="built_in">UIViewController</span> *)source;</div><div class="line"><span class="comment">// Asks your delegate for the transition animator object to use when dismissing a view controller.</span></div><div class="line">- (<span class="keyword">nullable</span> <span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerAnimatedTransitioning</span>&gt;)animationControllerForDismissedController:(<span class="built_in">UIViewController</span> *)dismissed;</div><div class="line"><span class="comment">// Asks your delegate for the interactive animator object to use when presenting a view controller.</span></div><div class="line">- (<span class="keyword">nullable</span> <span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerInteractiveTransitioning</span>&gt;)interactionControllerForPresentation:(<span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerAnimatedTransitioning</span>&gt;)animator;</div><div class="line"><span class="comment">// Asks your delegate for the interactive animator object to use when dismissing a view controller.</span></div><div class="line">- (<span class="keyword">nullable</span> <span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerInteractiveTransitioning</span>&gt;)interactionControllerForDismissal:(<span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerAnimatedTransitioning</span>&gt;)animator;</div><div class="line"><span class="comment">// Asks your delegate for the custom presentation controller to use for managing the view hierarchy when presenting a view controller.</span></div><div class="line">- (<span class="keyword">nullable</span> <span class="built_in">UIPresentationController</span> *)presentationControllerForPresentedViewController:(<span class="built_in">UIViewController</span> *)presented presentingViewController:(<span class="built_in">UIViewController</span> *)presenting sourceViewController:(<span class="built_in">UIViewController</span> *)source <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</div></pre></td></tr></table></figure>
+<p>通过文档可以看到,<code>UIViewControllerTransitioningDelegate</code>主要要实现前两个方法来获取present和dismiss的动画对象;</p>
+</li>
+<li><p>而动画对象需要遵守<code>UIViewControllerAnimatedTransitioning</code>协议,看一下这个协议需要实现的方法:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// This is used for percent driven interactive transitions, as well as for container controllers that have companion animations that might need to</span></div><div class="line"><span class="comment">// synchronize with the main animation. </span></div><div class="line">- (<span class="built_in">NSTimeInterval</span>)transitionDuration:(<span class="keyword">nullable</span> <span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerContextTransitioning</span>&gt;)transitionContext;</div><div class="line"><span class="comment">// This method can only  be a nop if the transition is interactive and not a percentDriven interactive transition.</span></div><div class="line">- (<span class="keyword">void</span>)animateTransition:(<span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerContextTransitioning</span>&gt;)transitionContext;</div></pre></td></tr></table></figure>
+<p>第一个方法返回的是动画执行的时间,第二个方法则是用于处理动画效果;</p>
+</li>
+<li><p>首先实现present动画,新建一个<code>DHPresentAnimation</code>类,继承自<code>NSObject</code>,并且实现<code>UIViewControllerAnimatedTransitioning</code>中的两个方法,代码如下:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 动画执行的时间</span></div><div class="line">- (<span class="built_in">NSTimeInterval</span>)transitionDuration:(<span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerContextTransitioning</span>&gt;)transitionContex</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> <span class="number">0.3</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 自定义动画</span></div><div class="line">- (<span class="keyword">void</span>)animateTransition:(<span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerContextTransitioning</span>&gt;)transitionContext</div><div class="line">&#123;</div><div class="line">    <span class="comment">// 获取目标VC</span></div><div class="line">    <span class="built_in">UIViewController</span> *toVC = [transitionContext viewControllerForKey:<span class="built_in">UITransitionContextToViewControllerKey</span>];</div><div class="line">    <span class="comment">// 获取最终要显示的VC的frame</span></div><div class="line">    <span class="built_in">CGRect</span> finalRect = [transitionContext finalFrameForViewController:toVC];</div><div class="line">    <span class="comment">// 设置目标VC的默认位置,这里定位在屏幕左侧</span></div><div class="line">    toVC.view.frame = <span class="built_in">CGRectOffset</span>(finalRect, -[[<span class="built_in">UIScreen</span> mainScreen]bounds].size.width, <span class="number">0</span>);</div><div class="line">    <span class="comment">// 获取containerView,并将目标VC的view设置为它的子视图</span></div><div class="line">    [[transitionContext containerView] addSubview:toVC.view];</div><div class="line">    <span class="comment">// 简单UIView动画,使toVC的view变换到最终要显示的位置和大小</span></div><div class="line">    [<span class="built_in">UIView</span> animateWithDuration:[<span class="keyword">self</span> transitionDuration:transitionContext] animations:^&#123;</div><div class="line">        toVC.view.frame = finalRect;</div><div class="line">    &#125; completion:^(<span class="built_in">BOOL</span> finished) &#123;</div><div class="line">    <span class="comment">// 明确告诉上下文,结束动画</span></div><div class="line">        [transitionContext completeTransition:<span class="literal">YES</span>];</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>FromVC</code>中,实现<code>UIViewControllerTransitioningDelegate</code>协议方法</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerAnimatedTransitioning</span>&gt;)animationControllerForPresentedController:(<span class="built_in">UIViewController</span> *)presented presentingController:(<span class="built_in">UIViewController</span> *)presenting sourceController:(<span class="built_in">UIViewController</span> *)source &#123;</div><div class="line"><span class="comment">// 返回present自定义动画对象</span></div><div class="line">    <span class="keyword">return</span> [[DHPresentAnimation alloc] init];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>同理,实现dismiss动画,实现<code>FromVC</code>遵循协议中的另一个方法:<br> dismiss动画</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">NSTimeInterval</span>)transitionDuration:(<span class="keyword">id</span>&lt;<span class="built_in">UIViewControllerContextTransitioning</span>&gt;)transitionContext</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> <span class="number">1.0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)animateTransition:(<span class="keyword">id</span>&lt;<span class="built_in">UIViewControllerContextTransitioning</span>&gt;)transitionContext</div><div class="line">&#123;</div><div class="line">    <span class="built_in">UIViewController</span> *fromVC = [transitionContext viewControllerForKey:<span class="built_in">UITransitionContextFromViewControllerKey</span>];</div><div class="line">    <span class="built_in">UIViewController</span> *toVC = [transitionContext viewControllerForKey:<span class="built_in">UITransitionContextToViewControllerKey</span>];</div><div class="line">    </div><div class="line">    <span class="built_in">CGRect</span> initRect  = [transitionContext initialFrameForViewController:fromVC];</div><div class="line">    <span class="built_in">CGRect</span> finalRect = <span class="built_in">CGRectOffset</span>(initRect, -[[<span class="built_in">UIScreen</span> mainScreen]bounds].size.width, <span class="number">0</span>);</div><div class="line">    </div><div class="line">    <span class="built_in">UIView</span> *containerView = [transitionContext containerView];</div><div class="line">    [containerView addSubview:toVC.view];</div><div class="line">    [containerView sendSubviewToBack:toVC.view];</div><div class="line">    </div><div class="line">    [<span class="built_in">UIView</span> animateWithDuration:[<span class="keyword">self</span> transitionDuration:transitionContext] animations:^&#123;</div><div class="line">        fromVC.view.frame = finalRect;</div><div class="line">    &#125; completion:^(<span class="built_in">BOOL</span> finished) &#123;</div><div class="line">        [transitionContext completeTransition:<span class="literal">YES</span>];</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>协议方法:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">id</span>&lt;<span class="built_in">UIViewControllerAnimatedTransitioning</span>&gt;)animationControllerForDismissedController:(<span class="built_in">UIViewController</span> *)dismissed</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> [[DHDismissAnimation alloc] init];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>command + R</code>.</p>
+<h3 id="push动画"><a href="#push动画" class="headerlink" title="push动画"></a>push动画</h3><p>待续</p>
+<h3 id="常见动画的实现"><a href="#常见动画的实现" class="headerlink" title="常见动画的实现"></a>常见动画的实现</h3><p>待续</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2016/11/28/自定义转场动画/">自定义转场动画</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">jiangdaohong</a></p>
+        <p><span>Created:</span>2016-11-28, 20:43:58</p>
+        <p><span>Updated:</span>2016-11-28, 21:43:45</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2016/11/28/自定义转场动画/" title="自定义转场动画">https://jiangdaohong.github.io/2016/11/28/自定义转场动画/</a>
+            <span class="copy-path" data-clipboard-text="From https://jiangdaohong.github.io/2016/11/28/自定义转场动画/　　By jiangdaohong" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/11/20/初窥JSPatch/">
+                    初窥JSPatch
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#modal动画"><span class="toc-number">1.</span> <span class="toc-text">modal动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#push动画"><span class="toc-number">2.</span> <span class="toc-text">push动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见动画的实现"><span class="toc-number">3.</span> <span class="toc-text">常见动画的实现</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="Back to Homepage"><i class="fa fa-home"></i></a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/11/20/初窥JSPatch/" title="Next: 初窥JSPatch">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/11/28/自定义转场动画/">自定义转场动画</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/初窥JSPatch/">初窥JSPatch</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/22/iOS开发常用UI小技巧/">iOS开发常用UI小技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/22/UIWebView清除缓存/">UIWebView清除缓存</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/22/项目开发中的GCD实战应用/">项目开发中的GCD实战应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/03/项目开发中KVC的简单应用/">项目开发中KVC的简单应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/02/每到深夜-总是有话想说说/">每到深夜,总是有话想说说</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/02/记一次关于null-resettable的性能优化/">记一次关于null_resettable的性能优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/Xcode命令行打包/">Xcode命令行打包</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/23/Reveal真机查看app/">Reveal真机查看app</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/22/安装Chisel/">安装Chisel</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/19/tips/">Tips</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/19/hello world/">123</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016 jiangdaohong
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
