@@ -21,7 +21,7 @@
 <meta property="og:url" content="https://jiangdaohong.github.io/2016/10/22/iOS开发常用UI小技巧/index.html">
 <meta property="og:site_name" content="见习魔法师">
 <meta property="og:description" content="整理一下开发中常用的UI小技巧">
-<meta property="og:updated_time" content="2016-10-22T16:57:22.000Z">
+<meta property="og:updated_time" content="2016-12-04T14:19:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS开发常用UI小技巧">
 <meta name="twitter:description" content="整理一下开发中常用的UI小技巧">
@@ -206,7 +206,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
       <div class="body-wrap"><article id="post-iOS开发常用UI小技巧" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -293,7 +293,7 @@
 <p>table view 默认设置</p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 背景色</span></div><div class="line">tableView.backgroundColor = [<span class="built_in">UIColor</span> viewBackgroundColor];</div><div class="line"><span class="comment">// 分割线样式去除</span></div><div class="line">tableView.separatorStyle = <span class="built_in">UITableViewCellSeparatorStyleNone</span>;</div><div class="line"><span class="comment">// 表尾去除</span></div><div class="line">tableView.tableFooterView = [<span class="built_in">UIView</span> new];</div><div class="line"><span class="comment">// 表头去除</span></div><div class="line">tableView.tableHeaderView = [<span class="built_in">UIView</span> new];</div><div class="line"><span class="comment">// 区头默认有10高度,设置0无效,可以设置为0.01</span></div></pre></td></tr></table></figure>
 <p>table view controller 添加3D Touch</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1.遵循代理`UIViewControllerPreviewingDelegate`</span></div><div class="line"><span class="comment">// 2.注册cell</span></div><div class="line">- (<span class="built_in">UITableViewCell</span> *)tableView:(<span class="built_in">UITableView</span> *)tableView cellForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath </div><div class="line">&#123;</div><div class="line">    DHCell *cell = [DHCell cellWithTableView:tableView];</div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    [<span class="keyword">self</span> registerForPreviewingWithDelegate:<span class="keyword">self</span> sourceView:cell];</div><div class="line">    <span class="keyword">return</span> cell;</div><div class="line">&#125;</div><div class="line"><span class="comment">// 3.需要跳转的目标控制器</span></div><div class="line">- (<span class="built_in">UIViewController</span> *)previewingContext:(<span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerPreviewing</span>&gt;)previewingContext viewControllerForLocation:(<span class="built_in">CGPoint</span>)location</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSIndexPath</span> *indexPath = [_tableView indexPathForCell:(<span class="built_in">UITableViewCell</span>* )[previewingContext sourceView]];</div><div class="line">	DestinationViewController *destinationVC = [[DestinationViewController alloc] init];</div><div class="line">	<span class="keyword">return</span> destinationVC;</div><div class="line">&#125;</div><div class="line"><span class="comment">// 4.目标控制的操作,写在目标控制器的实现里面</span></div><div class="line">- (<span class="built_in">NSArray</span>&lt;<span class="keyword">id</span>&lt;<span class="built_in">UIPreviewActionItem</span>&gt;&gt; *)previewActionItems</div><div class="line">&#123;</div><div class="line">    <span class="built_in">UIPreviewAction</span> * action1 = [<span class="built_in">UIPreviewAction</span> actionWithTitle:<span class="string">@"操作1"</span> style:<span class="built_in">UIPreviewActionStyleDefault</span> handler:^(<span class="built_in">UIPreviewAction</span> * _Nonnull action, <span class="built_in">UIViewController</span> * _Nonnull previewViewController) &#123;</div><div class="line">        DHLog(<span class="string">@"操作1"</span>);</div><div class="line">    &#125;];</div><div class="line">    </div><div class="line">    <span class="built_in">UIPreviewAction</span> * action2 = [<span class="built_in">UIPreviewAction</span> actionWithTitle:<span class="string">@"操作2"</span> style:<span class="built_in">UIPreviewActionStyleSelected</span> handler:^(<span class="built_in">UIPreviewAction</span> * _Nonnull action, <span class="built_in">UIViewController</span> * _Nonnull previewViewController) &#123;</div><div class="line">        DHLog(<span class="string">@"操作2"</span>);</div><div class="line">    &#125;];</div><div class="line">    </div><div class="line">    <span class="built_in">UIPreviewAction</span> * action3 = [<span class="built_in">UIPreviewAction</span> actionWithTitle:<span class="string">@"操作3"</span> style:<span class="built_in">UIPreviewActionStyleDestructive</span> handler:^(<span class="built_in">UIPreviewAction</span> * _Nonnull action, <span class="built_in">UIViewController</span> * _Nonnull previewViewController) &#123;</div><div class="line">        DHLog(<span class="string">@"操作3"</span>);</div><div class="line">    &#125;];</div><div class="line">    </div><div class="line">    <span class="built_in">NSArray</span> * actions = @[action1,action2,action3];</div><div class="line">    <span class="keyword">return</span> actions;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1.遵循代理`UIViewControllerPreviewingDelegate`</span></div><div class="line"><span class="comment">// 2.注册cell</span></div><div class="line">- (<span class="built_in">UITableViewCell</span> *)tableView:(<span class="built_in">UITableView</span> *)tableView cellForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath </div><div class="line">&#123;</div><div class="line">    DHCell *cell = [DHCell cellWithTableView:tableView];</div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    [<span class="keyword">self</span> registerForPreviewingWithDelegate:<span class="keyword">self</span> sourceView:cell];</div><div class="line">    <span class="keyword">return</span> cell;</div><div class="line">&#125;</div><div class="line"><span class="comment">// 3.需要跳转的目标控制器</span></div><div class="line">- (<span class="built_in">UIViewController</span> *)previewingContext:(<span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerPreviewing</span>&gt;)previewingContext viewControllerForLocation:(<span class="built_in">CGPoint</span>)location</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSIndexPath</span> *indexPath = [_tableView indexPathForCell:(<span class="built_in">UITableViewCell</span>* )[previewingContext sourceView]];</div><div class="line">	DestinationViewController *destinationVC = [[DestinationViewController alloc] init];</div><div class="line">	<span class="built_in">UINavigationController</span> *navc = [[<span class="built_in">UINavigationController</span> alloc] initWithRootViewController:destinationVC];</div><div class="line">	<span class="keyword">return</span> navc;</div><div class="line">&#125;</div><div class="line">- (<span class="keyword">void</span>)previewingContext:(<span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerPreviewing</span>&gt;)previewingContext commitViewController:(<span class="built_in">UIViewController</span> *)viewControllerToCommit</div><div class="line">&#123;</div><div class="line">    [<span class="keyword">self</span> showViewController:viewControllerToCommit.childViewControllers[<span class="number">0</span>] sender:<span class="keyword">self</span>];</div><div class="line">&#125;</div><div class="line"><span class="comment">// 4.目标控制的操作,写在目标控制器的实现里面</span></div><div class="line">- (<span class="built_in">NSArray</span>&lt;<span class="keyword">id</span>&lt;<span class="built_in">UIPreviewActionItem</span>&gt;&gt; *)previewActionItems</div><div class="line">&#123;</div><div class="line">    <span class="built_in">UIPreviewAction</span> * action1 = [<span class="built_in">UIPreviewAction</span> actionWithTitle:<span class="string">@"操作1"</span> style:<span class="built_in">UIPreviewActionStyleDefault</span> handler:^(<span class="built_in">UIPreviewAction</span> * _Nonnull action, <span class="built_in">UIViewController</span> * _Nonnull previewViewController) &#123;</div><div class="line">        DHLog(<span class="string">@"操作1"</span>);</div><div class="line">    &#125;];</div><div class="line">    </div><div class="line">    <span class="built_in">UIPreviewAction</span> * action2 = [<span class="built_in">UIPreviewAction</span> actionWithTitle:<span class="string">@"操作2"</span> style:<span class="built_in">UIPreviewActionStyleSelected</span> handler:^(<span class="built_in">UIPreviewAction</span> * _Nonnull action, <span class="built_in">UIViewController</span> * _Nonnull previewViewController) &#123;</div><div class="line">        DHLog(<span class="string">@"操作2"</span>);</div><div class="line">    &#125;];</div><div class="line">    </div><div class="line">    <span class="built_in">UIPreviewAction</span> * action3 = [<span class="built_in">UIPreviewAction</span> actionWithTitle:<span class="string">@"操作3"</span> style:<span class="built_in">UIPreviewActionStyleDestructive</span> handler:^(<span class="built_in">UIPreviewAction</span> * _Nonnull action, <span class="built_in">UIViewController</span> * _Nonnull previewViewController) &#123;</div><div class="line">        DHLog(<span class="string">@"操作3"</span>);</div><div class="line">    &#125;];</div><div class="line">    </div><div class="line">    <span class="built_in">NSArray</span> * actions = @[action1,action2,action3];</div><div class="line">    <span class="keyword">return</span> actions;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>app 添加 <code>Shortcuts</code></p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions</div><div class="line">&#123;</div><div class="line">	<span class="built_in">UIApplicationShortcutItem</span> *addItem = [[<span class="built_in">UIApplicationShortcutItem</span> alloc] initWithType:SHORTCUT_TYPE_ADD localizedTitle:<span class="string">@"添加"</span> localizedSubtitle:<span class="literal">nil</span> icon:	[<span class="built_in">UIApplicationShortcutIcon</span> iconWithType:<span class="built_in">UIApplicationShortcutIconTypeAdd</span>]</div><div class="line">	userInfo:@&#123;<span class="string">@"infoKey"</span>: <span class="string">@"infoValue"</span>&#125;];</div><div class="line">	[<span class="built_in">UIApplication</span> sharedApplication].shortcutItems = @[addItem];</div><div class="line">	<span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line"></div><div class="line">&#125;</div><div class="line">- (<span class="keyword">void</span>)application:(<span class="built_in">UIApplication</span> *)application performActionForShortcutItem:(<span class="built_in">UIApplicationShortcutItem</span> *)shortcutItem completionHandler:(<span class="keyword">void</span>(^)(<span class="built_in">BOOL</span> succeeded))completionHandler</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> ([shortcutItem.type isEqualToString:SHORTCUT_TYPE_ADD]) &#123;</div><div class="line">    	<span class="comment">// do something</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
@@ -310,17 +310,17 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/10/22/iOS开发常用UI小技巧/">iOS开发常用UI小技巧</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">jiangdaohong</a></p>
-        <p><span>发布时间:</span>2016-10-22, 22:55:16</p>
-        <p><span>最后更新:</span>2016-10-23, 00:57:22</p>
+        <p><span>Title:</span><a href="/2016/10/22/iOS开发常用UI小技巧/">iOS开发常用UI小技巧</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">jiangdaohong</a></p>
+        <p><span>Created:</span>2016-10-22, 22:55:16</p>
+        <p><span>Updated:</span>2016-12-04, 22:19:31</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/10/22/iOS开发常用UI小技巧/" title="iOS开发常用UI小技巧">https://jiangdaohong.github.io/2016/10/22/iOS开发常用UI小技巧/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://jiangdaohong.github.io/2016/10/22/iOS开发常用UI小技巧/　　作者: jiangdaohong" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2016/10/22/iOS开发常用UI小技巧/" title="iOS开发常用UI小技巧">https://jiangdaohong.github.io/2016/10/22/iOS开发常用UI小技巧/</a>
+            <span class="copy-path" data-clipboard-text="From https://jiangdaohong.github.io/2016/10/22/iOS开发常用UI小技巧/　　By jiangdaohong" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
         </p>
     </div>
 
@@ -347,7 +347,7 @@
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Contents</strong>
         
             
         
@@ -363,10 +363,10 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
 
     <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
     </script>
 
 
@@ -380,15 +380,15 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/11/20/初窥JSPatch/" title="上一篇: 初窥JSPatch">
+            <a href="/2016/11/20/初窥JSPatch/" title="Pre: 初窥JSPatch">
                 <i class="fa fa-angle-left"></i>
             </a>
         
 
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/10/22/UIWebView清除缓存/" title="下一篇: UIWebView清除缓存">
+            <a href="/2016/10/22/UIWebView清除缓存/" title="Next: UIWebView清除缓存">
                 <i class="fa fa-angle-right"></i>
             </a>
         
@@ -411,14 +411,14 @@
                 2016 jiangdaohong
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -427,7 +427,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -460,9 +460,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window
