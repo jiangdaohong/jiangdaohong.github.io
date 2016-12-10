@@ -4,6 +4,44 @@
   
     
     <entry>
+      <title><![CDATA[APP本地化笔记]]></title>
+      <url>https://jiangdaohong.github.io/2016/12/10/APP%E5%9B%BD%E9%99%85%E5%8C%96%E7%AC%94%E8%AE%B0/</url>
+      <content type="html"><![CDATA[<p>最近项目需要做本地化,简单记录一下,这里的APP本地化特指iOS客户端的本地化.<br><a id="more"></a></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>随着移动互联网的发展,很多APP借着苹果的平台渐渐走向国际,甚至有些国内的公司面向的就是国外用户,我们现在做的产品就有这方面的需求,所以抽时间做了一下APP本地化.<br>一般来说,APP本地化主要是一些文字和图片,plist资源的本地化.文字一般就是UI控件上展示的文本,控件可能是纯代码创建的,也可能是xib或者storyboard上的控件;而图片则需要准备不同的资源文件.<br>下面介绍一下常用的本地化方法:</p>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>以普通的工程为例:</p>
+<ol>
+<li>新建工程,Info.plist中添加<code>Application has localized display name</code>,bool值为<code>YES</code>,<code>CFBundleDisplayName</code>和<code>CFBundleName</code>都设置为<code>$(PROJECT_NAME)</code>;</li>
+<li>选择PROJECT-&gt;Info-&gt;Localizations,点击<code>+</code>,选择需要本地化的语言,我们选择Chinese(Simplified),然后弹出需要本地化的资源文件,需要的打钩,点击确定;</li>
+<li>新建文件.选择iOS-&gt;Resource-&gt;String File,这里命名为Localizations.string;</li>
+<li>选择新建的.string文件,右边属性栏有Localization,点击,弹出需要本地化的语言,随便选择一个,然后把需要本地化的语言都勾选上,点击文件,可以看到生成了不同语言的.string文件;</li>
+<li>重复步骤3和步骤4,命名必须为<code>InfoPlist.strings</code>.</li>
+<li>打开项目目录,把生成的本地化文件夹拖到项目中.<h3 id="应用名称本地化"><a href="#应用名称本地化" class="headerlink" title="应用名称本地化"></a>应用名称本地化</h3>选择InfoPlist.strings,将需要显示的名称写到对应的文件里面即可:<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 中文文件</span></div><div class="line"><span class="built_in">CFBundleDisplayName</span> = <span class="string">"中文名字"</span>;</div><div class="line"><span class="comment">// 英文文件</span></div><div class="line"><span class="built_in">CFBundleDisplayName</span> = <span class="string">"English name"</span>;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="文本本地化"><a href="#文本本地化" class="headerlink" title="文本本地化"></a>文本本地化</h3><p>以登陆按钮显示的标题为例,需要借助一个本地化方法才可以实现,首先在Localizations.string文件中分别写上对应的key-value:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 中文文件</span></div><div class="line"><span class="string">"Login"</span> = <span class="string">"登陆"</span>;</div><div class="line"><span class="comment">// 英文文件</span></div><div class="line"><span class="string">"Login"</span> = <span class="string">"Login"</span>;</div></pre></td></tr></table></figure></p>
+<p>调用的地方<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 前面是key,后面是注释,可为nil</span></div><div class="line"><span class="built_in">NSString</span> *loginString = <span class="built_in">NSLocalizedString</span>(<span class="string">@"Login"</span>, <span class="string">@"login button title"</span>);</div><div class="line">[loginButton setTitle:loginString forState:<span class="built_in">UIControlStateNormal</span>];</div></pre></td></tr></table></figure></p>
+<h3 id="图片资源和xib-plist资源的本地化"><a href="#图片资源和xib-plist资源的本地化" class="headerlink" title="图片资源和xib,plist资源的本地化"></a>图片资源和xib,plist资源的本地化</h3><p>图片本地化很简单,选中图片资源,点击属性栏的Localization选项,会自动把图片放到对应的语言文件夹下面,调用无需更改.<br>plist以及xib本地化方式和图片本地化方式大同小异.</p>
+<h3 id="简化调用"><a href="#简化调用" class="headerlink" title="简化调用"></a>简化调用</h3><p>如果一开始没有做本地化的准备,但是突然要加入这项feature,这就需要快速完成,但是项目中的控件太多了怎么办?</p>
+<ol>
+<li>简单做法,修改继承,如替换UILabel为自定义Label,重写<code>setText:</code>,然后调用<code>NSLocalizedString(key,comment)</code>,这么做代价很大;</li>
+<li><p>查看NSLocalizedString的实现:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> NSLocalizedString(key, comment) \</span></div><div class="line">	    [[NSBundle mainBundle] localizedStringForKey:(key) value:@<span class="meta-string">""</span> table:nil]</div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> NSLocalizedStringFromTable(key, tbl, comment) \</span></div><div class="line">	    [[NSBundle mainBundle] localizedStringForKey:(key) value:@<span class="meta-string">""</span> table:(tbl)]</div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> NSLocalizedStringFromTableInBundle(key, tbl, bundle, comment) \</span></div><div class="line">	    [bundle localizedStringForKey:(key) value:@<span class="meta-string">""</span> table:(tbl)]</div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> NSLocalizedStringWithDefaultValue(key, tbl, bundle, val, comment) \</span></div><div class="line">	    [bundle localizedStringForKey:(key) value:(val) table:(tbl)]</div></pre></td></tr></table></figure>
+<p>为了方便调用添加个宏定义:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">undef</span> L</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> L(key) \</span></div><div class="line">[[NSBundle mainBundle] localizedStringForKey:(key) value:@<span class="meta-string">""</span> table:nil]</div></pre></td></tr></table></figure>
+<p>然后一个一个替换/(ㄒoㄒ)/~~</p>
+</li>
+<li><p>替换完之后,用命令自动生成strings文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// 打开终端,定位到需要生成stings的文件,比如为LoginViewController.m,要生成DHLocalizations.strings</div><div class="line">// 字符串调用的地方</div><div class="line">NSString *loginString = NSLocalizedStringFromTable(@&quot;Login&quot;,@&quot;DHLocalizations&quot;, @&quot;login button title&quot;);</div><div class="line">[loginButton setTitle:loginString forState:UIControlStateNormal];</div><div class="line">// 执行如下命令</div><div class="line">genstrings LoginViewController.m</div><div class="line">// 查看文件夹,看到已经生成了DHLocalizations.strings文件</div></pre></td></tr></table></figure>
+</li>
+<li><p>批量生成命令<br>上个命令虽然能自动生成本地方资源文件,但是一次只能生成一个文件里面的本地化字符串,借助下面的命令可以进行批量生成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// 进入终端,使用命令生成文件夹</div><div class="line">mkdir en.lpro</div><div class="line">// 遍历文件夹下.m文件,并执行genstrings命令</div><div class="line">find ./ -name *.m -print0 | xargs -0 genstrings -o en.lproj</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p>感谢一下开发者的教程,放上教程链接<br><a href="https://my.oschina.net/u/1049180/blog/215695" target="_blank" rel="external">https://my.oschina.net/u/1049180/blog/215695</a><br>// 下面这篇文章讲述的很详细,图文并茂<br><a href="http://blog.csdn.net/q199109106q/article/details/8564615" target="_blank" rel="external">http://blog.csdn.net/q199109106q/article/details/8564615</a></p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[自定义转场动画]]></title>
       <url>https://jiangdaohong.github.io/2016/11/28/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BD%AC%E5%9C%BA%E5%8A%A8%E7%94%BB/</url>
       <content type="html"><![CDATA[<p>好久不用的东西,复习一下,先写一下转场动画吧O(∩_∩)O<br><a id="more"></a></p>
