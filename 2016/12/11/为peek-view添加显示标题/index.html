@@ -15,16 +15,21 @@
 
 
 
-<meta name="description" content="项目中有些时候使用KVC,可以节省很多的时间精力,实现快速开发">
+<meta name="description" content="看到一些APP peek操作的时候会显示标题,模仿一下喽.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="项目开发中KVC的简单应用">
-<meta property="og:url" content="https://jiangdaohong.github.io/2016/10/03/项目开发中KVC的简单应用/index.html">
+<meta property="og:title" content="为peek view添加显示标题">
+<meta property="og:url" content="https://jiangdaohong.github.io/2016/12/11/为peek-view添加显示标题/index.html">
 <meta property="og:site_name" content="见习魔法师">
-<meta property="og:description" content="项目中有些时候使用KVC,可以节省很多的时间精力,实现快速开发">
-<meta property="og:updated_time" content="2016-10-06T07:47:19.000Z">
+<meta property="og:description" content="看到一些APP peek操作的时候会显示标题,模仿一下喽.">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006tNc79gw1fan1wxdu44j305k027jr7.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006tNc79gw1fan1xn1ka9j305k025t8k.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006tNc79gw1fan1zf8f1aj305k01wjr6.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/006tNc79gw1fan1zufo7fj305k01yjr7.jpg">
+<meta property="og:updated_time" content="2016-12-11T11:23:03.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="项目开发中KVC的简单应用">
-<meta name="twitter:description" content="项目中有些时候使用KVC,可以节省很多的时间精力,实现快速开发">
+<meta name="twitter:title" content="为peek view添加显示标题">
+<meta name="twitter:description" content="看到一些APP peek操作的时候会显示标题,模仿一下喽.">
+<meta name="twitter:image" content="http://ww2.sinaimg.cn/large/006tNc79gw1fan1wxdu44j305k027jr7.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -56,7 +61,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>项目开发中KVC的简单应用 | 见习魔法师</title>
+<title>为peek view添加显示标题 | 见习魔法师</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -208,11 +213,11 @@
     </div>
     <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
-      <div class="body-wrap"><article id="post-项目开发中KVC的简单应用" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-为peek-view添加显示标题" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/10/03/项目开发中KVC的简单应用/" class="article-date">
-      <time datetime="2016-10-03T09:38:25.000Z" itemprop="datePublished">2016-10-03</time>
+      <a href="/2016/12/11/为peek-view添加显示标题/" class="article-date">
+      <time datetime="2016-12-11T10:50:05.000Z" itemprop="datePublished">2016-12-11</time>
 </a>
 
 
@@ -227,7 +232,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      项目开发中KVC的简单应用
+      为peek view添加显示标题
     </h1>
   
 
@@ -238,7 +243,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/skill/">skill</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/3D-touch/">3D touch</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -248,29 +253,13 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>项目中有些时候使用KVC,可以节省很多的时间精力,实现快速开发</p>
-<a id="more"></a>
-<p>前一段时间有同学问我,能不能在不自定义UI的情况下,修改ActionSheet指定title的颜色,当时说很简单啊,Runtime获取实例变量列表,找到设置标题颜色的key,使用KVC就可以搞定.</p>
-<h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><p>编译条件: Xcode7.3.1;Project Deployment Target:iOS8.0.</p>
-<h3 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h3><ol>
-<li><p>初始化一个ActionSheet.</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">UIActionSheet</span> *actionSheet = [[<span class="built_in">UIActionSheet</span> alloc] initWithTitle:<span class="string">@"title"</span> delegate:<span class="literal">nil</span> cancelButtonTitle:<span class="string">@"cancle"</span> destructiveButtonTitle:<span class="string">@"destructive"</span> otherButtonTitles:<span class="string">@"other"</span>,<span class="string">@"other1"</span>, <span class="literal">nil</span>];</div></pre></td></tr></table></figure>
-</li>
-<li><p>获取实例变量列表,可以为NSObject添加一个Category方法,用于打印列表,具体实现如下:</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)printIvarList</div><div class="line">&#123;</div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">    Ivar *ivars = class_copyIvarList([<span class="keyword">self</span> <span class="keyword">class</span>], &amp;count);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;count; i++) &#123;</div><div class="line">        Ivar ivar = ivars[i];</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"name:%s------type:%s"</span>, ivar_getName(ivar),ivar_getTypeEncoding(ivar));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>结果如下:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">name:_alertController------type:@<span class="string">"UIAlertController"</span></div><div class="line">name:_presenter------type:@<span class="string">"_UIAlertControllerShimPresenter"</span></div><div class="line">name:_retainedSelf------type:@<span class="string">"UIActionSheet"</span></div><div class="line">name:_actions------type:@<span class="string">"NSMutableArray"</span></div><div class="line">name:_cancelIndex------type:q</div><div class="line">name:_firstOtherButtonIndex------type:q</div><div class="line">name:_destructiveButtonIndex------type:q</div><div class="line">name:_actionSheetStyle------type:q</div><div class="line">name:_context------type:@</div><div class="line">name:_hasPreparedAlertActions------type:B</div><div class="line">name:_isPresented------type:B</div><div class="line">name:_alertControllerShouldDismiss------type:B</div><div class="line">name:_handlingAlertActionShouldDismiss------type:B</div><div class="line">name:_dismissingAlertController------type:B</div><div class="line">name:_delegate------type:@<span class="string">"&lt;UIActionSheetDelegate&gt;"</span>**</div></pre></td></tr></table></figure>
-<p> 一看结果,好气哦,<code>UIAlertController</code>这个类是iOS8之后才允许使用的,算了,换用这个类重新打印一下吧,经过测试,<code>UIAlertAction</code>这个类含有可以设置标题的属性,属性列表大概是酱紫的:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">name:_checked------type:B</div><div class="line">name:_isPreferred------type:B</div><div class="line">name:_imageTintColor------type:@"UIColor"</div><div class="line">name:_titleTextColor------type:@"UIColor"</div><div class="line">name:_style------type:q</div><div class="line">name:_handler------type:@?</div><div class="line">name:_simpleHandler------type:@?</div><div class="line">name:_image------type:@"UIImage"</div><div class="line">name:_shouldDismissHandler------type:@?</div><div class="line">name:__descriptiveText------type:@"NSString"</div><div class="line">name:_contentViewController------type:@"UIViewController"</div><div class="line">name:_keyCommandInput------type:@"NSString"</div><div class="line">name:_keyCommandModifierFlags------type:q</div><div class="line">name:__representer------type:@"&lt;UIAlertActionViewRepresentation_Internal&gt;"</div><div class="line">name:__alertController------type:@"UIAlertController"</div></pre></td></tr></table></figure>
-<p> 里面找一下,_titleTextColor就是它了.</p>
-</li>
-<li><p>找到了就试一下喽.</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[ac1 setValue:[<span class="built_in">UIColor</span> redColor] forKeyPath:<span class="string">@"_titleTextColor"</span>];</div></pre></td></tr></table></figure>
-</li>
-<li><p>run一下,完美.</p>
-</li>
-<li>其他.<br> 通过第2步,可以看到在iOS8上使用<code>UIActionSheet</code>也是可以达到同样的效果的,因为其中有_actions可以得到一个<code>UIAlertAction</code>的数组,重复上述步骤即可完成,以后适配iOS7的应用越来越少了,不考虑iOS7的适配,使用KVC可以便捷地实现这种UI效果,还是不错的.</li>
-</ol>
+        <p>看到一些APP peek操作的时候会显示标题,模仿一下喽.<br><a id="more"></a></p>
+<p>在玩APP的时候发现一些APP的peek出来的页面不太一样,显示的是有标题的,比如知乎首页和微博评论的按钮peek操作:</p>
+<p><div align="center"><br><img src="http://ww2.sinaimg.cn/large/006tNc79gw1fan1wxdu44j305k027jr7.jpg" alt="weibo_peek"><br><img src="http://ww2.sinaimg.cn/large/006tNc79gw1fan1xn1ka9j305k025t8k.jpg" alt="weibo_pop"><br><img src="http://ww1.sinaimg.cn/large/006tNc79gw1fan1zf8f1aj305k01wjr6.jpg" alt="zhihu_peek"><br><img src="http://ww4.sinaimg.cn/large/006tNc79gw1fan1zufo7fj305k01yjr7.jpg" alt="weibo_pop"></div></p>
+<p><div><br>简单分析一下:微博应该是用了navigation controller,而知乎则在pop的页面多了一个top视图,当peek的时候,可以看到多了一个标题的视图,真是简单粗暴.<br>实现一个微博的效果,简单Swift写一下:<br>peek页面</div></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>: <span class="title">UIViewController</span> </span>&#123;</div><div class="line">    <span class="keyword">internal</span> <span class="keyword">let</span> tableView = <span class="type">UITableView</span>(frame: <span class="type">UIScreen</span>.mainScreen().bounds, style: <span class="type">UITableViewStyle</span>.<span class="type">Plain</span>)</div><div class="line">    </div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        <span class="comment">// Do any additional setup after loading the view, typically from a nib.</span></div><div class="line">        view.backgroundColor = <span class="type">UIColor</span>.greenColor()</div><div class="line">        tableView.delegate = <span class="keyword">self</span>;</div><div class="line">        tableView.dataSource = <span class="keyword">self</span>;</div><div class="line">        tableView.tableFooterView = <span class="type">UIView</span>()</div><div class="line">        view .addSubview(tableView)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">ViewController</span> : <span class="title">UITableViewDelegate</span>,<span class="title">UITableViewDataSource</span>,<span class="title">UIViewControllerPreviewingDelegate</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, numberOfRowsInSection section: Int)</span></span> -&gt; <span class="type">Int</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath)</span></span> -&gt; <span class="type">UITableViewCell</span> &#123;</div><div class="line">        <span class="keyword">var</span> tableViewCell = tableView.dequeueReusableCellWithIdentifier(<span class="string">"tableviewcell"</span>)</div><div class="line">        <span class="keyword">if</span> tableViewCell == <span class="literal">nil</span> &#123;</div><div class="line">            tableViewCell = <span class="type">UITableViewCell</span>(style: <span class="type">UITableViewCellStyle</span>.<span class="type">Default</span>, reuseIdentifier: <span class="string">"tableviewcell"</span>)</div><div class="line">            tableViewCell?.textLabel?.text = (<span class="string">"第"</span> + <span class="string">"<span class="subst">\(indexPath.row)</span>"</span> + <span class="string">"行"</span>)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> traitCollection.forceTouchCapability == <span class="type">UIForceTouchCapability</span>.<span class="type">Available</span> &#123;</div><div class="line">            registerForPreviewingWithDelegate(<span class="keyword">self</span>, sourceView: tableViewCell!)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> tableViewCell!</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/// UIViewControllerPreviewingDelegate</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)</span></span> &#123;</div><div class="line">        navigationController?.pushViewController(<span class="type">DetailViewController</span>(), animated: <span class="literal">true</span>)</div><div class="line">        tableView.deselectRowAtIndexPath(indexPath, animated: <span class="literal">true</span>)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">previewingContext</span><span class="params">(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint)</span></span> -&gt; <span class="type">UIViewController</span>? &#123;</div><div class="line">    <span class="comment">/// 预览的应该包装一个UINavigationController,才会有title</span></div><div class="line">        <span class="keyword">let</span> navc = <span class="type">UINavigationController</span>()</div><div class="line">        navc.addChildViewController(<span class="type">DetailViewController</span>())</div><div class="line">        <span class="keyword">return</span> navc;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">previewingContext</span><span class="params">(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController)</span></span> &#123;</div><div class="line">    <span class="comment">/// pop的页面是UINavigationController的第一个子控制器</span></div><div class="line">        showViewController(viewControllerToCommit.childViewControllers[<span class="number">0</span>], sender: <span class="keyword">self</span>)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>pop的页面:<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DetailViewController</span>: <span class="title">UIViewController</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line"></div><div class="line">        <span class="comment">// Do any additional setup after loading the view.</span></div><div class="line">        view.backgroundColor = <span class="type">UIColor</span>.cyanColor()</div><div class="line">        title = <span class="string">"评论"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样就可以了.</p>
 
       
     </div>
@@ -279,13 +268,13 @@
   
     
     <div class="copyright">
-        <p><span>Title:</span><a href="/2016/10/03/项目开发中KVC的简单应用/">项目开发中KVC的简单应用</a></p>
+        <p><span>Title:</span><a href="/2016/12/11/为peek-view添加显示标题/">为peek view添加显示标题</a></p>
         <p><span>Author:</span><a href="/" title="Back to Homepage">jiangdaohong</a></p>
-        <p><span>Created:</span>2016-10-03, 17:38:25</p>
-        <p><span>Updated:</span>2016-10-06, 15:47:19</p>
+        <p><span>Created:</span>2016-12-11, 18:50:05</p>
+        <p><span>Updated:</span>2016-12-11, 19:23:03</p>
         <p>
-            <span>Full URL:</span><a class="post-url" href="/2016/10/03/项目开发中KVC的简单应用/" title="项目开发中KVC的简单应用">https://jiangdaohong.github.io/2016/10/03/项目开发中KVC的简单应用/</a>
-            <span class="copy-path" data-clipboard-text="From https://jiangdaohong.github.io/2016/10/03/项目开发中KVC的简单应用/　　By jiangdaohong" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2016/12/11/为peek-view添加显示标题/" title="为peek view添加显示标题">https://jiangdaohong.github.io/2016/12/11/为peek-view添加显示标题/</a>
+            <span class="copy-path" data-clipboard-text="From https://jiangdaohong.github.io/2016/12/11/为peek-view添加显示标题/　　By jiangdaohong" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -297,16 +286,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/10/22/项目开发中的GCD实战应用/">
-                    项目开发中的GCD实战应用
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/10/02/每到深夜-总是有话想说说/">
-                    每到深夜,总是有话想说说
+                <a href="/2016/12/10/APP国际化笔记/">
+                    APP本地化笔记
                 </a>
             </div>
         
@@ -318,7 +301,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#备注"><span class="toc-number">1.</span> <span class="toc-text">备注</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主要步骤"><span class="toc-number">2.</span> <span class="toc-text">主要步骤</span></a></li></ol>
+            
         
     </div>
     <style>
@@ -349,15 +332,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/10/22/项目开发中的GCD实战应用/" title="Pre: 项目开发中的GCD实战应用">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="Back to Homepage"><i class="fa fa-home"></i></a>
         
 
         <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/10/02/每到深夜-总是有话想说说/" title="Next: 每到深夜,总是有话想说说">
+            <a href="/2016/12/10/APP国际化笔记/" title="Next: APP本地化笔记">
                 <i class="fa fa-angle-right"></i>
             </a>
         
