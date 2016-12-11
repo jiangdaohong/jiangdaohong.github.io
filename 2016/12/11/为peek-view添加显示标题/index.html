@@ -211,7 +211,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap"><article id="post-为peek-view添加显示标题" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -257,7 +257,7 @@
 <p>在玩APP的时候发现一些APP的peek出来的页面不太一样,显示的是有标题的,比如知乎首页和微博评论的按钮peek操作:</p>
 <p><div align="center"><br><img src="http://ww2.sinaimg.cn/large/006tNc79gw1fan1wxdu44j305k027jr7.jpg" alt="weibo_peek"><br><img src="http://ww2.sinaimg.cn/large/006tNc79gw1fan1xn1ka9j305k025t8k.jpg" alt="weibo_pop"><br><img src="http://ww1.sinaimg.cn/large/006tNc79gw1fan1zf8f1aj305k01wjr6.jpg" alt="zhihu_peek"><br><img src="http://ww4.sinaimg.cn/large/006tNc79gw1fan1zufo7fj305k01yjr7.jpg" alt="weibo_pop"></div></p>
 <p><div><br>简单分析一下:微博应该是用了navigation controller,而知乎则在pop的页面多了一个top视图,当peek的时候,可以看到多了一个标题的视图,真是简单粗暴.<br>实现一个微博的效果,简单Swift写一下:<br>peek页面</div></p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>: <span class="title">UIViewController</span> </span>&#123;</div><div class="line">    <span class="keyword">internal</span> <span class="keyword">let</span> tableView = <span class="type">UITableView</span>(frame: <span class="type">UIScreen</span>.mainScreen().bounds, style: <span class="type">UITableViewStyle</span>.<span class="type">Plain</span>)</div><div class="line">    </div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        <span class="comment">// Do any additional setup after loading the view, typically from a nib.</span></div><div class="line">        view.backgroundColor = <span class="type">UIColor</span>.greenColor()</div><div class="line">        tableView.delegate = <span class="keyword">self</span>;</div><div class="line">        tableView.dataSource = <span class="keyword">self</span>;</div><div class="line">        tableView.tableFooterView = <span class="type">UIView</span>()</div><div class="line">        view .addSubview(tableView)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">ViewController</span> : <span class="title">UITableViewDelegate</span>,<span class="title">UITableViewDataSource</span>,<span class="title">UIViewControllerPreviewingDelegate</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, numberOfRowsInSection section: Int)</span></span> -&gt; <span class="type">Int</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath)</span></span> -&gt; <span class="type">UITableViewCell</span> &#123;</div><div class="line">        <span class="keyword">var</span> tableViewCell = tableView.dequeueReusableCellWithIdentifier(<span class="string">"tableviewcell"</span>)</div><div class="line">        <span class="keyword">if</span> tableViewCell == <span class="literal">nil</span> &#123;</div><div class="line">            tableViewCell = <span class="type">UITableViewCell</span>(style: <span class="type">UITableViewCellStyle</span>.<span class="type">Default</span>, reuseIdentifier: <span class="string">"tableviewcell"</span>)</div><div class="line">            tableViewCell?.textLabel?.text = (<span class="string">"第"</span> + <span class="string">"<span class="subst">\(indexPath.row)</span>"</span> + <span class="string">"行"</span>)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> traitCollection.forceTouchCapability == <span class="type">UIForceTouchCapability</span>.<span class="type">Available</span> &#123;</div><div class="line">            registerForPreviewingWithDelegate(<span class="keyword">self</span>, sourceView: tableViewCell!)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> tableViewCell!</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/// UIViewControllerPreviewingDelegate</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)</span></span> &#123;</div><div class="line">        navigationController?.pushViewController(<span class="type">DetailViewController</span>(), animated: <span class="literal">true</span>)</div><div class="line">        tableView.deselectRowAtIndexPath(indexPath, animated: <span class="literal">true</span>)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">previewingContext</span><span class="params">(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint)</span></span> -&gt; <span class="type">UIViewController</span>? &#123;</div><div class="line">    <span class="comment">/// 预览的应该包装一个UINavigationController,才会有title</span></div><div class="line">        <span class="keyword">let</span> navc = <span class="type">UINavigationController</span>()</div><div class="line">        navc.addChildViewController(<span class="type">DetailViewController</span>())</div><div class="line">        <span class="keyword">return</span> navc;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">previewingContext</span><span class="params">(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController)</span></span> &#123;</div><div class="line">    <span class="comment">/// pop的页面是UINavigationController的第一个子控制器</span></div><div class="line">        showViewController(viewControllerToCommit.childViewControllers[<span class="number">0</span>], sender: <span class="keyword">self</span>)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>: <span class="title">UIViewController</span> </span>&#123;</div><div class="line">    <span class="keyword">internal</span> <span class="keyword">let</span> tableView = <span class="type">UITableView</span>(frame: <span class="type">UIScreen</span>.mainScreen().bounds, style: <span class="type">UITableViewStyle</span>.<span class="type">Plain</span>)</div><div class="line">    </div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        <span class="comment">// Do any additional setup after loading the view, typically from a nib.</span></div><div class="line">        view.backgroundColor = <span class="type">UIColor</span>.greenColor()</div><div class="line">        tableView.delegate = <span class="keyword">self</span>;</div><div class="line">        tableView.dataSource = <span class="keyword">self</span>;</div><div class="line">        tableView.tableFooterView = <span class="type">UIView</span>()</div><div class="line">        view .addSubview(tableView)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">ViewController</span> : <span class="title">UITableViewDelegate</span>,<span class="title">UITableViewDataSource</span>,<span class="title">UIViewControllerPreviewingDelegate</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, numberOfRowsInSection section: Int)</span></span> -&gt; <span class="type">Int</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath)</span></span> -&gt; <span class="type">UITableViewCell</span> &#123;</div><div class="line">        <span class="keyword">var</span> tableViewCell = tableView.dequeueReusableCellWithIdentifier(<span class="string">"tableviewcell"</span>)</div><div class="line">        <span class="keyword">if</span> tableViewCell == <span class="literal">nil</span> &#123;</div><div class="line">            tableViewCell = <span class="type">UITableViewCell</span>(style: <span class="type">UITableViewCellStyle</span>.<span class="type">Default</span>, reuseIdentifier: <span class="string">"tableviewcell"</span>)</div><div class="line">            tableViewCell?.textLabel?.text = (<span class="string">"第"</span> + <span class="string">"\(indexPath.row)"</span> + <span class="string">"行"</span>)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> traitCollection.forceTouchCapability == <span class="type">UIForceTouchCapability</span>.<span class="type">Available</span> &#123;</div><div class="line">            registerForPreviewingWithDelegate(<span class="keyword">self</span>, sourceView: tableViewCell!)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> tableViewCell!</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/// UIViewControllerPreviewingDelegate</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)</span></span> &#123;</div><div class="line">        navigationController?.pushViewController(<span class="type">DetailViewController</span>(), animated: <span class="literal">true</span>)</div><div class="line">        tableView.deselectRowAtIndexPath(indexPath, animated: <span class="literal">true</span>)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">previewingContext</span><span class="params">(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint)</span></span> -&gt; <span class="type">UIViewController</span>? &#123;</div><div class="line">    <span class="comment">/// 预览的应该包装一个UINavigationController,才会有title</span></div><div class="line">        <span class="keyword">let</span> navc = <span class="type">UINavigationController</span>()</div><div class="line">        navc.addChildViewController(<span class="type">DetailViewController</span>())</div><div class="line">        <span class="keyword">return</span> navc;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">previewingContext</span><span class="params">(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController)</span></span> &#123;</div><div class="line">    <span class="comment">/// pop的页面是UINavigationController的第一个子控制器</span></div><div class="line">        showViewController(viewControllerToCommit.childViewControllers[<span class="number">0</span>], sender: <span class="keyword">self</span>)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>pop的页面:<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DetailViewController</span>: <span class="title">UIViewController</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line"></div><div class="line">        <span class="comment">// Do any additional setup after loading the view.</span></div><div class="line">        view.backgroundColor = <span class="type">UIColor</span>.cyanColor()</div><div class="line">        title = <span class="string">"评论"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>这样就可以了.</p>
 
@@ -268,17 +268,17 @@
   
     
     <div class="copyright">
-        <p><span>Title:</span><a href="/2016/12/11/为peek-view添加显示标题/">为peek view添加显示标题</a></p>
-        <p><span>Author:</span><a href="/" title="Back to Homepage">jiangdaohong</a></p>
-        <p><span>Created:</span>2016-12-11, 18:50:05</p>
-        <p><span>Updated:</span>2016-12-11, 19:23:03</p>
+        <p><span>本文标题:</span><a href="/2016/12/11/为peek-view添加显示标题/">为peek view添加显示标题</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">jiangdaohong</a></p>
+        <p><span>发布时间:</span>2016-12-11, 18:50:05</p>
+        <p><span>最后更新:</span>2016-12-11, 19:23:03</p>
         <p>
-            <span>Full URL:</span><a class="post-url" href="/2016/12/11/为peek-view添加显示标题/" title="为peek view添加显示标题">https://jiangdaohong.github.io/2016/12/11/为peek-view添加显示标题/</a>
-            <span class="copy-path" data-clipboard-text="From https://jiangdaohong.github.io/2016/12/11/为peek-view添加显示标题/　　By jiangdaohong" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/12/11/为peek-view添加显示标题/" title="为peek view添加显示标题">https://jiangdaohong.github.io/2016/12/11/为peek-view添加显示标题/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://jiangdaohong.github.io/2016/12/11/为peek-view添加显示标题/　　作者: jiangdaohong" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
         </p>
     </div>
 
@@ -299,7 +299,7 @@
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">Contents</strong>
+        <strong class="toc-title">文章目录</strong>
         
             
         
@@ -315,10 +315,10 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
     <script>
-        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
     </script>
 
 
@@ -332,13 +332,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="Back to Homepage"><i class="fa fa-home"></i></a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
-        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/12/10/APP国际化笔记/" title="Next: APP本地化笔记">
+            <a href="/2016/12/10/APP国际化笔记/" title="下一篇: APP本地化笔记">
                 <i class="fa fa-angle-right"></i>
             </a>
         
@@ -361,14 +361,14 @@
                 2016 jiangdaohong
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -377,7 +377,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -410,9 +410,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window
