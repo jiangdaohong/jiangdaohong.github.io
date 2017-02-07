@@ -4,7 +4,7 @@
     <!-- Title -->
     
     <title>
-        123 | 见习魔法师
+        iOS端加载PDF文件实践 | 见习魔法师
     </title>
     
     <!-- Favicons -->
@@ -40,7 +40,7 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="https://jiangdaohong.github.io.">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="123 | 见习魔法师">
+    <meta property="og:title" content="iOS端加载PDF文件实践 | 见习魔法师">
     <meta property="og:description" content="KISS">
     
      <!--[if lte IE 9]>
@@ -217,7 +217,7 @@
 	<ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
 		for="post-toc-trigger-btn">
 			
-			
+			<ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#常见加载PDF的方式"><span class="post-toc-number">1.</span> <span class="post-toc-text">常见加载PDF的方式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用简单示例"><span class="post-toc-number">2.</span> <span class="post-toc-text">使用简单示例</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#第二种方式的新问题"><span class="post-toc-number">3.</span> <span class="post-toc-text">第二种方式的新问题</span></a></li></ol>
 		
 <!--			<li class="mdl-menu__item">Some Action</li>-->
 	</ul>
@@ -251,7 +251,7 @@
 		
 	
         <p class="article-headline-p">
-            123
+            iOS端加载PDF文件实践
         </p>
     </div>
 
@@ -269,7 +269,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>jiangdaohong</strong>
-        <span>8月 19, 2016</span>
+        <span>2月 07, 2017</span>
     </div>
     
     <div class="section-spacer"></div>
@@ -289,7 +289,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        
+        <a class="post_tag-link" href="/tags/skill/">skill</a>
     </ul>
     
     <!-- Share -->
@@ -304,21 +304,21 @@
     
     
     <!-- Share Twitter -->
-    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=123&url=https://jiangdaohong.github.io.//2016/08/19/hello world/index.html&via=jiangdaohong" target="_blank">
+    <a class="post_share-link" href="https://twitter.com/intent/tweet?text=iOS端加载PDF文件实践&url=https://jiangdaohong.github.io.//2017/02/07/iOS端加载PDF文件实践/index.html&via=jiangdaohong" target="_blank">
         <li class="mdl-menu__item">
             分享到 Twitter
         </li>
     </a>
     
     <!-- Share Google+ -->
-    <a class="post_share-link" href="https://plus.google.com/share?url=https://jiangdaohong.github.io.//2016/08/19/hello world/index.html" target="_blank">
+    <a class="post_share-link" href="https://plus.google.com/share?url=https://jiangdaohong.github.io.//2017/02/07/iOS端加载PDF文件实践/index.html" target="_blank">
         <li class="mdl-menu__item">
             分享到 Google+
         </li>
     </a>
     
     <!-- Share Weibo -->
-    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=123&url=https://jiangdaohong.github.io.//2016/08/19/hello world/index.html&pic=&searchPic=false&style=simple" target="_blank">
+    <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=iOS端加载PDF文件实践&url=https://jiangdaohong.github.io.//2017/02/07/iOS端加载PDF文件实践/index.html&pic=&searchPic=false&style=simple" target="_blank">
         <li class="mdl-menu__item">
             分享到微博
         </li>
@@ -330,7 +330,23 @@
                 <!-- Post Content -->
                 <div id="post-content" class="markdown-Github mdl-color-text--grey-700 mdl-card__supporting-text fade out">
 	
-		<p>hello world</p>
+		<p>最近项目中需要加载PDF文件,遇到一些小问题,记录一下.<br><a id="more"></a></p>
+<h3 id="常见加载PDF的方式"><a href="#常见加载PDF的方式" class="headerlink" title="常见加载PDF的方式"></a>常见加载PDF的方式</h3><p>   iOS上面加载PDF一般分为两种方式,一种是使用web view,加载本地PDF文件或者网络PDF数据;另一种就是将PDF文件重新绘制,使用自定义view进行显示.两种方式各有优劣:第一种方式简单,粗暴,没有编辑的时候使用这种方式进行简单PDF浏览,能达到比较好的效果,缺点是不能进行编辑,显示的信息比较简略,而且web view本身是有内存问题的;自定义view的灵活性比较大,一般的阅读软件都是使用这种方式,可以分页显示,进行编辑等操作,缺点是与第一种方式相比下,需要写较多的代码以及考虑性能优化的问题.</p>
+<h3 id="使用简单示例"><a href="#使用简单示例" class="headerlink" title="使用简单示例"></a>使用简单示例</h3><ol>
+<li><p>第一种方式示例代码:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSURL</span> *url = [[<span class="built_in">NSBundle</span> mainBundle] URLForResource:<span class="string">@"demo"</span> withExtension:<span class="string">@"pdf"</span>];</div><div class="line"><span class="built_in">NSURLRequest</span> *request = [[<span class="built_in">NSURLRequest</span> alloc] initWithURL:url];</div><div class="line">    [webView loadRequest:request];</div></pre></td></tr></table></figure>
+<p>由于有的PDF是有编码的,默认使用的是<code>UTF-8</code></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSData</span> * data = [<span class="built_in">NSData</span> dataWithContentsOfFile:url];</div><div class="line">[webView loadData:data MIMEType:<span class="string">@"application/pdf"</span> textEncodingName:<span class="string">@"UTF-8"</span> baseURL:url];</div></pre></td></tr></table></figure>
+</li>
+<li><p>第二种方式示例代码:<br>这里有一篇<a href="http://blog.csdn.net/yiyaaixuexi/article/details/7645725" target="_blank" rel="external">博客</a>,<a href="https://github.com/ShadowLJia/PDFReader" target="_blank" rel="external">示例代码</a><br> <a href="http://blog.csdn.net/yiyaaixuexi/article/details/8209188" target="_blank" rel="external">创建PDF密码</a><br> <a href="http://blog.csdn.net/yiyaaixuexi/article/details/8035014" target="_blank" rel="external">PDF横竖屏切换</a><br>感谢念茜大神的博客.<br>简单来说,就是首先拿到文件,转为data,然后通过系统函数转为<code>CGContextRef</code>对象,然后<code>CGPDFDocumentGetNumberOfPages()</code>可以获取到PDF的页数,然后通过页数,<code>CG_EXTERN CGPDFPageRef __nullable CGPDFDocumentGetPage(
+ CGPDFDocumentRef __nullable document, size_t pageNumber)
+ CG_AVAILABLE_STARTING(__MAC_10_3, __IPHONE_2_0)</code>可以获取到指定页的PDF,然后进行PDF绘制就好了.<br>自定义view核心代码:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)drawRect:(<span class="built_in">CGRect</span>)rect &#123;</div><div class="line">	<span class="comment">// 坐标系转换</span></div><div class="line">    <span class="built_in">CGContextTranslateCTM</span>(context, <span class="number">0.0</span>, <span class="keyword">self</span>.bounds.size.height);</div><div class="line">	<span class="built_in">CGContextScaleCTM</span>(context, <span class="number">1.0</span>, <span class="number">-1.0</span>);</div><div class="line">	<span class="keyword">long</span> pageSum = <span class="built_in">CGPDFDocumentGetNumberOfPages</span>(pdfDocument);</div><div class="line">	pageNO = pageNO == <span class="number">0</span> ? <span class="number">1</span> : pageNo;</div><div class="line">	<span class="built_in">CGPDFPageRef</span> page = <span class="built_in">CGPDFDocumentGetPage</span>(pdfDocument, pageNO);</div><div class="line">	<span class="built_in">CGContextSaveGState</span>(context);</div><div class="line">	<span class="built_in">CGAffineTransform</span> pdfTransform = <span class="built_in">CGPDFPageGetDrawingTransform</span>(page, kCGPDFCropBox, <span class="keyword">self</span>.bounds, <span class="number">0</span>, <span class="literal">true</span>);</div><div class="line">	<span class="built_in">CGContextConcatCTM</span>(context, pdfTransform);</div><div class="line">	<span class="built_in">CGContextDrawPDFPage</span>(context, page);</div><div class="line">	<span class="built_in">CGContextRestoreGState</span>(context);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="第二种方式的新问题"><a href="#第二种方式的新问题" class="headerlink" title="第二种方式的新问题"></a>第二种方式的新问题</h3><p>上面就是两种常见PDF的显示方式,但是第二种如果这么处理,会带来一个问题,就是如果进行放大处理,PDF会很模糊,看了一下<code>多看</code>的PDF显示,明显不是使用的第一种方式,但是放大之后依然很清晰,怎么处理的呢?答案是使用<code>CATiledLayer</code>替换自定义view的layer.<br>移动设备的图片处理能力终究是有限的,如果需要显示一张分辨率非常高的图片,直接用image view加载可能会爆内存,并且通常一张巨大的图片,比如地图,我们经常查看的是一部分而不是整体,为了高效绘图,苹果提供了<code>CATiledLayer</code>类,这个类可以很好地解决我们的问题.详细请参考苹果官方文档或者<ios核心动画高级技巧>的专用图层CATiledLayer章节.<br>示例代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">+ (Class)layerClass &#123;</div><div class="line">    return [FastCATiledLayer class];</div><div class="line">&#125;</div><div class="line"></div><div class="line">//初始化方法</div><div class="line">- (id)initWithFrame:(CGRect)frame &#123;</div><div class="line">	self = [super initWithFrame:frame];</div><div class="line">	DHCATiledLayer* layer = (DHCATiledLayer *)[self layer];</div><div class="line">	layer.levelsOfDetail = 10;</div><div class="line">	layer.levelsOfDetailBias = 10;</div><div class="line">	layer.tileSize = CGSizeMake(4086.0, 4086.0);</div><div class="line">&#125;</div></pre></td></tr></table></figure></ios核心动画高级技巧></p>
+<p>这个类有隐式动画,集成并重写方法,动画时长为0即可:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">+(<span class="built_in">CFTimeInterval</span>)fadeDuration &#123;</div><div class="line">    <span class="keyword">return</span> <span class="number">0.0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><a href="http://adad184.com/2015/11/10/disable-uicollectionview-implicit-animation/" target="_blank" rel="external">这篇博客</a>里面写了如何去除UIView动画以及layer动画.</p>
 
 	
 	
@@ -353,19 +369,19 @@
     
     <!-- Prev Nav -->
     
-        <a href="/2016/08/19/tips/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
+    
+        <a href="/2016/12/11/为peek-view添加显示标题/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
     
 </nav>
         </div>
