@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://jiangdaohong.github.io./"/>
-  <updated>2017-05-14T16:03:53.000Z</updated>
+  <updated>2017-06-24T02:58:32.000Z</updated>
   <id>https://jiangdaohong.github.io./</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://jiangdaohong.github.io./2017/05/14/%E6%B5%85%E8%B0%88iOS%E5%A4%8D%E6%9D%82%E8%A1%A8%E4%BC%98%E5%8C%96/"/>
     <id>https://jiangdaohong.github.io./2017/05/14/浅谈iOS复杂表优化/</id>
     <published>2017-05-14T13:45:28.000Z</published>
-    <updated>2017-05-14T16:03:53.000Z</updated>
+    <updated>2017-06-24T02:58:32.000Z</updated>
     
     <content type="html"><![CDATA[<p>记录一下最进项目改版的一些思考<br><a id="more"></a></p>
 <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>由于原来首页列表需求多次大变动,加载<code>cell</code>的逻辑也跟着调整了很多次,<code>cell</code>的种类以及布局也变化很大,这次刚好进行重构;而且,原来的加载方式会大量进行子视图修改,有一定的潜在性能问题.</p>
@@ -176,7 +176,6 @@
         <span class="token function">dispatch_async</span><span class="token punctuation">(</span><span class="token function">dispatch_get_main_queue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">^</span><span class="token punctuation">{</span>
             <span class="token punctuation">[</span><span class="token keyword">self</span><span class="token punctuation">.</span>tableView reloadData<span class="token punctuation">]</span><span class="token punctuation">;</span>
         <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
     <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
@@ -186,7 +185,7 @@
 
 <span class="token operator">-</span> <span class="token punctuation">(</span>UITableViewCell <span class="token operator">*</span><span class="token punctuation">)</span>tableView<span class="token punctuation">:</span><span class="token punctuation">(</span>UITableView <span class="token operator">*</span><span class="token punctuation">)</span>tableView cellForRowAtIndexPath<span class="token punctuation">:</span><span class="token punctuation">(</span>NSIndexPath <span class="token operator">*</span><span class="token punctuation">)</span>indexPath <span class="token punctuation">{</span>
 
-    NSString <span class="token operator">*</span>cellID <span class="token operator">=</span> <span class="token string">@"cell"</span><span class="token punctuation">;</span>
+    <span class="token keyword">static</span> NSString <span class="token operator">*</span> <span class="token keyword">const</span> cellID <span class="token operator">=</span> <span class="token string">@"cell"</span><span class="token punctuation">;</span>
     DHHomeCell <span class="token operator">*</span>cell <span class="token operator">=</span> <span class="token punctuation">[</span>tableView dequeueReusableCellWithIdentifier<span class="token punctuation">:</span>cellID<span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>cell<span class="token punctuation">)</span> <span class="token punctuation">{</span>
         cell <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span>DHHomeCell alloc<span class="token punctuation">]</span> initWithStyle<span class="token punctuation">:</span>UITableViewCellStyleDefault reuseIdentifier<span class="token punctuation">:</span>cellID<span class="token punctuation">]</span><span class="token punctuation">;</span>

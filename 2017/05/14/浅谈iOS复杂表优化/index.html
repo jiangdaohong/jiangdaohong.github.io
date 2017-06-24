@@ -72,7 +72,7 @@
 
     
         <meta property="article:published_time" content="5月 14, 2017" />
-        <meta property="article:modified_time" content="5月 15, 2017" />
+        <meta property="article:modified_time" content="6月 24, 2017" />
     
 
     <!-- The Twitter Card protocol -->
@@ -113,7 +113,7 @@
     "headline": "浅谈iOS复杂列表优化",
     "url": "https://jiangdaohong.github.io./2017/05/14/浅谈iOS复杂表优化/index.html",
     "datePublished": "5月 14, 2017",
-    "dateModified": "5月 15, 2017",
+    "dateModified": "6月 24, 2017",
     "description": "记录一下最进项目改版的一些思考",
     "mainEntityOfPage": {
         "@type": "WebPage",
@@ -262,7 +262,7 @@
 
     <!-- Custom Head -->
     
-<link rel="stylesheet" href="/css/prism-solarizedlight.css" type="text/css"><script src="/js/prism.js"></script></head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 
     
@@ -575,7 +575,6 @@
         <span class="token function">dispatch_async</span><span class="token punctuation">(</span><span class="token function">dispatch_get_main_queue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">^</span><span class="token punctuation">{</span>
             <span class="token punctuation">[</span><span class="token keyword">self</span><span class="token punctuation">.</span>tableView reloadData<span class="token punctuation">]</span><span class="token punctuation">;</span>
         <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
     <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
@@ -585,7 +584,7 @@
 
 <span class="token operator">-</span> <span class="token punctuation">(</span>UITableViewCell <span class="token operator">*</span><span class="token punctuation">)</span>tableView<span class="token punctuation">:</span><span class="token punctuation">(</span>UITableView <span class="token operator">*</span><span class="token punctuation">)</span>tableView cellForRowAtIndexPath<span class="token punctuation">:</span><span class="token punctuation">(</span>NSIndexPath <span class="token operator">*</span><span class="token punctuation">)</span>indexPath <span class="token punctuation">{</span>
 
-    NSString <span class="token operator">*</span>cellID <span class="token operator">=</span> <span class="token string">@"cell"</span><span class="token punctuation">;</span>
+    <span class="token keyword">static</span> NSString <span class="token operator">*</span> <span class="token keyword">const</span> cellID <span class="token operator">=</span> <span class="token string">@"cell"</span><span class="token punctuation">;</span>
     DHHomeCell <span class="token operator">*</span>cell <span class="token operator">=</span> <span class="token punctuation">[</span>tableView dequeueReusableCellWithIdentifier<span class="token punctuation">:</span>cellID<span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>cell<span class="token punctuation">)</span> <span class="token punctuation">{</span>
         cell <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span>DHHomeCell alloc<span class="token punctuation">]</span> initWithStyle<span class="token punctuation">:</span>UITableViewCellStyleDefault reuseIdentifier<span class="token punctuation">:</span>cellID<span class="token punctuation">]</span><span class="token punctuation">;</span>

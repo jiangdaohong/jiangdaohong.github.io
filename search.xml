@@ -160,7 +160,6 @@
         <span class="token function">dispatch_async</span><span class="token punctuation">(</span><span class="token function">dispatch_get_main_queue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">^</span><span class="token punctuation">{</span>
             <span class="token punctuation">[</span><span class="token keyword">self</span><span class="token punctuation">.</span>tableView reloadData<span class="token punctuation">]</span><span class="token punctuation">;</span>
         <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
     <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
@@ -170,7 +169,7 @@
 
 <span class="token operator">-</span> <span class="token punctuation">(</span>UITableViewCell <span class="token operator">*</span><span class="token punctuation">)</span>tableView<span class="token punctuation">:</span><span class="token punctuation">(</span>UITableView <span class="token operator">*</span><span class="token punctuation">)</span>tableView cellForRowAtIndexPath<span class="token punctuation">:</span><span class="token punctuation">(</span>NSIndexPath <span class="token operator">*</span><span class="token punctuation">)</span>indexPath <span class="token punctuation">{</span>
 
-    NSString <span class="token operator">*</span>cellID <span class="token operator">=</span> <span class="token string">@"cell"</span><span class="token punctuation">;</span>
+    <span class="token keyword">static</span> NSString <span class="token operator">*</span> <span class="token keyword">const</span> cellID <span class="token operator">=</span> <span class="token string">@"cell"</span><span class="token punctuation">;</span>
     DHHomeCell <span class="token operator">*</span>cell <span class="token operator">=</span> <span class="token punctuation">[</span>tableView dequeueReusableCellWithIdentifier<span class="token punctuation">:</span>cellID<span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>cell<span class="token punctuation">)</span> <span class="token punctuation">{</span>
         cell <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span>DHHomeCell alloc<span class="token punctuation">]</span> initWithStyle<span class="token punctuation">:</span>UITableViewCellStyleDefault reuseIdentifier<span class="token punctuation">:</span>cellID<span class="token punctuation">]</span><span class="token punctuation">;</span>
