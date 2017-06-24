@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>见习魔法师</title>
   
+  <link href="/atom.xml" rel="self"/>
   
+  <link href="https://jiangdaohong.github.io./"/>
+  <updated>2017-05-14T16:03:53.000Z</updated>
+  <id>https://jiangdaohong.github.io./</id>
+  
+  <author>
+    <name>jiangdaohong</name>
     
-    <entry>
-      <title><![CDATA[浅谈iOS复杂列表优化]]></title>
-      <url>https://jiangdaohong.github.io./2017/05/14/%E6%B5%85%E8%B0%88iOS%E5%A4%8D%E6%9D%82%E8%A1%A8%E4%BC%98%E5%8C%96/</url>
-      <content type="html"><![CDATA[<p>记录一下最进项目改版的一些思考<br><a id="more"></a></p>
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>浅谈iOS复杂列表优化</title>
+    <link href="https://jiangdaohong.github.io./2017/05/14/%E6%B5%85%E8%B0%88iOS%E5%A4%8D%E6%9D%82%E8%A1%A8%E4%BC%98%E5%8C%96/"/>
+    <id>https://jiangdaohong.github.io./2017/05/14/浅谈iOS复杂表优化/</id>
+    <published>2017-05-14T13:45:28.000Z</published>
+    <updated>2017-05-14T16:03:53.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>记录一下最进项目改版的一些思考<br><a id="more"></a></p>
 <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>由于原来首页列表需求多次大变动,加载<code>cell</code>的逻辑也跟着调整了很多次,<code>cell</code>的种类以及布局也变化很大,这次刚好进行重构;而且,原来的加载方式会大量进行子视图修改,有一定的潜在性能问题.</p>
 <h3 id="需求分析及目标"><a href="#需求分析及目标" class="headerlink" title="需求分析及目标"></a>需求分析及目标</h3><ol>
 <li><code>cell</code>布局更加灵活,以后增加新类型不需要修改控制器代码逻辑,简言之,视图和控制器解耦;</li>
@@ -189,12 +205,26 @@
 <p>这样,基本完成了复杂列表的重构.<br>还可以创建一个工具类或者<code>category</code>,将常用的处理方法进行封装,使用工具类处理,可以方便测试以及代码复用.</p>
 <p>如果以后需求出现变动,只需要<code>cell</code>添加新视图,<code>layout</code>计算新的视图的布局,增加新的枚举类型即可完成布局.</p>
 ]]></content>
-    </entry>
     
-    <entry>
-      <title><![CDATA[WebView截图的一种思路]]></title>
-      <url>https://jiangdaohong.github.io./2017/02/13/WebView%E6%88%AA%E5%9B%BE%E7%9A%84%E4%B8%80%E7%A7%8D%E6%80%9D%E8%B7%AF/</url>
-      <content type="html"><![CDATA[<p>网页完整截图的方法<br><a id="more"></a></p>
+    <summary type="html">
+    
+      &lt;p&gt;记录一下最进项目改版的一些思考&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Performance" scheme="https://jiangdaohong.github.io./tags/Performance/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>WebView截图的一种思路</title>
+    <link href="https://jiangdaohong.github.io./2017/02/13/WebView%E6%88%AA%E5%9B%BE%E7%9A%84%E4%B8%80%E7%A7%8D%E6%80%9D%E8%B7%AF/"/>
+    <id>https://jiangdaohong.github.io./2017/02/13/WebView截图的一种思路/</id>
+    <published>2017-02-13T02:06:07.000Z</published>
+    <updated>2017-02-13T02:34:44.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>网页完整截图的方法<br><a id="more"></a></p>
 <p>那天想起来一个APP分享的时候生成一张长图,想试一下,开始想的很简单:在webview加载完成的delegate里面,获取scroll view的layer,然后根据图形上下文获取image,保存相册即可.然而,失败了╮(╯▽╰)╭</p>
 <h3 id="第一种方法-更改scroll-view的frame再截图"><a href="#第一种方法-更改scroll-view的frame再截图" class="headerlink" title="第一种方法:更改scroll view的frame再截图"></a>第一种方法:更改scroll view的frame再截图</h3><p>上面之所以无法截图,是因为scroll view的layer的实际需要截图的layer不是同一个东西,还没有加载出来的页面并没有显示在layer上?所以,只要改变scroll view的frame,使content size和frame的size一样就好了.核心代码:</p>
 <pre class=" language-ObjectiveC"><code class="language-ObjectiveC">- (UIImage *)captureScrollView:(UIScrollView *)scrollView{
@@ -245,12 +275,26 @@ name:pdfHandler------type:@"UIWebPDFViewHandler"
 </code></pre>
 <p>KVC大法好!QAQ~</p>
 ]]></content>
-    </entry>
     
-    <entry>
-      <title><![CDATA[iOS端加载PDF文件实践]]></title>
-      <url>https://jiangdaohong.github.io./2017/02/07/iOS%E7%AB%AF%E5%8A%A0%E8%BD%BDPDF%E6%96%87%E4%BB%B6%E5%AE%9E%E8%B7%B5/</url>
-      <content type="html"><![CDATA[<p>最近项目中需要加载PDF文件,遇到一些小问题,记录一下.<br><a id="more"></a></p>
+    <summary type="html">
+    
+      &lt;p&gt;网页完整截图的方法&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="skill" scheme="https://jiangdaohong.github.io./tags/skill/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS端加载PDF文件实践</title>
+    <link href="https://jiangdaohong.github.io./2017/02/07/iOS%E7%AB%AF%E5%8A%A0%E8%BD%BDPDF%E6%96%87%E4%BB%B6%E5%AE%9E%E8%B7%B5/"/>
+    <id>https://jiangdaohong.github.io./2017/02/07/iOS端加载PDF文件实践/</id>
+    <published>2017-02-07T08:10:16.000Z</published>
+    <updated>2017-02-07T09:34:26.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近项目中需要加载PDF文件,遇到一些小问题,记录一下.<br><a id="more"></a></p>
 <h3 id="常见加载PDF的方式"><a href="#常见加载PDF的方式" class="headerlink" title="常见加载PDF的方式"></a>常见加载PDF的方式</h3><p>   iOS上面加载PDF一般分为两种方式,一种是使用web view,加载本地PDF文件或者网络PDF数据;另一种就是将PDF文件重新绘制,使用自定义view进行显示.两种方式各有优劣:第一种方式简单,粗暴,没有编辑的时候使用这种方式进行简单PDF浏览,能达到比较好的效果,缺点是不能进行编辑,显示的信息比较简略,而且web view本身是有内存问题的;自定义view的灵活性比较大,一般的阅读软件都是使用这种方式,可以分页显示,进行编辑等操作,缺点是与第一种方式相比下,需要写较多的代码以及考虑性能优化的问题.</p>
 <h3 id="使用简单示例"><a href="#使用简单示例" class="headerlink" title="使用简单示例"></a>使用简单示例</h3><ol>
 <li>第一种方式示例代码:<pre class=" language-objectivec"><code class="language-objectivec">NSURL <span class="token operator">*</span>url <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span>NSBundle mainBundle<span class="token punctuation">]</span> URLForResource<span class="token punctuation">:</span><span class="token string">@"demo"</span> withExtension<span class="token punctuation">:</span><span class="token string">@"pdf"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
@@ -281,12 +325,26 @@ NSURLRequest <span class="token operator">*</span>request <span class="token ope
 </code></pre><a href="http://adad184.com/2015/11/10/disable-uicollectionview-implicit-animation/" target="_blank" rel="external">这篇博客</a>里面写了如何去除UIView动画以及layer动画.</li>
 </ul>
 ]]></content>
-    </entry>
     
-    <entry>
-      <title><![CDATA[为peek view添加显示标题]]></title>
-      <url>https://jiangdaohong.github.io./2016/12/11/%E4%B8%BApeek-view%E6%B7%BB%E5%8A%A0%E6%98%BE%E7%A4%BA%E6%A0%87%E9%A2%98/</url>
-      <content type="html"><![CDATA[<p>看到一些APP peek操作的时候会显示标题,模仿一下喽.<br><a id="more"></a></p>
+    <summary type="html">
+    
+      &lt;p&gt;最近项目中需要加载PDF文件,遇到一些小问题,记录一下.&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="skill" scheme="https://jiangdaohong.github.io./tags/skill/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>为peek view添加显示标题</title>
+    <link href="https://jiangdaohong.github.io./2016/12/11/%E4%B8%BApeek-view%E6%B7%BB%E5%8A%A0%E6%98%BE%E7%A4%BA%E6%A0%87%E9%A2%98/"/>
+    <id>https://jiangdaohong.github.io./2016/12/11/为peek-view添加显示标题/</id>
+    <published>2016-12-11T10:50:05.000Z</published>
+    <updated>2016-12-11T11:23:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>看到一些APP peek操作的时候会显示标题,模仿一下喽.<br><a id="more"></a></p>
 <p>在玩APP的时候发现一些APP的peek出来的页面不太一样,显示的是有标题的,比如知乎首页和微博评论的按钮peek操作:</p>
 <p><div align="center"><br><img src="http://ww2.sinaimg.cn/large/006tNc79gw1fan1wxdu44j305k027jr7.jpg" alt="weibo_peek"><br><img src="http://ww2.sinaimg.cn/large/006tNc79gw1fan1xn1ka9j305k025t8k.jpg" alt="weibo_pop"><br><img src="http://ww1.sinaimg.cn/large/006tNc79gw1fan1zf8f1aj305k01wjr6.jpg" alt="zhihu_peek"><br><img src="http://ww4.sinaimg.cn/large/006tNc79gw1fan1zufo7fj305k01yjr7.jpg" alt="weibo_pop"></div></p>
 <p><div><br>简单分析一下:微博应该是用了navigation controller,而知乎则在pop的页面多了一个top视图,当peek的时候,可以看到多了一个标题的视图,真是简单粗暴.<br>实现一个微博的效果,简单Swift写一下:<br>peek页面</div></p>
@@ -360,12 +418,26 @@ NSURLRequest <span class="token operator">*</span>request <span class="token ope
 </code></pre>
 <p>这样就可以了.</p>
 ]]></content>
-    </entry>
     
-    <entry>
-      <title><![CDATA[APP本地化笔记]]></title>
-      <url>https://jiangdaohong.github.io./2016/12/10/APP%E5%9B%BD%E9%99%85%E5%8C%96%E7%AC%94%E8%AE%B0/</url>
-      <content type="html"><![CDATA[<p>最近项目需要做本地化,简单记录一下,这里的APP本地化特指iOS客户端的本地化.<br><a id="more"></a></p>
+    <summary type="html">
+    
+      &lt;p&gt;看到一些APP peek操作的时候会显示标题,模仿一下喽.&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="3D touch" scheme="https://jiangdaohong.github.io./tags/3D-touch/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>APP本地化笔记</title>
+    <link href="https://jiangdaohong.github.io./2016/12/10/APP%E5%9B%BD%E9%99%85%E5%8C%96%E7%AC%94%E8%AE%B0/"/>
+    <id>https://jiangdaohong.github.io./2016/12/10/APP国际化笔记/</id>
+    <published>2016-12-10T15:32:31.000Z</published>
+    <updated>2016-12-12T05:08:42.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近项目需要做本地化,简单记录一下,这里的APP本地化特指iOS客户端的本地化.<br><a id="more"></a></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>随着移动互联网的发展,很多APP借着苹果的平台渐渐走向国际,甚至有些国内的公司面向的就是国外用户,我们现在做的产品就有这方面的需求,所以抽时间做了一下APP本地化.<br>一般来说,APP本地化主要是一些文字和图片,plist资源的本地化.文字一般就是UI控件上展示的文本,控件可能是纯代码创建的,也可能是xib或者storyboard上的控件;而图片则需要准备不同的资源文件.<br>下面介绍一下常用的本地化方法:</p>
 <h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>以普通的工程为例:</p>
 <ol>
@@ -436,12 +508,24 @@ find ./ -name *.m -print0 | xargs -0 genstrings -o en.lproj
 <h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3>感谢一下开发者的教程,放上教程链接<br><a href="https://my.oschina.net/u/1049180/blog/215695" target="_blank" rel="external">https://my.oschina.net/u/1049180/blog/215695</a><br>// 下面这篇文章讲述的很详细,图文并茂<br><a href="http://blog.csdn.net/q199109106q/article/details/8564615" target="_blank" rel="external">http://blog.csdn.net/q199109106q/article/details/8564615</a></li>
 </ol>
 ]]></content>
-    </entry>
     
-    <entry>
-      <title><![CDATA[自定义转场动画]]></title>
-      <url>https://jiangdaohong.github.io./2016/11/28/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BD%AC%E5%9C%BA%E5%8A%A8%E7%94%BB/</url>
-      <content type="html"><![CDATA[<p>好久不用的东西,复习一下,先写一下转场动画吧O(∩_∩)O<br><a id="more"></a></p>
+    <summary type="html">
+    
+      &lt;p&gt;最近项目需要做本地化,简单记录一下,这里的APP本地化特指iOS客户端的本地化.&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>自定义转场动画</title>
+    <link href="https://jiangdaohong.github.io./2016/11/28/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BD%AC%E5%9C%BA%E5%8A%A8%E7%94%BB/"/>
+    <id>https://jiangdaohong.github.io./2016/11/28/自定义转场动画/</id>
+    <published>2016-11-28T12:43:58.000Z</published>
+    <updated>2016-11-28T13:43:45.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>好久不用的东西,复习一下,先写一下转场动画吧O(∩_∩)O<br><a id="more"></a></p>
 <p>直接开始,这篇博客分三部分,第一部分记述自定义modal动画,第二部记述自定义push动画,第三部分记一下常见动画的实现.</p>
 <h3 id="modal动画"><a href="#modal动画" class="headerlink" title="modal动画"></a>modal动画</h3><p>下面简要写一下以modal的形式实现系统的push动画<br>主要步骤:</p>
 <ol>
@@ -503,12 +587,26 @@ find ./ -name *.m -print0 | xargs -0 genstrings -o en.lproj
 <li><code>command + R</code>.<h3 id="push动画"><a href="#push动画" class="headerlink" title="push动画"></a>push动画</h3>待续<h3 id="常见动画的实现"><a href="#常见动画的实现" class="headerlink" title="常见动画的实现"></a>常见动画的实现</h3>待续</li>
 </ol>
 ]]></content>
-    </entry>
     
-    <entry>
-      <title><![CDATA[初窥JSPatch]]></title>
-      <url>https://jiangdaohong.github.io./2016/11/20/%E5%88%9D%E7%AA%A5JSPatch/</url>
-      <content type="html"><![CDATA[<p>Hotfix是解决线上bug的重要手段之一,iOS开发中,如今流行的成熟解决方法之一就是JSPatch,本文主要是对JSPatch应用进行一定的介绍,并未做原理分析.<br><a id="more"></a></p>
+    <summary type="html">
+    
+      &lt;p&gt;好久不用的东西,复习一下,先写一下转场动画吧O(∩_∩)O&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Animation" scheme="https://jiangdaohong.github.io./tags/Animation/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>初窥JSPatch</title>
+    <link href="https://jiangdaohong.github.io./2016/11/20/%E5%88%9D%E7%AA%A5JSPatch/"/>
+    <id>https://jiangdaohong.github.io./2016/11/20/初窥JSPatch/</id>
+    <published>2016-11-20T09:28:23.000Z</published>
+    <updated>2016-11-20T10:52:58.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Hotfix是解决线上bug的重要手段之一,iOS开发中,如今流行的成熟解决方法之一就是JSPatch,本文主要是对JSPatch应用进行一定的介绍,并未做原理分析.<br><a id="more"></a></p>
 <p>谈起hotfix,是个不小的话题,而JSPatch以他灵活,使用方便而且功能强大的特点,使它成为解决线上重大bug的”黑武器”,强大,危险.所以在开头要说明,不用使用JSPatch来修改一些小的错误,只有发生重大bug的时候才使用,原子弹固然威力大,但造成的后果也是影响深远的.一些界面可以采用其他方案替代,提高app的动态性,比如使用web view等方式,这里不做深究.下面开始介绍JSPatch.</p>
 <p>JSPatch是微信读书团队的大神<a href="https://github.com/bang590/" target="_blank" rel="external">bang</a>的<a href="https://github.com/bang590/JSPatch" target="_blank" rel="external">开源项目</a>,所以你是可以看到这个项目的核心源码,你可以通过CocoaPods集成到项目中,也可以手动集成,也可以通过SDK的方式集成,<a href="http://www.jspatch.com/Docs/intro" target="_blank" rel="external">这里</a>是JSPatch Platform的集成说明文档,简单来讲,如果你要自己搭建后台,进行修复包的部署等工作,直接使用开源代码即可,这种比较适用于大公司或者业务敏感,个性化定制功能的公司,而对公司来说,作为一般性需求或者只是在个人项目中使用的话,完全可以借助平台,而且平台也提供了付费功能.对于日请求量小于1w的用户是免费的.需要进行灰度测试,在线监控等功能,需要进行付费.</p>
 <h3 id="集成"><a href="#集成" class="headerlink" title="集成"></a>集成</h3><pre class=" language-objectivec"><code class="language-objectivec">pod <span class="token string">'JSPatch'</span>
@@ -596,12 +694,26 @@ superView.addSubview(view)
 <h3 id="传输安全问题"><a href="#传输安全问题" class="headerlink" title="传输安全问题"></a>传输安全问题</h3><p>由于JSPatch是通过运行时进行消息分发,因此功能强大, 因此一旦被黑客攻击,下发恶意补丁包,那app基本就会被彻底攻破,因此在使用JSPatch SDK的时候,对js文件进行了<a href="https://en.wikipedia.org/wiki/RSA" target="_blank" rel="external">RSA加密</a><br>主要流程就是对服务端进行js文件的MD5加密,然后使用RSA私钥对MD5进行一次加密,一起下发给客户端;<br>客户端拿到数据之后,RSA公钥进行解密,拿到MD5值,然后自己进行计算下载的js文件的MD5,进行校验,判断是否被修改,进行分情况处理.</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://www.jspatch.com/Docs/intro" target="_blank" rel="external">JSPatch</a>官方文档说明;<br><a href="https://github.com/bang590/JSPatch" target="_blank" rel="external">JSPatch github源代码</a></p>
 ]]></content>
-    </entry>
     
-    <entry>
-      <title><![CDATA[iOS开发常用UI小技巧]]></title>
-      <url>https://jiangdaohong.github.io./2016/10/22/iOS%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8UI%E5%B0%8F%E6%8A%80%E5%B7%A7/</url>
-      <content type="html"><![CDATA[<p>整理一下开发中常用的UI小技巧<br><a id="more"></a></p>
+    <summary type="html">
+    
+      &lt;p&gt;Hotfix是解决线上bug的重要手段之一,iOS开发中,如今流行的成熟解决方法之一就是JSPatch,本文主要是对JSPatch应用进行一定的介绍,并未做原理分析.&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="skill" scheme="https://jiangdaohong.github.io./tags/skill/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS开发常用UI小技巧</title>
+    <link href="https://jiangdaohong.github.io./2016/10/22/iOS%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8UI%E5%B0%8F%E6%8A%80%E5%B7%A7/"/>
+    <id>https://jiangdaohong.github.io./2016/10/22/iOS开发常用UI小技巧/</id>
+    <published>2016-10-22T14:55:16.000Z</published>
+    <updated>2016-12-04T14:19:31.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>整理一下开发中常用的UI小技巧<br><a id="more"></a></p>
 <ol>
 <li><p>UINavigationBar相关设置</p>
 <pre class=" language-ObjectiveC"><code class="language-ObjectiveC"> // 去阴影
@@ -852,23 +964,51 @@ NAArray *names = [UIFont fontNamesForFamilyName:familyName];
 </li>
 </ol>
 ]]></content>
-    </entry>
     
-    <entry>
-      <title><![CDATA[UIWebView清除缓存]]></title>
-      <url>https://jiangdaohong.github.io./2016/10/22/UIWebView%E6%B8%85%E9%99%A4%E7%BC%93%E5%AD%98/</url>
-      <content type="html"><![CDATA[<p>webview清理缓存的正确姿势<br><a id="more"></a></p>
+    <summary type="html">
+    
+      &lt;p&gt;整理一下开发中常用的UI小技巧&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Tips" scheme="https://jiangdaohong.github.io./tags/Tips/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>UIWebView清除缓存</title>
+    <link href="https://jiangdaohong.github.io./2016/10/22/UIWebView%E6%B8%85%E9%99%A4%E7%BC%93%E5%AD%98/"/>
+    <id>https://jiangdaohong.github.io./2016/10/22/UIWebView清除缓存/</id>
+    <published>2016-10-22T14:41:53.000Z</published>
+    <updated>2016-10-22T14:50:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>webview清理缓存的正确姿势<br><a id="more"></a></p>
 <p>最近项目中加了不少网页,有一些内容经常变动,未能及时刷新,网上找了一些方法,包括清除<code>NSURLCache</code>和写<code>js</code>进行清除,或者加载之前进行<code>reload</code>操作,发现都没效果,关掉网络还是可以加载出来😶后来发现想的复杂了,直接初始化<code>request</code>的时候缓存策略选择忽略本地缓存就好了,一声叹息…</p>
 <pre class=" language-ObjectiveC"><code class="language-ObjectiveC">NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:urlStr] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:HTTP_REQUSET_TIMEOUT_INTERVAL];
 [webView loadRequest:request];
 </code></pre>
 ]]></content>
-    </entry>
     
-    <entry>
-      <title><![CDATA[项目开发中的GCD实战应用]]></title>
-      <url>https://jiangdaohong.github.io./2016/10/22/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E4%B8%AD%E7%9A%84GCD%E5%AE%9E%E6%88%98%E5%BA%94%E7%94%A8/</url>
-      <content type="html"><![CDATA[<p>整理一下项目中GCD的应用<br><a id="more"></a></p>
+    <summary type="html">
+    
+      &lt;p&gt;webview清理缓存的正确姿势&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="DEBUG" scheme="https://jiangdaohong.github.io./tags/DEBUG/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>项目开发中的GCD实战应用</title>
+    <link href="https://jiangdaohong.github.io./2016/10/22/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E4%B8%AD%E7%9A%84GCD%E5%AE%9E%E6%88%98%E5%BA%94%E7%94%A8/"/>
+    <id>https://jiangdaohong.github.io./2016/10/22/项目开发中的GCD实战应用/</id>
+    <published>2016-10-22T11:08:13.000Z</published>
+    <updated>2016-11-13T04:23:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>整理一下项目中GCD的应用<br><a id="more"></a></p>
 <p>GCD是apple提供的一组C语言的API,主要用于实现一些特殊的功能,比如并发编程等,虽然是C语言的接口,但是经过block封装,调用十分方便,因此在项目中应用十分广泛,现在总结一下我个人在项目中的使用.</p>
 <h3 id="延迟执行"><a href="#延迟执行" class="headerlink" title="延迟执行"></a>延迟执行</h3><pre class=" language-ObjectiveC"><code class="language-ObjectiveC">NSTimeInterval delayTime = 5;
 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayTime * NSEC_PER_SEC)),     dispatch_get_main_queue(), ^{
@@ -973,12 +1113,28 @@ dispatch_source_set_event_handler(timer, ^{
 dispatch_resume(timer);
 </code></pre>
 ]]></content>
-    </entry>
     
-    <entry>
-      <title><![CDATA[项目开发中KVC的简单应用]]></title>
-      <url>https://jiangdaohong.github.io./2016/10/03/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E4%B8%ADKVC%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8/</url>
-      <content type="html"><![CDATA[<p>项目中有些时候使用KVC,可以节省很多的时间精力,实现快速开发</p>
+    <summary type="html">
+    
+      &lt;p&gt;整理一下项目中GCD的应用&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="skill" scheme="https://jiangdaohong.github.io./tags/skill/"/>
+    
+      <category term="GCD" scheme="https://jiangdaohong.github.io./tags/GCD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>项目开发中KVC的简单应用</title>
+    <link href="https://jiangdaohong.github.io./2016/10/03/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E4%B8%ADKVC%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8/"/>
+    <id>https://jiangdaohong.github.io./2016/10/03/项目开发中KVC的简单应用/</id>
+    <published>2016-10-03T09:38:25.000Z</published>
+    <updated>2016-10-06T07:47:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>项目中有些时候使用KVC,可以节省很多的时间精力,实现快速开发</p>
 <a id="more"></a>
 <p>前一段时间有同学问我,能不能在不自定义UI的情况下,修改ActionSheet指定title的颜色,当时说很简单啊,Runtime获取实例变量列表,找到设置标题颜色的key,使用KVC就可以搞定.</p>
 <h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><p>编译条件: Xcode7.3.1;Project Deployment Target:iOS8.0.</p>
@@ -1034,22 +1190,50 @@ name:__alertController------type:@"UIAlertController"
 <li>其他.<br> 通过第2步,可以看到在iOS8上使用<code>UIActionSheet</code>也是可以达到同样的效果的,因为其中有_actions可以得到一个<code>UIAlertAction</code>的数组,重复上述步骤即可完成,以后适配iOS7的应用越来越少了,不考虑iOS7的适配,使用KVC可以便捷地实现这种UI效果,还是不错的.</li>
 </ol>
 ]]></content>
-    </entry>
     
-    <entry>
-      <title><![CDATA[每到深夜,总是有话想说说]]></title>
-      <url>https://jiangdaohong.github.io./2016/10/02/%E6%AF%8F%E5%88%B0%E6%B7%B1%E5%A4%9C-%E6%80%BB%E6%98%AF%E6%9C%89%E8%AF%9D%E6%83%B3%E8%AF%B4%E8%AF%B4/</url>
-      <content type="html"><![CDATA[<p>随便写写字<br><a id="more"></a></p>
+    <summary type="html">
+    
+      &lt;p&gt;项目中有些时候使用KVC,可以节省很多的时间精力,实现快速开发&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="skill" scheme="https://jiangdaohong.github.io./tags/skill/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>每到深夜,总是有话想说说</title>
+    <link href="https://jiangdaohong.github.io./2016/10/02/%E6%AF%8F%E5%88%B0%E6%B7%B1%E5%A4%9C-%E6%80%BB%E6%98%AF%E6%9C%89%E8%AF%9D%E6%83%B3%E8%AF%B4%E8%AF%B4/"/>
+    <id>https://jiangdaohong.github.io./2016/10/02/每到深夜-总是有话想说说/</id>
+    <published>2016-10-02T14:30:17.000Z</published>
+    <updated>2016-10-02T14:40:10.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>随便写写字<br><a id="more"></a></p>
 <p>来杭州工作一年多了,记得上次十一,还在加班搞这个项目,一年过去了,还是这个项目,心累…做了很久的东西,没来得及上线就被砍了,虽说是搬砖,心里总还是不爽的.之前一直想写博客,但是网上大牛很多,博客写的很好,我写出来有什么用呢?内心还是希望记录一些东西.直到前一段时间比较空闲,就搭建了这个博客.</p>
 <p>除了想有个地方说说话,之前记录多很多零散的东西,都保存在笔记软件里面,前一段才发现,里面实在太乱了,正好借着整理一下,以后查阅也方便.</p>
 <p>就这样,话唠.</p>
 ]]></content>
-    </entry>
     
-    <entry>
-      <title><![CDATA[记一次关于null_resettable的性能优化]]></title>
-      <url>https://jiangdaohong.github.io./2016/10/02/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%85%B3%E4%BA%8Enull-resettable%E7%9A%84%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</url>
-      <content type="html"><![CDATA[<p>最近在进行项目优化的时候遇到了关于null_resettable的坑,记录一下,由于之前代码不在了,简单模拟一下当时的情况.<br><a id="more"></a></p>
+    <summary type="html">
+    
+      &lt;p&gt;随便写写字&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="我说" scheme="https://jiangdaohong.github.io./tags/%E6%88%91%E8%AF%B4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>记一次关于null_resettable的性能优化</title>
+    <link href="https://jiangdaohong.github.io./2016/10/02/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%85%B3%E4%BA%8Enull-resettable%E7%9A%84%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    <id>https://jiangdaohong.github.io./2016/10/02/记一次关于null-resettable的性能优化/</id>
+    <published>2016-10-02T12:14:19.000Z</published>
+    <updated>2016-10-06T07:48:57.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近在进行项目优化的时候遇到了关于null_resettable的坑,记录一下,由于之前代码不在了,简单模拟一下当时的情况.<br><a id="more"></a></p>
 <p>最近项目要正式上线,需要进行一定的性能方面的测试,由于之前的数据加载的方案几经变化,都没有出现严重的性能问题,也没有在意,结果一测试,结果让我大跌眼镜:性能简直差到天边d(･｀ω´･d*)!!!简单log一下看看那里耗时严重.</p>
 <h3 id="测试环境"><a href="#测试环境" class="headerlink" title="测试环境"></a>测试环境</h3><p>硬件:iPhone5C,系统,iOS9.0.2(越狱)<br>网络:辣鸡WiFi…<br>没有模拟器,之前引入第三方蓝牙库,只有真机包,坑…,要不然直接Instruments查看了,不过当时预测不是大问题,就直接log查看了.</p>
 <h3 id="主要过程"><a href="#主要过程" class="headerlink" title="主要过程"></a>主要过程</h3><p>思路:由于之前是采取分段加载数据,之后采取一次性加载数据,同时进行4个网络请求,可能在网络方面有耗时操作,包括请求数据,解析数据;另一个就是存在频繁调用方法的低性能,导致运行慢.<br>测试数据是血糖数据,数据时间跨度为两年,模拟数据3600条,主要包括空腹血糖数据,以及数据记录时间等,用于绘制曲线图,曲线图以四小时为单位进行绘制,可知共有<code>365 * 2 * 6 = 4380</code>个点需要绘制,其中包括大量的时间比较,因为在同一时间区间,比如4:00-8:00只允许有一个数据进行绘制,因此这里还有一个数据去重操作.大概过程理清之后,打印一下时间:<br><img src="http://ww4.sinaimg.cn/large/006y8lVagw1f8e88oerjmj312e0megzu.jpg" alt=""></p>
@@ -1132,12 +1316,26 @@ name:__alertController------type:@"UIAlertController"
 </code></pre>
 <p>经过这一番修改,绘制时间缩短到了1.5s,但是网络请求时间太久,接下来就是进行数据本地缓存,网络分段加载数据等方面网络部分的优化了.</p>
 ]]></content>
-    </entry>
     
-    <entry>
-      <title><![CDATA[Xcode命令行打包]]></title>
-      <url>https://jiangdaohong.github.io./2016/09/25/Xcode%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%89%93%E5%8C%85/</url>
-      <content type="html"><![CDATA[<p>记录一下使用命令行进行打包<br><a id="more"></a></p>
+    <summary type="html">
+    
+      &lt;p&gt;最近在进行项目优化的时候遇到了关于null_resettable的坑,记录一下,由于之前代码不在了,简单模拟一下当时的情况.&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Performance" scheme="https://jiangdaohong.github.io./tags/Performance/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Xcode命令行打包</title>
+    <link href="https://jiangdaohong.github.io./2016/09/25/Xcode%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%89%93%E5%8C%85/"/>
+    <id>https://jiangdaohong.github.io./2016/09/25/Xcode命令行打包/</id>
+    <published>2016-09-25T12:59:52.000Z</published>
+    <updated>2016-09-25T13:36:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>记录一下使用命令行进行打包<br><a id="more"></a></p>
 <h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>最近公司进行内部测试,要求每天进行App打包上传,本来想搭建一个CI系统,但是实在没有精力(好吧,是没有成功╮(╯_╰)╭,搭建到一半下载git等插件的时候一直出问题,下次有时间再搞了),项目不大,但是每次打包要10分钟(里面有Swift混编,大坑),忍不了了,上网查了一下看到有一些编译优化指令,然后看CI的时候看到了自动打包命令,试了一下,打包时间可以缩短到3分钟以内,记录一下过程吧.</p>
 <h3 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h3><ol>
 <li>Xcode中修改编译选项,修改为发布版证书和描述文件,或者修改编译Target</li>
@@ -1159,12 +1357,26 @@ name:__alertController------type:@"UIAlertController"
 <li>发布项目,暂时手动发布😢</li>
 </ol>
 ]]></content>
-    </entry>
     
-    <entry>
-      <title><![CDATA[Reveal真机查看app]]></title>
-      <url>https://jiangdaohong.github.io./2016/09/23/Reveal%E7%9C%9F%E6%9C%BA%E6%9F%A5%E7%9C%8Bapp/</url>
-      <content type="html"><![CDATA[<p>记录一下使用Reveal的基本使用<br><a id="more"></a></p>
+    <summary type="html">
+    
+      &lt;p&gt;记录一下使用命令行进行打包&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Tips" scheme="https://jiangdaohong.github.io./tags/Tips/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Reveal真机查看app</title>
+    <link href="https://jiangdaohong.github.io./2016/09/23/Reveal%E7%9C%9F%E6%9C%BA%E6%9F%A5%E7%9C%8Bapp/"/>
+    <id>https://jiangdaohong.github.io./2016/09/23/Reveal真机查看app/</id>
+    <published>2016-09-23T01:43:17.000Z</published>
+    <updated>2017-03-15T05:40:13.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>记录一下使用Reveal的基本使用<br><a id="more"></a></p>
 <h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ol>
 <li>使用设备:iPhone5C,系统版本iOS9.0.2</li>
 <li>Reveal版本:1.6.3</li>
@@ -1195,12 +1407,26 @@ name:__alertController------type:@"UIAlertController"
 <li>运行Xcode,接下来的步骤是重复真机查看app步骤4-5步.</li>
 </ol>
 ]]></content>
-    </entry>
     
-    <entry>
-      <title><![CDATA[安装Chisel]]></title>
-      <url>https://jiangdaohong.github.io./2016/09/22/%E5%AE%89%E8%A3%85Chisel/</url>
-      <content type="html"><![CDATA[<p>记录一下使用Chisel的安装过程以及基本的命令<br><a id="more"></a></p>
+    <summary type="html">
+    
+      &lt;p&gt;记录一下使用Reveal的基本使用&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="DEBUG" scheme="https://jiangdaohong.github.io./tags/DEBUG/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>安装Chisel</title>
+    <link href="https://jiangdaohong.github.io./2016/09/22/%E5%AE%89%E8%A3%85Chisel/"/>
+    <id>https://jiangdaohong.github.io./2016/09/22/安装Chisel/</id>
+    <published>2016-09-22T02:53:22.000Z</published>
+    <updated>2017-03-15T05:39:57.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>记录一下使用Chisel的安装过程以及基本的命令<br><a id="more"></a></p>
 <ol>
 <li>使用 brew install chisel</li>
 <li>记录默认命令的安装路径,默认路径是 /usr/local/opt/chisel/libexec/fblldb.py</li>
@@ -1213,12 +1439,26 @@ name:__alertController------type:@"UIAlertController"
 </ol>
 <p>官方地址以及常用命令参考:<a href="https://github.com/facebook/chisel" target="_blank" rel="external">https://github.com/facebook/chisel</a></p>
 ]]></content>
-    </entry>
     
-    <entry>
-      <title><![CDATA[Tips]]></title>
-      <url>https://jiangdaohong.github.io./2016/08/19/tips/</url>
-      <content type="html"><![CDATA[<pre><code>    // 主线程
+    <summary type="html">
+    
+      &lt;p&gt;记录一下使用Chisel的安装过程以及基本的命令&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="DEBUG" scheme="https://jiangdaohong.github.io./tags/DEBUG/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Tips</title>
+    <link href="https://jiangdaohong.github.io./2016/08/19/tips/"/>
+    <id>https://jiangdaohong.github.io./2016/08/19/tips/</id>
+    <published>2016-08-19T09:59:16.000Z</published>
+    <updated>2016-08-20T11:18:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>    // 主线程
     if (pthread_main_np() == 0) returnnil;
 </code></pre><pre><code>    //处于开发阶段
     #ifdef DEBUG
@@ -1230,15 +1470,38 @@ name:__alertController------type:@"UIAlertController"
 </code></pre><pre><code>    //Format
     #define F(string, args...)                  [NSString stringWithFormat:string, args]
 </code></pre>]]></content>
-    </entry>
     
-    <entry>
-      <title><![CDATA[123]]></title>
-      <url>https://jiangdaohong.github.io./2016/08/19/hello%20world/</url>
-      <content type="html"><![CDATA[<p>hello world</p>
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;    // 主线程
+    if (pthread_main_np() == 0) returnnil;
+&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;    //处于开发阶段
+    #ifdef DEBUG
+    #define DHLog(...
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>123</title>
+    <link href="https://jiangdaohong.github.io./2016/08/19/hello%20world/"/>
+    <id>https://jiangdaohong.github.io./2016/08/19/hello world/</id>
+    <published>2016-08-19T02:40:55.000Z</published>
+    <updated>2016-08-19T08:04:55.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>hello world</p>
 ]]></content>
-    </entry>
     
+    <summary type="html">
+    
+      &lt;p&gt;hello world&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+  </entry>
   
-  
-</search>
+</feed>
