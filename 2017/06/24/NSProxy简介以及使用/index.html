@@ -12,7 +12,7 @@
     
     <title>
         
-            归档 | 
+            NSProxy简介以及使用 | 
         
         见习魔法师
     </title>
@@ -36,7 +36,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="jiangdaohong">
     <meta name="description" itemprop="description" content="KISS">
-    <meta name="keywords" content="null">
+    <meta name="keywords" content="null,Tips">
 
     <!-- Site Verification -->
     
@@ -65,15 +65,18 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="https://jiangdaohong.github.io.">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="归档 | 见习魔法师">
+    <meta property="og:title" content="NSProxy简介以及使用 | 见习魔法师">
     <meta property="og:image" content="/img/favicon.png" />
     <meta property="og:description" content="KISS">
-    
+    <meta property="og:article:tag" content="Tips"> 
 
+    
+        <meta property="article:published_time" content="6月 24, 2017" />
+        <meta property="article:modified_time" content="7月 03, 2017" />
     
 
     <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="归档 | 见习魔法师">
+    <meta name="twitter:title" content="NSProxy简介以及使用 | 见习魔法师">
     <meta name="twitter:description" content="KISS">
     <meta name="twitter:image" content="/img/favicon.png">
     <meta name="twitter:card" content="summary_large_image" />
@@ -81,13 +84,43 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://jiangdaohong.github.io./archives/index.html" />
+        <link rel="canonical" href="https://jiangdaohong.github.io./2017/06/24/NSProxy简介以及使用/index.html" />
     
 
     <!-- Structured-data for SEO -->
     
         
 
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "见习魔法师",
+        "logo": "/img/favicon.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "jiangdaohong",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/favicon.png"
+        },
+        "description": "KISS"
+    },
+    "headline": "NSProxy简介以及使用",
+    "url": "https://jiangdaohong.github.io./2017/06/24/NSProxy简介以及使用/index.html",
+    "datePublished": "6月 24, 2017",
+    "dateModified": "7月 03, 2017",
+    "description": "KISS",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://jiangdaohong.github.io."
+    }
+}
+</script>
 
 
     
@@ -342,25 +375,29 @@
 
                     
 
-                    <!-- Index Module -->
-<div class="material-index mdl-grid">
-    
-    <div class="locate-thumbnail-symbol"></div>
+                    <!-- Post TOC -->
 
-    <!-- Pin on top -->
     
 
-    <!-- Normal Post -->
-    
-        
-            
-            
-                <!-- Isolation Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post_entry Header -->
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+
+
+    <!-- Isolation Post Header -->
+    <!-- Post thumbnail -->
     
         <!-- Post Header Info -->
-        <div class="post_entry-header_info without-thumbnail">
+        <div class="post-header_info without-thumbnail">
             <!-- Author Avatar & Name -->
             <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&amp;s=460" class="avatar-img" width="44px" height="44px" alt="jiangdaohong's avatar">
             <span class="name-span">jiangdaohong</span>
@@ -371,587 +408,75 @@
     
         </div>
 
-    <!-- Post_entry Content -->
-    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
-        <!-- Post Title -->
-        <p class="post_entry-title">
-            <a href="/2017/06/24/NSProxy简介以及使用/">NSProxy简介以及使用</a>
-        </p>
 
-        <!-- Post Excerpt -->
-        <p class="post_entry-excerpt">
-            
-                简介在...
-            
-            &nbsp;&nbsp;&nbsp;
-            <span>
-                <a href="/2017/06/24/NSProxy简介以及使用/" target="_self">阅读全文</a>
-            </span>
-        </p>
 
-        <!-- Post Tags -->
-        <ul class="post_entry-tags-list"><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/Tips/">Tips</a></li></ul>
-    </div>
-
-    <!-- Post_entry Footer -->
-    <div class="post_entry-footer">
-        <div class="post_entry-footer-border"></div>
-        <div class="post_entry-footer-info">
-            <div class="post_entry-footer-date">
-                6月 24, 2017
-            </div>
-            <div class="post_entry-footer-comment">
                 
-                
-            </div>
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+
+    
+        <div class="post-content_wrapper">
+            <p class="post-title">
+                NSProxy简介以及使用
+            </p>
+            <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>在<code>Objective-C</code>中,大部分类都是继承自<code>NSObject</code>,但它并不是唯一的<code>root class</code>,还有一个就是<code>NSProxy</code>这个类,看一下API中它的介绍:</p>
+<blockquote>
+<p>NSProxy is an abstract superclass defining an API for objects that act as stand-ins for other objects or for objects that don’t exist yet. Typically, a message to a proxy is forwarded to the real object or causes the proxy to load (or transform itself into) the real object. Subclasses of NSProxy can be used to implement transparent distributed messaging or for lazy instantiation of objects that are expensive to create.<br>NSProxy implements the basic methods required of a root class, including those defined in the NSObject protocol. However, as an abstract class it doesn’t provide an initialization method, and it raises an exception upon receiving any message it doesn’t respond to. A concrete subclass must therefore provide an initialization or creation method and override the forwardInvocation: and methodSignatureForSelector: methods to handle messages that it doesn’t implement itself. A subclass’s implementation of forwardInvocation: should do whatever is needed to process the invocation, such as forwarding the invocation over the network or loading the real object and passing it the invocation. methodSignatureForSelector: is required to provide argument type information for a given message; a subclass’s implementation should be able to determine the argument types for the messages it needs to forward and should construct an NSMethodSignature object accordingly. See the NSDistantObject , NSInvocation, and NSMethodSignature class specifications for more information.</p>
+</blockquote>
+<p>简单来说:</p>
+<ol>
+<li><code>NSProxy</code>是一个抽象基类, 主要是 <code>stand-ins</code>, 用于消息转发, 使用时需要子类化</li>
+<li>这个类没有指定初始化方法, 子类化之后必须提供初始化方法,</li>
+<li>使用时候需要实现基类以及<code>NSObject协议</code>的一些方法,<code>forwardInvocation:``methodSignatureForSelector:</code>, 这两个方法需要重载</li>
+</ol>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>上文可以看到, 这个类主要是在消息转发中扮演一个<code>中间人</code>的角色,实际项目中,看到的应用重要有这些:</p>
+<ol>
+<li>实现一个weak proxy, 防止<code>retain cycle</code>, 这里有一份实现的代码:<a href="https://github.com/ibireme/YYText/blob/master/YYText/Utility/YYTextWeakProxy.m" target="_blank" rel="external">YYTextWeakProxy.m</a>, 使用这个类, 可以在调用<code>NSTimer</code>等的时候让<code>timer</code>保留一个weak reference, 从源码中可以看到,定义了<code>@property (nullable, nonatomic, weak, readonly) id target;</code>, 这个<code>target</code>在初始化方法中对传入的对象弱引用,并实现<code>respondsToSelector:</code>, weak对象调用方法之前都会先调用这个方法,如果被释放掉的话就不会执行接下来的方法调用,从而实现weak proxy.</li>
+<li>实现多继承<br><a href="http://ios.jobbole.com/87856/" target="_blank" rel="external">NSProxy——少见却神奇的类</a>, 这篇文件介绍了使用<code>NSProxy</code>实现多继承的一种方法.</li>
+<li>其他一些实践,比如有人做AOP用到它,链接地址<a href="http://www.jianshu.com/p/a7187e014c03" target="_blank" rel="external">用 NSProxy 实现面向切面编程</a>,<a href="http://blog.csdn.net/yanghua_kobe/article/details/8395535" target="_blank" rel="external">NSProxy实现AOP方便为iOS应用实现异常处理策略</a></li>
+</ol>
+
         </div>
-    </div>
+    
 </div>
 
-            
-        
-    
-        
-            
-            
-                <!-- Isolation Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post_entry Header -->
-    
-        <!-- Post Header Info -->
-        <div class="post_entry-header_info without-thumbnail">
-            <!-- Author Avatar & Name -->
-            <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&amp;s=460" class="avatar-img" width="44px" height="44px" alt="jiangdaohong's avatar">
-            <span class="name-span">jiangdaohong</span>
-        </div>
 
-        <!-- Null Thumbnail -->
-        <div class="post_thumbnail-null">
-    
-        </div>
-
-    <!-- Post_entry Content -->
-    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
-        <!-- Post Title -->
-        <p class="post_entry-title">
-            <a href="/2017/05/14/浅谈iOS复杂表优化/">浅谈iOS复杂列表优化</a>
-        </p>
-
-        <!-- Post Excerpt -->
-        <p class="post_entry-excerpt">
-            
-                记录一下最进项目改版的一些思考
-            
-            &nbsp;&nbsp;&nbsp;
-            <span>
-                <a href="/2017/05/14/浅谈iOS复杂表优化/" target="_self">阅读全文</a>
-            </span>
-        </p>
-
-        <!-- Post Tags -->
-        <ul class="post_entry-tags-list"><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/Performance/">Performance</a></li></ul>
-    </div>
-
-    <!-- Post_entry Footer -->
-    <div class="post_entry-footer">
-        <div class="post_entry-footer-border"></div>
-        <div class="post_entry-footer-info">
-            <div class="post_entry-footer-date">
-                5月 14, 2017
-            </div>
-            <div class="post_entry-footer-comment">
                 
+                    <!-- Paradox Post Info -->
+                    
+                
+
+                <!-- Post Comments -->
+                
+                    
                 
             </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/05/14/浅谈iOS复杂表优化/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
         </div>
     </div>
-</div>
 
-            
-        
-    
-        
-            
-            
-                <!-- Isolation Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post_entry Header -->
-    
-        <!-- Post Header Info -->
-        <div class="post_entry-header_info without-thumbnail">
-            <!-- Author Avatar & Name -->
-            <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&amp;s=460" class="avatar-img" width="44px" height="44px" alt="jiangdaohong's avatar">
-            <span class="name-span">jiangdaohong</span>
-        </div>
-
-        <!-- Null Thumbnail -->
-        <div class="post_thumbnail-null">
-    
-        </div>
-
-    <!-- Post_entry Content -->
-    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
-        <!-- Post Title -->
-        <p class="post_entry-title">
-            <a href="/2017/02/13/WebView截图的一种思路/">WebView截图的一种思路</a>
-        </p>
-
-        <!-- Post Excerpt -->
-        <p class="post_entry-excerpt">
-            
-                网页完整截图的方法
-            
-            &nbsp;&nbsp;&nbsp;
-            <span>
-                <a href="/2017/02/13/WebView截图的一种思路/" target="_self">阅读全文</a>
-            </span>
-        </p>
-
-        <!-- Post Tags -->
-        <ul class="post_entry-tags-list"><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/skill/">skill</a></li></ul>
-    </div>
-
-    <!-- Post_entry Footer -->
-    <div class="post_entry-footer">
-        <div class="post_entry-footer-border"></div>
-        <div class="post_entry-footer-info">
-            <div class="post_entry-footer-date">
-                2月 13, 2017
-            </div>
-            <div class="post_entry-footer-comment">
-                
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-            
-        
-    
-        
-            
-            
-                <!-- Isolation Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post_entry Header -->
-    
-        <!-- Post Header Info -->
-        <div class="post_entry-header_info without-thumbnail">
-            <!-- Author Avatar & Name -->
-            <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&amp;s=460" class="avatar-img" width="44px" height="44px" alt="jiangdaohong's avatar">
-            <span class="name-span">jiangdaohong</span>
-        </div>
-
-        <!-- Null Thumbnail -->
-        <div class="post_thumbnail-null">
-    
-        </div>
-
-    <!-- Post_entry Content -->
-    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
-        <!-- Post Title -->
-        <p class="post_entry-title">
-            <a href="/2017/02/07/iOS端加载PDF文件实践/">iOS端加载PDF文件实践</a>
-        </p>
-
-        <!-- Post Excerpt -->
-        <p class="post_entry-excerpt">
-            
-                最近项目中需要加载PDF文件, 遇到一些小问题, 记录一下
-            
-            &nbsp;&nbsp;&nbsp;
-            <span>
-                <a href="/2017/02/07/iOS端加载PDF文件实践/" target="_self">阅读全文</a>
-            </span>
-        </p>
-
-        <!-- Post Tags -->
-        <ul class="post_entry-tags-list"><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/skill/">skill</a></li></ul>
-    </div>
-
-    <!-- Post_entry Footer -->
-    <div class="post_entry-footer">
-        <div class="post_entry-footer-border"></div>
-        <div class="post_entry-footer-info">
-            <div class="post_entry-footer-date">
-                2月 07, 2017
-            </div>
-            <div class="post_entry-footer-comment">
-                
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-            
-        
-    
-        
-            
-            
-                <!-- Isolation Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post_entry Header -->
-    
-        <!-- Post Header Info -->
-        <div class="post_entry-header_info without-thumbnail">
-            <!-- Author Avatar & Name -->
-            <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&amp;s=460" class="avatar-img" width="44px" height="44px" alt="jiangdaohong's avatar">
-            <span class="name-span">jiangdaohong</span>
-        </div>
-
-        <!-- Null Thumbnail -->
-        <div class="post_thumbnail-null">
-    
-        </div>
-
-    <!-- Post_entry Content -->
-    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
-        <!-- Post Title -->
-        <p class="post_entry-title">
-            <a href="/2016/12/11/为peek-view添加显示标题/">为peek view添加显示标题</a>
-        </p>
-
-        <!-- Post Excerpt -->
-        <p class="post_entry-excerpt">
-            
-                看到一些APP peek操作的时候会显示标题,模仿一下喽.
-            
-            &nbsp;&nbsp;&nbsp;
-            <span>
-                <a href="/2016/12/11/为peek-view添加显示标题/" target="_self">阅读全文</a>
-            </span>
-        </p>
-
-        <!-- Post Tags -->
-        <ul class="post_entry-tags-list"><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/3D-touch/">3D touch</a></li></ul>
-    </div>
-
-    <!-- Post_entry Footer -->
-    <div class="post_entry-footer">
-        <div class="post_entry-footer-border"></div>
-        <div class="post_entry-footer-info">
-            <div class="post_entry-footer-date">
-                12月 11, 2016
-            </div>
-            <div class="post_entry-footer-comment">
-                
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-            
-        
-    
-        
-            
-            
-                <!-- Isolation Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post_entry Header -->
-    
-        <!-- Post Header Info -->
-        <div class="post_entry-header_info without-thumbnail">
-            <!-- Author Avatar & Name -->
-            <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&amp;s=460" class="avatar-img" width="44px" height="44px" alt="jiangdaohong's avatar">
-            <span class="name-span">jiangdaohong</span>
-        </div>
-
-        <!-- Null Thumbnail -->
-        <div class="post_thumbnail-null">
-    
-        </div>
-
-    <!-- Post_entry Content -->
-    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
-        <!-- Post Title -->
-        <p class="post_entry-title">
-            <a href="/2016/12/10/APP国际化笔记/">APP本地化笔记</a>
-        </p>
-
-        <!-- Post Excerpt -->
-        <p class="post_entry-excerpt">
-            
-                最近项目需要做本地化,简单记录一下,这里的APP本地化特指iOS客户端的本地化.
-            
-            &nbsp;&nbsp;&nbsp;
-            <span>
-                <a href="/2016/12/10/APP国际化笔记/" target="_self">阅读全文</a>
-            </span>
-        </p>
-
-        <!-- Post Tags -->
-        
-    </div>
-
-    <!-- Post_entry Footer -->
-    <div class="post_entry-footer">
-        <div class="post_entry-footer-border"></div>
-        <div class="post_entry-footer-info">
-            <div class="post_entry-footer-date">
-                12月 10, 2016
-            </div>
-            <div class="post_entry-footer-comment">
-                
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-            
-        
-    
-        
-            
-            
-                <!-- Isolation Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post_entry Header -->
-    
-        <!-- Post Header Info -->
-        <div class="post_entry-header_info without-thumbnail">
-            <!-- Author Avatar & Name -->
-            <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&amp;s=460" class="avatar-img" width="44px" height="44px" alt="jiangdaohong's avatar">
-            <span class="name-span">jiangdaohong</span>
-        </div>
-
-        <!-- Null Thumbnail -->
-        <div class="post_thumbnail-null">
-    
-        </div>
-
-    <!-- Post_entry Content -->
-    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
-        <!-- Post Title -->
-        <p class="post_entry-title">
-            <a href="/2016/11/28/自定义转场动画/">自定义转场动画</a>
-        </p>
-
-        <!-- Post Excerpt -->
-        <p class="post_entry-excerpt">
-            
-                好久不用的东西,复习一下,先写一下转场动画吧O(∩_∩)O
-            
-            &nbsp;&nbsp;&nbsp;
-            <span>
-                <a href="/2016/11/28/自定义转场动画/" target="_self">阅读全文</a>
-            </span>
-        </p>
-
-        <!-- Post Tags -->
-        <ul class="post_entry-tags-list"><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/Animation/">Animation</a></li></ul>
-    </div>
-
-    <!-- Post_entry Footer -->
-    <div class="post_entry-footer">
-        <div class="post_entry-footer-border"></div>
-        <div class="post_entry-footer-info">
-            <div class="post_entry-footer-date">
-                11月 28, 2016
-            </div>
-            <div class="post_entry-footer-comment">
-                
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-            
-        
-    
-        
-            
-            
-                <!-- Isolation Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post_entry Header -->
-    
-        <!-- Post Header Info -->
-        <div class="post_entry-header_info without-thumbnail">
-            <!-- Author Avatar & Name -->
-            <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&amp;s=460" class="avatar-img" width="44px" height="44px" alt="jiangdaohong's avatar">
-            <span class="name-span">jiangdaohong</span>
-        </div>
-
-        <!-- Null Thumbnail -->
-        <div class="post_thumbnail-null">
-    
-        </div>
-
-    <!-- Post_entry Content -->
-    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
-        <!-- Post Title -->
-        <p class="post_entry-title">
-            <a href="/2016/11/20/初窥JSPatch/">初窥JSPatch</a>
-        </p>
-
-        <!-- Post Excerpt -->
-        <p class="post_entry-excerpt">
-            
-                Hotfix是解决线上bug的重要手段之一,iOS开发中,如今流行的成熟解决方法之一就是JSPatch,本文主要是对JSPatch应用进行一定的介绍,并未做原理分析.
-            
-            &nbsp;&nbsp;&nbsp;
-            <span>
-                <a href="/2016/11/20/初窥JSPatch/" target="_self">阅读全文</a>
-            </span>
-        </p>
-
-        <!-- Post Tags -->
-        <ul class="post_entry-tags-list"><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/skill/">skill</a></li></ul>
-    </div>
-
-    <!-- Post_entry Footer -->
-    <div class="post_entry-footer">
-        <div class="post_entry-footer-border"></div>
-        <div class="post_entry-footer-info">
-            <div class="post_entry-footer-date">
-                11月 20, 2016
-            </div>
-            <div class="post_entry-footer-comment">
-                
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-            
-        
-    
-        
-            
-            
-                <!-- Isolation Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post_entry Header -->
-    
-        <!-- Post Header Info -->
-        <div class="post_entry-header_info without-thumbnail">
-            <!-- Author Avatar & Name -->
-            <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&amp;s=460" class="avatar-img" width="44px" height="44px" alt="jiangdaohong's avatar">
-            <span class="name-span">jiangdaohong</span>
-        </div>
-
-        <!-- Null Thumbnail -->
-        <div class="post_thumbnail-null">
-    
-        </div>
-
-    <!-- Post_entry Content -->
-    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
-        <!-- Post Title -->
-        <p class="post_entry-title">
-            <a href="/2016/10/22/iOS开发常用UI小技巧/">iOS开发常用UI小技巧</a>
-        </p>
-
-        <!-- Post Excerpt -->
-        <p class="post_entry-excerpt">
-            
-                整理一下开发中常用的UI小技巧
-            
-            &nbsp;&nbsp;&nbsp;
-            <span>
-                <a href="/2016/10/22/iOS开发常用UI小技巧/" target="_self">阅读全文</a>
-            </span>
-        </p>
-
-        <!-- Post Tags -->
-        <ul class="post_entry-tags-list"><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/Tips/">Tips</a></li></ul>
-    </div>
-
-    <!-- Post_entry Footer -->
-    <div class="post_entry-footer">
-        <div class="post_entry-footer-border"></div>
-        <div class="post_entry-footer-info">
-            <div class="post_entry-footer-date">
-                10月 22, 2016
-            </div>
-            <div class="post_entry-footer-comment">
-                
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-            
-        
-    
-        
-            
-            
-                <!-- Isolation Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post_entry Header -->
-    
-        <!-- Post Header Info -->
-        <div class="post_entry-header_info without-thumbnail">
-            <!-- Author Avatar & Name -->
-            <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&amp;s=460" class="avatar-img" width="44px" height="44px" alt="jiangdaohong's avatar">
-            <span class="name-span">jiangdaohong</span>
-        </div>
-
-        <!-- Null Thumbnail -->
-        <div class="post_thumbnail-null">
-    
-        </div>
-
-    <!-- Post_entry Content -->
-    <div class="post_entry-content mdl-color-text--grey-600 mdl-card__supporting-text">
-        <!-- Post Title -->
-        <p class="post_entry-title">
-            <a href="/2016/10/22/UIWebView清除缓存/">UIWebView清除缓存</a>
-        </p>
-
-        <!-- Post Excerpt -->
-        <p class="post_entry-excerpt">
-            
-                webview清理缓存的正确姿势
-            
-            &nbsp;&nbsp;&nbsp;
-            <span>
-                <a href="/2016/10/22/UIWebView清除缓存/" target="_self">阅读全文</a>
-            </span>
-        </p>
-
-        <!-- Post Tags -->
-        <ul class="post_entry-tags-list"><li class="post_entry-tags-list-item"><a class="post_entry-tags-list-link" href="/tags/DEBUG/">DEBUG</a></li></ul>
-    </div>
-
-    <!-- Post_entry Footer -->
-    <div class="post_entry-footer">
-        <div class="post_entry-footer-border"></div>
-        <div class="post_entry-footer-info">
-            <div class="post_entry-footer-date">
-                10月 22, 2016
-            </div>
-            <div class="post_entry-footer-comment">
-                
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-            
-        
-    
-
-    
-    <!-- Index nav -->
-        <nav class="material-nav mdl-cell mdl-cell--12-col">
-            <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/"><button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons" role="presentation">arrow_forward</i></button></a>
-        </nav>
-    
-
-    
-</div>
 
 
                     

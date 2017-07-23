@@ -72,7 +72,7 @@
 
     
         <meta property="article:published_time" content="11月 28, 2016" />
-        <meta property="article:modified_time" content="11月 28, 2016" />
+        <meta property="article:modified_time" content="7月 23, 2017" />
     
 
     <!-- The Twitter Card protocol -->
@@ -113,7 +113,7 @@
     "headline": "自定义转场动画",
     "url": "https://jiangdaohong.github.io./2016/11/28/自定义转场动画/index.html",
     "datePublished": "11月 28, 2016",
-    "dateModified": "11月 28, 2016",
+    "dateModified": "7月 23, 2017",
     "description": "好久不用的东西,复习一下,先写一下转场动画吧O(∩_∩)O",
     "mainEntityOfPage": {
         "@type": "WebPage",
@@ -421,67 +421,92 @@
             <p class="post-title">
                 自定义转场动画
             </p>
-            <p>好久不用的东西,复习一下,先写一下转场动画吧O(∩_∩)O<br><a id="more"></a></p>
+            <p>好久不用的东西,复习一下,先写一下转场动画吧O(∩_∩)O</p>
+<a id="more"></a>
 <p>直接开始,这篇博客分三部分,第一部分记述自定义modal动画,第二部记述自定义push动画,第三部分记一下常见动画的实现.</p>
-<h3 id="modal动画"><a href="#modal动画" class="headerlink" title="modal动画"></a>modal动画</h3><p>下面简要写一下以modal的形式实现系统的push动画<br>主要步骤:</p>
-<ol>
-<li>新建两个view controller,记做FromVC,ToVC;</li>
-<li>在FromVC中,实现<code>presentViewController:animated:completion</code>,ToVC对象设置<code>toVC.transitioningDelegate = self;</code>,fromVC遵守协议<code>UIViewControllerTransitioningDelegate</code>;</li>
-<li>看一下<code>UIViewControllerTransitioningDelegate</code><br>```objectivec<br>// Asks your delegate for the transition animator object to use when presenting a view controller.</li>
-</ol>
-<ul>
-<li>(nullable id <uiviewcontrolleranimatedtransitioning>)animationControllerForPresentedController:(UIViewController <em>)presented presentingController:(UIViewController </em>)presenting sourceController:(UIViewController *)source;<br>// Asks your delegate for the transition animator object to use when dismissing a view controller.</uiviewcontrolleranimatedtransitioning></li>
-<li>(nullable id <uiviewcontrolleranimatedtransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed;<br>// Asks your delegate for the interactive animator object to use when presenting a view controller.</uiviewcontrolleranimatedtransitioning></li>
-<li>(nullable id <uiviewcontrollerinteractivetransitioning>)interactionControllerForPresentation:(id <uiviewcontrolleranimatedtransitioning>)animator;<br>// Asks your delegate for the interactive animator object to use when dismissing a view controller.</uiviewcontrolleranimatedtransitioning></uiviewcontrollerinteractivetransitioning></li>
-<li>(nullable id <uiviewcontrollerinteractivetransitioning>)interactionControllerForDismissal:(id <uiviewcontrolleranimatedtransitioning>)animator;<br>// Asks your delegate for the custom presentation controller to use for managing the view hierarchy when presenting a view controller.</uiviewcontrolleranimatedtransitioning></uiviewcontrollerinteractivetransitioning></li>
-<li>(nullable UIPresentationController <em>)presentationControllerForPresentedViewController:(UIViewController </em>)presented presentingViewController:(UIViewController <em>)presenting sourceViewController:(UIViewController </em>)source NS_AVAILABLE_IOS(8_0);<br><code>``
-通过文档可以看到,</code>UIViewControllerTransitioningDelegate`主要要实现前两个方法来获取present和dismiss的动画对象;</li>
-</ul>
-<ol>
-<li>而动画对象需要遵守<code>UIViewControllerAnimatedTransitioning</code>协议,看一下这个协议需要实现的方法:<br>```objectivec<br>// This is used for percent driven interactive transitions, as well as for container controllers that have companion animations that might need to<br>// synchronize with the main animation. </li>
-</ol>
-<ul>
-<li>(NSTimeInterval)transitionDuration:(nullable id <uiviewcontrollercontexttransitioning>)transitionContext;<br>// This method can only  be a nop if the transition is interactive and not a percentDriven interactive transition.</uiviewcontrollercontexttransitioning></li>
-<li>(void)animateTransition:(id <uiviewcontrollercontexttransitioning>)transitionContext;<br>```<br>第一个方法返回的是动画执行的时间,第二个方法则是用于处理动画效果;</uiviewcontrollercontexttransitioning></li>
-</ul>
-<ol>
-<li>首先实现present动画,新建一个<code>DHPresentAnimation</code>类,继承自<code>NSObject</code>,并且实现<code>UIViewControllerAnimatedTransitioning</code>中的两个方法,代码如下:<br>```objectivec<br>// 动画执行的时间</li>
-</ol>
-<ul>
-<li>(NSTimeInterval)transitionDuration:(id <uiviewcontrollercontexttransitioning>)transitionContex<br>{<br>  return 0.3;<br>}</uiviewcontrollercontexttransitioning></li>
-</ul>
-<p>// 自定义动画</p>
-<ul>
-<li>(void)animateTransition:(id <uiviewcontrollercontexttransitioning>)transitionContext<br>{<br>  // 获取目标VC<br>  UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];<br>  // 获取最终要显示的VC的frame<br>  CGRect finalRect = [transitionContext finalFrameForViewController:toVC];<br>  // 设置目标VC的默认位置,这里定位在屏幕左侧<br>  toVC.view.frame = CGRectOffset(finalRect, -[[UIScreen mainScreen]bounds].size.width, 0);<br>  // 获取containerView,并将目标VC的view设置为它的子视图<br>  [[transitionContext containerView] addSubview:toVC.view];<br>  // 简单UIView动画,使toVC的view变换到最终要显示的位置和大小<br>  [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{<pre><code>  toVC.view.frame = finalRect;
-</code></pre>  } completion:^(BOOL finished) {<br>  // 明确告诉上下文,结束动画<pre><code>  [transitionContext completeTransition:YES];
-</code></pre>  }];<br>}<br>```</uiviewcontrollercontexttransitioning></li>
-</ul>
-<ol>
-<li>在<code>FromVC</code>中,实现<code>UIViewControllerTransitioningDelegate</code>协议方法<br>```objectivec</li>
-</ol>
-<ul>
-<li>(id <uiviewcontrolleranimatedtransitioning>)animationControllerForPresentedController:(UIViewController <em>)presented presentingController:(UIViewController </em>)presenting sourceController:(UIViewController *)source {<br>// 返回present自定义动画对象<br>  return [[DHPresentAnimation alloc] init];<br>}<br>```</uiviewcontrolleranimatedtransitioning></li>
-</ul>
-<ol>
-<li>同理,实现dismiss动画,实现<code>FromVC</code>遵循协议中的另一个方法:<br> dismiss动画<br>```objectivec</li>
-</ol>
-<ul>
-<li><p>(NSTimeInterval)transitionDuration:(id<uiviewcontrollercontexttransitioning>)transitionContext<br>{<br>  return 1.0;<br>}</uiviewcontrollercontexttransitioning></p>
-</li>
-<li><p>(void)animateTransition:(id<uiviewcontrollercontexttransitioning>)transitionContext<br>{<br>  UIViewController <em>fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];<br>  UIViewController </em>toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];</uiviewcontrollercontexttransitioning></p>
-<p>  CGRect initRect  = [transitionContext initialFrameForViewController:fromVC];<br>  CGRect finalRect = CGRectOffset(initRect, -[[UIScreen mainScreen]bounds].size.width, 0);</p>
-<p>  UIView *containerView = [transitionContext containerView];<br>  [containerView addSubview:toVC.view];<br>  [containerView sendSubviewToBack:toVC.view];</p>
-<p>  [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{</p>
-<pre><code>  fromVC.view.frame = finalRect;
-</code></pre><p>  } completion:^(BOOL finished) {</p>
-<pre><code>  [transitionContext completeTransition:YES];
-</code></pre><p>  }];<br>}<br><code>协议方法:</code>objectivec</p>
-</li>
-<li>(id<uiviewcontrolleranimatedtransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed<br>{<br>  return [[DHDismissAnimation alloc] init];<br>}<br>```</uiviewcontrolleranimatedtransitioning></li>
-</ul>
-<ol>
-<li><code>command + R</code>.<h3 id="push动画"><a href="#push动画" class="headerlink" title="push动画"></a>push动画</h3>待续<h3 id="常见动画的实现"><a href="#常见动画的实现" class="headerlink" title="常见动画的实现"></a>常见动画的实现</h3>待续</li>
-</ol>
+<h3 id="modal动画"><a href="#modal动画" class="headerlink" title="modal动画"></a>modal动画</h3><p>下面简要写一下以modal的形式实现系统的push动画</p>
+<p>主要步骤:<br>新建两个view controller,记做FromVC,ToVC;<br>在FromVC中,实现<code>presentViewController:animated:completion</code>,ToVC对象设置<code>toVC.transitioningDelegate = self;</code>,fromVC遵守协议<code>UIViewControllerTransitioningDelegate</code>;<br>看一下<code>UIViewControllerTransitioningDelegate</code>, 通过文档可以看到, <code>UIViewControllerTransitioningDelegate</code>主要要实现前两个方法来获取present和dismiss的动画对象</p>
+<pre class=" language-objectivec"><code class="language-objectivec">  <span class="token comment" spellcheck="true">// Asks your delegate for the transition animator object to use when presenting a view controller.</span>
+ <span class="token operator">-</span> <span class="token punctuation">(</span>nullable id <span class="token operator">&lt;</span>UIViewControllerAnimatedTransitioning<span class="token operator">></span><span class="token punctuation">)</span>animationControllerForPresentedController<span class="token punctuation">:</span><span class="token punctuation">(</span>UIViewController <span class="token operator">*</span><span class="token punctuation">)</span>presented presentingController<span class="token punctuation">:</span><span class="token punctuation">(</span>UIViewController <span class="token operator">*</span><span class="token punctuation">)</span>presenting sourceController<span class="token punctuation">:</span><span class="token punctuation">(</span>UIViewController <span class="token operator">*</span><span class="token punctuation">)</span>source<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">// Asks your delegate for the transition animator object to use when dismissing a view controller.</span>
+ <span class="token operator">-</span> <span class="token punctuation">(</span>nullable id <span class="token operator">&lt;</span>UIViewControllerAnimatedTransitioning<span class="token operator">></span><span class="token punctuation">)</span>animationControllerForDismissedController<span class="token punctuation">:</span><span class="token punctuation">(</span>UIViewController <span class="token operator">*</span><span class="token punctuation">)</span>dismissed<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">// Asks your delegate for the interactive animator object to use when presenting a view controller.</span>
+ <span class="token operator">-</span> <span class="token punctuation">(</span>nullable id <span class="token operator">&lt;</span>UIViewControllerInteractiveTransitioning<span class="token operator">></span><span class="token punctuation">)</span>interactionControllerForPresentation<span class="token punctuation">:</span><span class="token punctuation">(</span>id <span class="token operator">&lt;</span>UIViewControllerAnimatedTransitioning<span class="token operator">></span><span class="token punctuation">)</span>animator<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">// Asks your delegate for the interactive animator object to use when dismissing a view controller.</span>
+ <span class="token operator">-</span> <span class="token punctuation">(</span>nullable id <span class="token operator">&lt;</span>UIViewControllerInteractiveTransitioning<span class="token operator">></span><span class="token punctuation">)</span>interactionControllerForDismissal<span class="token punctuation">:</span><span class="token punctuation">(</span>id <span class="token operator">&lt;</span>UIViewControllerAnimatedTransitioning<span class="token operator">></span><span class="token punctuation">)</span>animator<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">// Asks your delegate for the custom presentation controller to use for managing the view hierarchy when presenting a view controller.</span>
+ <span class="token operator">-</span> <span class="token punctuation">(</span>nullable UIPresentationController <span class="token operator">*</span><span class="token punctuation">)</span>presentationControllerForPresentedViewController<span class="token punctuation">:</span><span class="token punctuation">(</span>UIViewController <span class="token operator">*</span><span class="token punctuation">)</span>presented presentingViewController<span class="token punctuation">:</span><span class="token punctuation">(</span>UIViewController <span class="token operator">*</span><span class="token punctuation">)</span>presenting sourceViewController<span class="token punctuation">:</span><span class="token punctuation">(</span>UIViewController <span class="token operator">*</span><span class="token punctuation">)</span>source <span class="token function">NS_AVAILABLE_IOS</span><span class="token punctuation">(</span>8_0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p> 而动画对象需要遵守<code>UIViewControllerAnimatedTransitioning</code>协议,看一下这个协议需要实现的方法:第一个方法返回的是动画执行的时间,第二个方法则是用于处理动画效果;</p>
+<pre class=" language-objectivec"><code class="language-objectivec">   <span class="token comment" spellcheck="true">// This is used for percent driven interactive transitions, as well as for container controllers that have companion animations that might need to</span>
+   <span class="token comment" spellcheck="true">// synchronize with the main animation. </span>
+ <span class="token operator">-</span> <span class="token punctuation">(</span>NSTimeInterval<span class="token punctuation">)</span>transitionDuration<span class="token punctuation">:</span><span class="token punctuation">(</span>nullable id <span class="token operator">&lt;</span>UIViewControllerContextTransitioning<span class="token operator">></span><span class="token punctuation">)</span>transitionContext<span class="token punctuation">;</span>
+   <span class="token comment" spellcheck="true">// This method can only  be a nop if the transition is interactive and not a percentDriven interactive transition.</span>
+ <span class="token operator">-</span> <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>animateTransition<span class="token punctuation">:</span><span class="token punctuation">(</span>id <span class="token operator">&lt;</span>UIViewControllerContextTransitioning<span class="token operator">></span><span class="token punctuation">)</span>transitionContext<span class="token punctuation">;</span>
+</code></pre>
+<p>首先实现present动画,新建一个<code>DHPresentAnimation</code>类,继承自<code>NSObject</code>,并且实现<code>UIViewControllerAnimatedTransitioning</code>中的两个方法,代码如下:</p>
+<pre class=" language-objectivec"><code class="language-objectivec">   <span class="token comment" spellcheck="true">// 动画执行的时间</span>
+ <span class="token operator">-</span> <span class="token punctuation">(</span>NSTimeInterval<span class="token punctuation">)</span>transitionDuration<span class="token punctuation">:</span><span class="token punctuation">(</span>id <span class="token operator">&lt;</span>UIViewControllerContextTransitioning<span class="token operator">></span><span class="token punctuation">)</span>transitionContex
+   <span class="token punctuation">{</span>
+     <span class="token keyword">return</span> <span class="token number">0.3</span><span class="token punctuation">;</span>
+   <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">// 自定义动画</span>
+ <span class="token operator">-</span> <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>animateTransition<span class="token punctuation">:</span><span class="token punctuation">(</span>id <span class="token operator">&lt;</span>UIViewControllerContextTransitioning<span class="token operator">></span><span class="token punctuation">)</span>transitionContext
+  <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 获取目标VC</span>
+        UIViewController <span class="token operator">*</span>toVC <span class="token operator">=</span> <span class="token punctuation">[</span>transitionContext viewControllerForKey<span class="token punctuation">:</span>UITransitionContextToViewControllerKey<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 获取最终要显示的VC的frame</span>
+        CGRect finalRect <span class="token operator">=</span> <span class="token punctuation">[</span>transitionContext finalFrameForViewController<span class="token punctuation">:</span>toVC<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 设置目标VC的默认位置,这里定位在屏幕左侧</span>
+        toVC<span class="token punctuation">.</span>view<span class="token punctuation">.</span>frame <span class="token operator">=</span> <span class="token function">CGRectOffset</span><span class="token punctuation">(</span>finalRect<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token punctuation">[</span><span class="token punctuation">[</span>UIScreen mainScreen<span class="token punctuation">]</span>bounds<span class="token punctuation">]</span><span class="token punctuation">.</span>size<span class="token punctuation">.</span>width<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 获取containerView,并将目标VC的view设置为它的子视图</span>
+        <span class="token punctuation">[</span><span class="token punctuation">[</span>transitionContext containerView<span class="token punctuation">]</span> addSubview<span class="token punctuation">:</span>toVC<span class="token punctuation">.</span>view<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 简单UIView动画,使toVC的view变换到最终要显示的位置和大小</span>
+        <span class="token punctuation">[</span>UIView animateWithDuration<span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token keyword">self</span> transitionDuration<span class="token punctuation">:</span>transitionContext<span class="token punctuation">]</span> animations<span class="token punctuation">:</span><span class="token operator">^</span><span class="token punctuation">{</span>
+            toVC<span class="token punctuation">.</span>view<span class="token punctuation">.</span>frame <span class="token operator">=</span> finalRect<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> completion<span class="token punctuation">:</span><span class="token operator">^</span><span class="token punctuation">(</span>BOOL finished<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 明确告诉上下文,结束动画</span>
+            <span class="token punctuation">[</span>transitionContext completeTransition<span class="token punctuation">:</span>YES<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</code></pre>
+<p>在<code>FromVC</code>中,实现<code>UIViewControllerTransitioningDelegate</code>协议方法</p>
+<pre class=" language-objectivec"><code class="language-objectivec"><span class="token operator">-</span> <span class="token punctuation">(</span>id <span class="token operator">&lt;</span>UIViewControllerAnimatedTransitioning<span class="token operator">></span><span class="token punctuation">)</span>animationControllerForPresentedController<span class="token punctuation">:</span><span class="token punctuation">(</span>UIViewController <span class="token operator">*</span><span class="token punctuation">)</span>presented presentingController<span class="token punctuation">:</span><span class="token punctuation">(</span>UIViewController <span class="token operator">*</span><span class="token punctuation">)</span>presenting sourceController<span class="token punctuation">:</span><span class="token punctuation">(</span>UIViewController <span class="token operator">*</span><span class="token punctuation">)</span>source 
+<span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 返回present自定义动画对象</span>
+    <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">[</span>DHPresentAnimation alloc<span class="token punctuation">]</span> init<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>  同理,实现dismiss动画,实现<code>FromVC</code>遵循协议中的另一个方法:<br>  dismiss动画</p>
+<pre class=" language-objectivec"><code class="language-objectivec"> <span class="token operator">-</span> <span class="token punctuation">(</span>NSTimeInterval<span class="token punctuation">)</span>transitionDuration<span class="token punctuation">:</span><span class="token punctuation">(</span>id<span class="token operator">&lt;</span>UIViewControllerContextTransitioning<span class="token operator">></span><span class="token punctuation">)</span>transitionContext
+  <span class="token punctuation">{</span> 
+    <span class="token keyword">return</span> <span class="token number">1.0</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+ <span class="token operator">-</span> <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>animateTransition<span class="token punctuation">:</span><span class="token punctuation">(</span>id<span class="token operator">&lt;</span>UIViewControllerContextTransitioning<span class="token operator">></span><span class="token punctuation">)</span>transitionContext
+  <span class="token punctuation">{</span> 
+        UIViewController <span class="token operator">*</span>fromVC <span class="token operator">=</span> <span class="token punctuation">[</span>transitionContext viewControllerForKey<span class="token punctuation">:</span>UITransitionContextFromViewControllerKey<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        UIViewController <span class="token operator">*</span>toVC <span class="token operator">=</span> <span class="token punctuation">[</span>transitionContext viewControllerForKey<span class="token punctuation">:</span>UITransitionContextToViewControllerKey<span class="token punctuation">]</span><span class="token punctuation">;</span> 
+        CGRect initRect  <span class="token operator">=</span> <span class="token punctuation">[</span>transitionContext initialFrameForViewController<span class="token punctuation">:</span>fromVC<span class="token punctuation">]</span><span class="token punctuation">;</span>   
+        CGRect finalRect <span class="token operator">=</span> <span class="token function">CGRectOffset</span><span class="token punctuation">(</span>initRect<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token punctuation">[</span><span class="token punctuation">[</span>UIScreen mainScreen<span class="token punctuation">]</span>bounds<span class="token punctuation">]</span><span class="token punctuation">.</span>size<span class="token punctuation">.</span>width<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        UIView <span class="token operator">*</span>containerView <span class="token operator">=</span> <span class="token punctuation">[</span>transitionContext containerView<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">[</span>containerView addSubview<span class="token punctuation">:</span>toVC<span class="token punctuation">.</span>view<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">[</span>containerView sendSubviewToBack<span class="token punctuation">:</span>toVC<span class="token punctuation">.</span>view<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">[</span>UIView animateWithDuration<span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token keyword">self</span> transitionDuration<span class="token punctuation">:</span>transitionContext<span class="token punctuation">]</span> animations<span class="token punctuation">:</span><span class="token operator">^</span><span class="token punctuation">{</span>
+            fromVC<span class="token punctuation">.</span>view<span class="token punctuation">.</span>frame <span class="token operator">=</span> finalRect<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> completion<span class="token punctuation">:</span><span class="token operator">^</span><span class="token punctuation">(</span>BOOL finished<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token punctuation">[</span>transitionContext completeTransition<span class="token punctuation">:</span>YES<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</code></pre>
+<p>  协议方法:</p>
+<pre class=" language-objectivec"><code class="language-objectivec">  <span class="token operator">-</span> <span class="token punctuation">(</span>id<span class="token operator">&lt;</span>UIViewControllerAnimatedTransitioning<span class="token operator">></span><span class="token punctuation">)</span>animationControllerForDismissedController<span class="token punctuation">:</span><span class="token punctuation">(</span>UIViewController <span class="token operator">*</span><span class="token punctuation">)</span>dismissed
+  <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token punctuation">[</span>DHDismissAnimation alloc<span class="token punctuation">]</span> init<span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</code></pre>
+<p>最后<code>command + R</code>运行.</p>
+<h3 id="push动画"><a href="#push动画" class="headerlink" title="push动画"></a>push动画</h3><p>待续</p>
+<h3 id="常见动画的实现"><a href="#常见动画的实现" class="headerlink" title="常见动画的实现"></a>常见动画的实现</h3><p>待续</p>
 
         </div>
     
