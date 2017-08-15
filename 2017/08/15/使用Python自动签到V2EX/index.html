@@ -12,6 +12,8 @@
     
     <title>
         
+            使用Python自动签到V2EX | 
+        
         见习魔法师
     </title>
 
@@ -33,8 +35,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="jiangdaohong">
-    <meta name="description" itemprop="description" content="KISS">
-    <meta name="keywords" content="null">
+    <meta name="description" itemprop="description" content="V2EX是我经常登录的一个社区,里面有很多做开发的小伙伴.这个网站每天有个签到功能,作为一个潜水党,每天和网站的交互,第一件事情就是签到,但是每天手动签到好麻烦,github上面搜到一个脚本,简单解析一下.">
+    <meta name="keywords" content="null,Python">
 
     <!-- Site Verification -->
     
@@ -63,29 +65,62 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="https://jiangdaohong.github.io.">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="见习魔法师">
+    <meta property="og:title" content="使用Python自动签到V2EX | 见习魔法师">
     <meta property="og:image" content="/img/favicon.png" />
-    <meta property="og:description" content="KISS">
-    
+    <meta property="og:description" content="V2EX是我经常登录的一个社区,里面有很多做开发的小伙伴.这个网站每天有个签到功能,作为一个潜水党,每天和网站的交互,第一件事情就是签到,但是每天手动签到好麻烦,github上面搜到一个脚本,简单解析一下.">
+    <meta property="og:article:tag" content="Python"> 
 
+    
+        <meta property="article:published_time" content="8月 15, 2017" />
+        <meta property="article:modified_time" content="8月 15, 2017" />
     
 
     <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="见习魔法师">
-    <meta name="twitter:description" content="KISS">
+    <meta name="twitter:title" content="使用Python自动签到V2EX | 见习魔法师">
+    <meta name="twitter:description" content="V2EX是我经常登录的一个社区,里面有很多做开发的小伙伴.这个网站每天有个签到功能,作为一个潜水党,每天和网站的交互,第一件事情就是签到,但是每天手动签到好麻烦,github上面搜到一个脚本,简单解析一下.">
     <meta name="twitter:image" content="/img/favicon.png">
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://jiangdaohong.github.io." />
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://jiangdaohong.github.io./page/2/index.html" />
+        <link rel="canonical" href="https://jiangdaohong.github.io./2017/08/15/使用Python自动签到V2EX/index.html" />
     
 
     <!-- Structured-data for SEO -->
     
         
 
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "见习魔法师",
+        "logo": "/img/favicon.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "jiangdaohong",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/favicon.png"
+        },
+        "description": "KISS"
+    },
+    "headline": "使用Python自动签到V2EX",
+    "url": "https://jiangdaohong.github.io./2017/08/15/使用Python自动签到V2EX/index.html",
+    "datePublished": "8月 15, 2017",
+    "dateModified": "8月 15, 2017",
+    "description": "V2EX是我经常登录的一个社区,里面有很多做开发的小伙伴.这个网站每天有个签到功能,作为一个潜水党,每天和网站的交互,第一件事情就是签到,但是每天手动签到好麻烦,github上面搜到一个脚本,简单解析一下.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://jiangdaohong.github.io."
+    }
+}
+</script>
 
 
     
@@ -269,633 +304,245 @@
                         </button>
                     
 
-                    <!-- Index Module -->
-<div class="material-index mdl-grid">
-    
-    <div class="locate-thumbnail-symbol"></div>
+                    <!-- Post TOC -->
 
-    <!-- Pin on top -->
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#脚本地址"><span class="post-toc-number">1.</span> <span class="post-toc-text">脚本地址</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#登陆签到流程"><span class="post-toc-number">2.</span> <span class="post-toc-text">登陆签到流程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一顿操作"><span class="post-toc-number">3.</span> <span class="post-toc-text">一顿操作</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#源码解读"><span class="post-toc-number">4.</span> <span class="post-toc-text">源码解读</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#用到模块方法总结"><span class="post-toc-number">5.</span> <span class="post-toc-text">用到模块方法总结</span></a></li></ol>
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
     
 
-    <!-- Normal Post -->
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
     
         
             <!-- Random Thumbnail -->
             <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
 
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2016/10/22/UIWebView清除缓存/">UIWebView清除缓存</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            webview清理缓存的正确姿势
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2016/10/22/UIWebView清除缓存/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&amp;s=460" width="44px" height="44px" alt="jiangdaohong's avatar">
-            </div>
-            <div>
-                <strong>jiangdaohong</strong>
-                <span>10月 22, 2016</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2016/10/22/项目开发中的GCD实战应用/">项目开发中的GCD实战应用</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            整理一下项目中GCD的应用
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2016/10/22/项目开发中的GCD实战应用/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&amp;s=460" width="44px" height="44px" alt="jiangdaohong's avatar">
-            </div>
-            <div>
-                <strong>jiangdaohong</strong>
-                <span>10月 22, 2016</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2016/10/03/项目开发中KVC的简单应用/">项目开发中KVC的简单应用</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            项目中有些时候使用KVC,可以节省很多的时间精力,实现快速开发
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2016/10/03/项目开发中KVC的简单应用/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&amp;s=460" width="44px" height="44px" alt="jiangdaohong's avatar">
-            </div>
-            <div>
-                <strong>jiangdaohong</strong>
-                <span>10月 03, 2016</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2016/10/02/每到深夜-总是有话想说说/">每到深夜,总是有话想说说</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            随便写写字
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2016/10/02/每到深夜-总是有话想说说/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&amp;s=460" width="44px" height="44px" alt="jiangdaohong's avatar">
-            </div>
-            <div>
-                <strong>jiangdaohong</strong>
-                <span>10月 02, 2016</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2016/10/02/记一次关于null-resettable的性能优化/">记一次关于null_resettable的性能优化</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            最近在进行项目优化的时候遇到了关于null_resettable的坑,记录一下,由于之前代码不在了,简单模拟一下当时的情况.
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2016/10/02/记一次关于null-resettable的性能优化/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&amp;s=460" width="44px" height="44px" alt="jiangdaohong's avatar">
-            </div>
-            <div>
-                <strong>jiangdaohong</strong>
-                <span>10月 02, 2016</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2016/09/25/Xcode命令行打包/">Xcode命令行打包</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            记录一下使用命令行进行打包
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2016/09/25/Xcode命令行打包/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&amp;s=460" width="44px" height="44px" alt="jiangdaohong's avatar">
-            </div>
-            <div>
-                <strong>jiangdaohong</strong>
-                <span>9月 25, 2016</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2016/09/23/Reveal真机查看app/">Reveal真机查看app</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            记录一下使用Reveal的基本使用
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2016/09/23/Reveal真机查看app/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&amp;s=460" width="44px" height="44px" alt="jiangdaohong's avatar">
-            </div>
-            <div>
-                <strong>jiangdaohong</strong>
-                <span>9月 23, 2016</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2016/09/22/安装Chisel/">安装Chisel</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            记录一下使用Chisel的安装过程以及基本的命令
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2016/09/22/安装Chisel/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&amp;s=460" width="44px" height="44px" alt="jiangdaohong's avatar">
-            </div>
-            <div>
-                <strong>jiangdaohong</strong>
-                <span>9月 22, 2016</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2016/08/19/tips/">Tips</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2016/08/19/tips/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&amp;s=460" width="44px" height="44px" alt="jiangdaohong's avatar">
-            </div>
-            <div>
-                <strong>jiangdaohong</strong>
-                <span>8月 19, 2016</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2016/08/19/hello world/">123</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            hello world
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2016/08/19/hello world/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&amp;s=460" width="44px" height="44px" alt="jiangdaohong's avatar">
-            </div>
-            <div>
-                <strong>jiangdaohong</strong>
-                <span>8月 19, 2016</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                
-            </span>
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-
-    
-    <!-- Index nav -->
-        <nav class="material-nav mdl-cell mdl-cell--12-col">
-            <a class="extend prev" rel="prev" href="/"><button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons" role="presentation">arrow_back</i></button></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-        </nav>
-    
-
-    
-        <script type="text/ls-javascript" id="thumbnail-script">
-    var randomNum;
-
-    var locatePost = $('.locate-thumbnail-symbol').next();
-    for(var i = 0; i < 10; i++) {
-        randomNum = Math.floor(Math.random() * 19 + 1);
-
-        locatePost.children('.post_thumbnail-random').attr('id', 'random_thumbnail-'+randomNum);
-        locatePost.children('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
     $('.post_thumbnail-random').addClass('lazy');
-
-        locatePost = locatePost.next();
-    }
 </script>
 
+        
+    
+            <p class="article-headline-p">
+                使用Python自动签到V2EX
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="https://avatars0.githubusercontent.com/u/10709553?v=3&s=460" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>jiangdaohong</strong>
+        <span>8月 15, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/Python/">Python</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=使用Python自动签到V2EX&url=https://jiangdaohong.github.io./2017/08/15/使用Python自动签到V2EX/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=使用Python自动签到V2EX&url=https://jiangdaohong.github.io./2017/08/15/使用Python自动签到V2EX/index.html&via=jiangdaohong" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=https://jiangdaohong.github.io./2017/08/15/使用Python自动签到V2EX/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=https://jiangdaohong.github.io./2017/08/15/使用Python自动签到V2EX/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p><a href="https://www.v2ex.com" target="_blank" rel="external">V2EX</a>是我经常登录的一个社区,里面有很多做开发的小伙伴.这个网站每天有个签到功能,作为一个潜水党,每天和网站的交互,第一件事情就是签到,但是每天手动签到好麻烦,github上面搜到一个脚本,简单解析一下.<br><a id="more"></a></p>
+<h3 id="脚本地址"><a href="#脚本地址" class="headerlink" title="脚本地址"></a>脚本地址</h3><p><a href="https://github.com/isayme/v2ex" target="_blank" rel="external">V2EX自动签到</a>,不是我写的,感谢脚本作者,感谢开源社区,让大家有更多学习交流的机会</p>
+<h3 id="登陆签到流程"><a href="#登陆签到流程" class="headerlink" title="登陆签到流程"></a>登陆签到流程</h3><p>首先熟悉一下V站的登陆流程:</p>
+<ol>
+<li>首先获取网站的<code>cookie</code>;</li>
+<li>然后通过<code>cookie</code>获取每日任务页面的<code>once</code>;</li>
+<li>如果<code>once</code>不为空,则是没有签到,执行签到操作;</li>
+<li>反之退出程序</li>
+</ol>
+<h3 id="一顿操作"><a href="#一顿操作" class="headerlink" title="一顿操作"></a>一顿操作</h3><p>根据以上流程,首先获取<code>cookie</code>,在脚本的readme文件里面,有说明,V站之前是采用<code>auth</code>方式登录,现在是采用<code>A2</code>.<br>在浏览器中打开网址主页,我使用的Safari,右键-&gt;检查元素-&gt;存储空间-&gt;Cookie-www.v2ex.com,找到<code>A2</code>列,复制出来<code>值</code>所在列的字符串.<br>解析<code>A2</code>,以示例中的A2为例:</p>
+<blockquote>
+<p>2|1:0|10:1415406915|2:A2|56:xxxxxx|uuuuuu</p>
+</blockquote>
+<p>我们需要的值,就是<code>56:</code>后面的字符串,它是cookie的base64编码之后的值,进行base64解码,简单的,可以使用终端:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo &apos;xxxxxx|uuuuuu&apos; |base64 -D;echo</div></pre></td></tr></table></figure></p>
+<p>得到cookie</p>
+<h3 id="源码解读"><a href="#源码解读" class="headerlink" title="源码解读"></a>源码解读</h3><p>源码还是比较简单的,思路很清晰,也没有使用第三方的模块,使用的都是系统自带的模块,适合新手学习.<br>源码引入了<code>sys</code>,<code>re</code>,<code>cookitlib</code>,<code>urllib2</code>这几个模块,下面都会使用到这几个Python中经常使用的模块.<br>前面几行,定义了一些全局变量,分别用于存储cookie和URL,没什么好说的.需要说明,在Python中,为防止正则表达式和<code>\</code>(比如网址中)冲突,会在字符穿前面加上<code>r</code>,告诉编译器这个string是<code>raw string</code>,无需转义:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">V2EX_DOMAIN = <span class="string">r'v2ex.com'</span></div></pre></td></tr></table></figure></p>
+<p>接下来是两个自定义方法和一个程序入口方法:<br>根据上面的签到流程,获取cookie之后,获取<code>once</code>,然后验证<code>once</code>是否为空;<br>第一个<code>get_onec_url(data)</code>就是用来获取<code>once</code>,第二个<code>make_cookit(name, value)</code>是生成<code>cookie</code>,是每次请求都需要携带的信息;<br>暂时跳过这两个函数的内部实现,先看入口函数,<code>if __name__ == &#39;__main__&#39;:</code>用于判断运行的是不是当前文件,这里<a href="https://stackoverflow.com/questions/419163/what-does-if-name-main-do" target="_blank" rel="external">有个介绍</a>,单文件程序就这么写好了.<br>入口函数代码:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    cj = cookielib.CookieJar()</div><div class="line">    cj.set_cookie(make_cookie(<span class="string">'auth'</span>, V2EX_COOKIE))</div><div class="line">    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))</div><div class="line"></div><div class="line">    opener.addheaders = [</div><div class="line">        (<span class="string">'User-Agent'</span>, <span class="string">'Mozilla/5.0 (Windows NT 6.1; rv:20.0) Gecko/20100101 Firefox/20.0'</span>),</div><div class="line">        (<span class="string">'Referer'</span>, V2EX_MISSION)</div><div class="line">    ]</div><div class="line">    </div><div class="line">    opener.open(V2EX_URL_START).read()</div><div class="line">    </div><div class="line">    data = opener.open(V2EX_MISSION).read()</div><div class="line">    once = get_once_url(data)</div><div class="line">    <span class="keyword">if</span> <span class="keyword">None</span> == once:</div><div class="line">        <span class="keyword">print</span> <span class="string">'"once" not found, maybe you already got coins'</span></div><div class="line">        sys.exit(<span class="number">-1</span>)</div><div class="line">    </div><div class="line">    v2ex_coin_url = V2EX_URL_START + once</div><div class="line">    <span class="keyword">print</span> v2ex_coin_url</div><div class="line">    opener.open(v2ex_coin_url).read()</div></pre></td></tr></table></figure></p>
+<p>使用<code>cookielib.CookieJar()</code>生成一个jar,然后调用<code>set_cookie()</code>,里面接受参数,我们填写字段名<code>auth</code>,值填写为全局变量<code>V2EX_COOKIE</code>即我们从浏览器中获取的cookie,设置好jar之后,使用<code>urllib2</code>手动生成一个<code>opener</code>,这个对象可以进行网页数据的读取.访问V2EX需要<code>User-Agent</code>,这个写死就好了.通过<code>opener</code>读取数据,然后调用<code>get_once_url()</code>,获取once,Python中判读是否为空需要和<code>None</code>进行比较,如果为空,可能已经签到成功过了,调用<code>sys.exit(-1)</code>退出程序,否则,使用获取到的<code>once</code>值访问签到页面,成功签到.<br>回头看两个自定义函数,<code>make_cookie</code>,比较简单,有两个参数,一个name,一个value,用于设置cookie的name和value,返回值第通过cookielie.Cookie生成的一个字典,这个比较简单.<br>在看<code>get_once_url</code>,参数是网页获取的数据,然后通过正则表达式,匹配出来<code>/mission/daily/redeem\?once=\d+</code>,具体方法是<code>re.search(p,data)</code>,作为对比,<code>re.match()</code>是从开头匹配结果,<code>re.search()</code>则是全字符串进行匹配,返回<code>match object</code>对象,我们取第一个结果,调用返回对象的<code>group()</code>方法即可.<br>至此,既可以完成自动签到功能.</p>
+<h3 id="用到模块方法总结"><a href="#用到模块方法总结" class="headerlink" title="用到模块方法总结"></a>用到模块方法总结</h3><p>自动签到功能主要用到的函数有</p>
+<ol>
+<li><code>cookielib</code>里面生成cookie的方法</li>
+<li><code>urllib2</code>生成<code>opener</code>的方法及相关方法</li>
+<li><code>opener</code>的<code>open()</code>以及<code>read()</code>方法</li>
+<li><code>re</code>模块的<code>search()</code>相关对象方法</li>
+<li><code>sys</code>模块的<code>exit()</code>方法</li>
+</ol>
+
+    
+
     
 </div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/06/24/NSProxy简介以及使用/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
 
 
                     
