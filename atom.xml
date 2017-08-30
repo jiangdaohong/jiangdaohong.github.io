@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://jiangdaohong.github.io./"/>
-  <updated>2017-08-15T03:46:50.000Z</updated>
+  <updated>2017-08-30T04:58:54.000Z</updated>
   <id>https://jiangdaohong.github.io./</id>
   
   <author>
@@ -16,11 +16,45 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>SDWebImage源码阅读笔记</title>
+    <link href="https://jiangdaohong.github.io./2017/08/21/SDWebImage%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/"/>
+    <id>https://jiangdaohong.github.io./2017/08/21/SDWebImage源码阅读笔记/</id>
+    <published>2017-08-21T08:56:51.000Z</published>
+    <updated>2017-08-30T04:58:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ol>
+<li>SDWebImage地址: <a href="https://github.com/rs/SDWebImage" target="_blank" rel="external">https://github.com/rs/SDWebImage</a></li>
+<li>版本: 4.1.0</li>
+<li>只分析 iOS OC 版本的相关实现, MacOS, watchOS等平台以及 Swift 版本暂不涉及, 代码实现大同小异<h3 id="项目目录结构及其功能"><a href="#项目目录结构及其功能" class="headerlink" title="项目目录结构及其功能"></a>项目目录结构及其功能</h3></li>
+<li><code>SDWebImageOperation</code> : 是一个<code>protocol</code>, 就定义了一个<code>cancle</code>方法; <code>SDWebImageCompat</code> 类: 主要是一些不同系统平台下的常用宏定义</li>
+<li>Downloader : 下载类,主要是对<code>NSOperation</code>以及<code>NSURLSessionTask</code>以及相关操作</li>
+<li>Cache : 缓存类, 主要是<code>SDImageCache</code>以及<code>SDImageCacheConfig</code>,内部涉及memory cache 和 disk cache的处理</li>
+<li>Utils : 工具类, 主要是管理调用上层接口,以及一些解压图片的工具,外加一个图片预取工具类</li>
+<li>Categories : 项目中使用系统类的扩展方法</li>
+<li>WebCache Categories : 一些 UI 控件的扩展方法,一般是我们直接调用的接口</li>
+</ol>
+<h3 id="SDWebImageCompat"><a href="#SDWebImageCompat" class="headerlink" title="SDWebImageCompat"></a>SDWebImageCompat</h3><h3 id="Downloader"><a href="#Downloader" class="headerlink" title="Downloader"></a>Downloader</h3><h3 id="Cache"><a href="#Cache" class="headerlink" title="Cache"></a>Cache</h3><h3 id="Utils"><a href="#Utils" class="headerlink" title="Utils"></a>Utils</h3><h3 id="Categories"><a href="#Categories" class="headerlink" title="Categories"></a>Categories</h3><h3 id="WebCache-Categories"><a href="#WebCache-Categories" class="headerlink" title="WebCache Categories"></a>WebCache Categories</h3>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;说明&quot;&gt;&lt;a href=&quot;#说明&quot; class=&quot;headerlink&quot; title=&quot;说明&quot;&gt;&lt;/a&gt;说明&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;SDWebImage地址: &lt;a href=&quot;https://github.com/rs/SDWebImage&quot; target=
+    
+    </summary>
+    
+      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
+    
+    
+      <category term="源码阅读" scheme="https://jiangdaohong.github.io./tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/"/>
+    
+  </entry>
+  
+  <entry>
     <title>使用Python自动签到V2EX</title>
     <link href="https://jiangdaohong.github.io./2017/08/15/%E4%BD%BF%E7%94%A8Python%E8%87%AA%E5%8A%A8%E7%AD%BE%E5%88%B0V2EX/"/>
     <id>https://jiangdaohong.github.io./2017/08/15/使用Python自动签到V2EX/</id>
     <published>2017-08-15T01:22:01.000Z</published>
-    <updated>2017-08-15T03:46:50.000Z</updated>
+    <updated>2017-08-30T04:56:41.000Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://www.v2ex.com" target="_blank" rel="external">V2EX</a>是我经常登录的一个社区,里面有很多做开发的小伙伴.这个网站每天有个签到功能,作为一个潜水党,每天和网站的交互,第一件事情就是签到,但是每天手动签到好麻烦,github上面搜到一个脚本,简单解析一下.<br><a id="more"></a></p>
 <h3 id="脚本地址"><a href="#脚本地址" class="headerlink" title="脚本地址"></a>脚本地址</h3><p><a href="https://github.com/isayme/v2ex" target="_blank" rel="external">V2EX自动签到</a>,不是我写的,感谢脚本作者,感谢开源社区,让大家有更多学习交流的机会</p>
@@ -56,6 +90,8 @@
     
     </summary>
     
+      <category term="Python" scheme="https://jiangdaohong.github.io./categories/Python/"/>
+    
     
       <category term="Python" scheme="https://jiangdaohong.github.io./tags/Python/"/>
     
@@ -66,7 +102,7 @@
     <link href="https://jiangdaohong.github.io./2017/06/24/NSProxy%E7%AE%80%E4%BB%8B%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/"/>
     <id>https://jiangdaohong.github.io./2017/06/24/NSProxy简介以及使用/</id>
     <published>2017-06-24T10:16:28.000Z</published>
-    <updated>2017-07-03T12:15:34.000Z</updated>
+    <updated>2017-08-30T04:59:07.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>在<code>Objective-C</code>中,大部分类都是继承自<code>NSObject</code>,但它并不是唯一的<code>root class</code>,还有一个就是<code>NSProxy</code>这个类,看一下API中它的介绍:</p>
 <blockquote>
@@ -92,6 +128,8 @@
     
     </summary>
     
+      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
+    
     
       <category term="Tips" scheme="https://jiangdaohong.github.io./tags/Tips/"/>
     
@@ -102,7 +140,7 @@
     <link href="https://jiangdaohong.github.io./2017/05/14/%E6%B5%85%E8%B0%88iOS%E5%A4%8D%E6%9D%82%E8%A1%A8%E4%BC%98%E5%8C%96/"/>
     <id>https://jiangdaohong.github.io./2017/05/14/浅谈iOS复杂表优化/</id>
     <published>2017-05-14T13:45:28.000Z</published>
-    <updated>2017-06-24T02:58:32.000Z</updated>
+    <updated>2017-08-30T04:59:31.000Z</updated>
     
     <content type="html"><![CDATA[<p>记录一下最进项目改版的一些思考<br><a id="more"></a></p>
 <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>由于原来首页列表需求多次大变动,加载<code>cell</code>的逻辑也跟着调整了很多次,<code>cell</code>的种类以及布局也变化很大,这次刚好进行重构;而且,原来的加载方式会大量进行子视图修改,有一定的潜在性能问题.</p>
@@ -144,6 +182,8 @@
     
     </summary>
     
+      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
+    
     
       <category term="Performance" scheme="https://jiangdaohong.github.io./tags/Performance/"/>
     
@@ -154,7 +194,7 @@
     <link href="https://jiangdaohong.github.io./2017/02/13/WebView%E6%88%AA%E5%9B%BE%E7%9A%84%E4%B8%80%E7%A7%8D%E6%80%9D%E8%B7%AF/"/>
     <id>https://jiangdaohong.github.io./2017/02/13/WebView截图的一种思路/</id>
     <published>2017-02-13T02:06:07.000Z</published>
-    <updated>2017-02-13T02:34:44.000Z</updated>
+    <updated>2017-08-30T05:00:08.000Z</updated>
     
     <content type="html"><![CDATA[<p>网页完整截图的方法<br><a id="more"></a></p>
 <p>那天想起来一个APP分享的时候生成一张长图,想试一下,开始想的很简单:在webview加载完成的delegate里面,获取scroll view的layer,然后根据图形上下文获取image,保存相册即可.然而,失败了╮(╯▽╰)╭</p>
@@ -170,6 +210,8 @@
     
     </summary>
     
+      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
+    
     
       <category term="skill" scheme="https://jiangdaohong.github.io./tags/skill/"/>
     
@@ -180,7 +222,7 @@
     <link href="https://jiangdaohong.github.io./2017/02/07/iOS%E7%AB%AF%E5%8A%A0%E8%BD%BDPDF%E6%96%87%E4%BB%B6%E5%AE%9E%E8%B7%B5/"/>
     <id>https://jiangdaohong.github.io./2017/02/07/iOS端加载PDF文件实践/</id>
     <published>2017-02-07T08:10:16.000Z</published>
-    <updated>2017-07-23T09:37:05.000Z</updated>
+    <updated>2017-08-30T04:58:34.000Z</updated>
     
     <content type="html"><![CDATA[<p>最近项目中需要加载PDF文件, 遇到一些小问题, 记录一下<br><a id="more"></a></p>
 <h3 id="常见加载PDF的方式"><a href="#常见加载PDF的方式" class="headerlink" title="常见加载PDF的方式"></a>常见加载PDF的方式</h3><p>   iOS上面加载PDF一般分为两种方式, 一种是使用web view, 加载本地PDF文件或者网络PDF数据; 另一种就是将PDF文件重新绘制, 使用自定义view进行显示. 两种方式各有优劣: 第一种方式简单, 粗暴, 没有编辑的时候使用这种方式进行简单PDF浏览, 能达到比较好的效果, 缺点是不能进行编辑, 显示的信息比较简略, 而且web view本身是有内存问题的; 自定义view的灵活性比较大, 一般的阅读软件都是使用这种方式, 可以分页显示, 进行编辑等操作, 缺点是与第一种方式相比下, 需要写较多的代码以及考虑性能优化的问题.</p>
@@ -208,6 +250,8 @@
     
     </summary>
     
+      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
+    
     
       <category term="skill" scheme="https://jiangdaohong.github.io./tags/skill/"/>
     
@@ -218,7 +262,7 @@
     <link href="https://jiangdaohong.github.io./2016/12/11/%E4%B8%BApeek-view%E6%B7%BB%E5%8A%A0%E6%98%BE%E7%A4%BA%E6%A0%87%E9%A2%98/"/>
     <id>https://jiangdaohong.github.io./2016/12/11/为peek-view添加显示标题/</id>
     <published>2016-12-11T10:50:05.000Z</published>
-    <updated>2016-12-11T11:23:03.000Z</updated>
+    <updated>2017-08-30T05:01:17.000Z</updated>
     
     <content type="html"><![CDATA[<p>看到一些APP peek操作的时候会显示标题,模仿一下喽.<br><a id="more"></a></p>
 <p>在玩APP的时候发现一些APP的peek出来的页面不太一样,显示的是有标题的,比如知乎首页和微博评论的按钮peek操作:</p>
@@ -235,6 +279,8 @@
     
     </summary>
     
+      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
+    
     
       <category term="3D touch" scheme="https://jiangdaohong.github.io./tags/3D-touch/"/>
     
@@ -245,7 +291,7 @@
     <link href="https://jiangdaohong.github.io./2016/12/10/APP%E5%9B%BD%E9%99%85%E5%8C%96%E7%AC%94%E8%AE%B0/"/>
     <id>https://jiangdaohong.github.io./2016/12/10/APP国际化笔记/</id>
     <published>2016-12-10T15:32:31.000Z</published>
-    <updated>2016-12-12T05:08:42.000Z</updated>
+    <updated>2017-08-30T05:01:45.000Z</updated>
     
     <content type="html"><![CDATA[<p>最近项目需要做本地化,简单记录一下,这里的APP本地化特指iOS客户端的本地化.<br><a id="more"></a></p>
 <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>随着移动互联网的发展,很多APP借着苹果的平台渐渐走向国际,甚至有些国内的公司面向的就是国外用户,我们现在做的产品就有这方面的需求,所以抽时间做了一下APP本地化.<br>一般来说,APP本地化主要是一些文字和图片,plist资源的本地化.文字一般就是UI控件上展示的文本,控件可能是纯代码创建的,也可能是xib或者storyboard上的控件;而图片则需要准备不同的资源文件.<br>下面介绍一下常用的本地化方法:</p>
@@ -287,6 +333,8 @@
     
     </summary>
     
+      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
+    
     
   </entry>
   
@@ -295,7 +343,7 @@
     <link href="https://jiangdaohong.github.io./2016/11/28/%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BD%AC%E5%9C%BA%E5%8A%A8%E7%94%BB/"/>
     <id>https://jiangdaohong.github.io./2016/11/28/自定义转场动画/</id>
     <published>2016-11-28T12:43:58.000Z</published>
-    <updated>2017-07-23T10:35:56.000Z</updated>
+    <updated>2017-08-30T04:57:53.000Z</updated>
     
     <content type="html"><![CDATA[<p>好久不用的东西,复习一下,先写一下转场动画吧O(∩_∩)O</p>
 <a id="more"></a>
@@ -324,6 +372,8 @@
     
     </summary>
     
+      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
+    
     
       <category term="Animation" scheme="https://jiangdaohong.github.io./tags/Animation/"/>
     
@@ -334,7 +384,7 @@
     <link href="https://jiangdaohong.github.io./2016/11/20/%E5%88%9D%E7%AA%A5JSPatch/"/>
     <id>https://jiangdaohong.github.io./2016/11/20/初窥JSPatch/</id>
     <published>2016-11-20T09:28:23.000Z</published>
-    <updated>2016-11-20T10:52:58.000Z</updated>
+    <updated>2017-08-30T05:01:31.000Z</updated>
     
     <content type="html"><![CDATA[<p>Hotfix是解决线上bug的重要手段之一,iOS开发中,如今流行的成熟解决方法之一就是JSPatch,本文主要是对JSPatch应用进行一定的介绍,并未做原理分析.<br><a id="more"></a></p>
 <p>谈起hotfix,是个不小的话题,而JSPatch以他灵活,使用方便而且功能强大的特点,使它成为解决线上重大bug的”黑武器”,强大,危险.所以在开头要说明,不用使用JSPatch来修改一些小的错误,只有发生重大bug的时候才使用,原子弹固然威力大,但造成的后果也是影响深远的.一些界面可以采用其他方案替代,提高app的动态性,比如使用web view等方式,这里不做深究.下面开始介绍JSPatch.</p>
@@ -359,6 +409,8 @@
     
     </summary>
     
+      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
+    
     
       <category term="skill" scheme="https://jiangdaohong.github.io./tags/skill/"/>
     
@@ -369,7 +421,7 @@
     <link href="https://jiangdaohong.github.io./2016/10/22/iOS%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8UI%E5%B0%8F%E6%8A%80%E5%B7%A7/"/>
     <id>https://jiangdaohong.github.io./2016/10/22/iOS开发常用UI小技巧/</id>
     <published>2016-10-22T14:55:16.000Z</published>
-    <updated>2016-12-04T14:19:31.000Z</updated>
+    <updated>2017-08-30T05:01:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>整理一下开发中常用的UI小技巧<br><a id="more"></a></p>
 <ol>
@@ -433,6 +485,8 @@
     
     </summary>
     
+      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
+    
     
       <category term="Tips" scheme="https://jiangdaohong.github.io./tags/Tips/"/>
     
@@ -443,7 +497,7 @@
     <link href="https://jiangdaohong.github.io./2016/10/22/UIWebView%E6%B8%85%E9%99%A4%E7%BC%93%E5%AD%98/"/>
     <id>https://jiangdaohong.github.io./2016/10/22/UIWebView清除缓存/</id>
     <published>2016-10-22T14:41:53.000Z</published>
-    <updated>2016-10-22T14:50:03.000Z</updated>
+    <updated>2017-08-30T05:02:01.000Z</updated>
     
     <content type="html"><![CDATA[<p>webview清理缓存的正确姿势<br><a id="more"></a></p>
 <p>最近项目中加了不少网页,有一些内容经常变动,未能及时刷新,网上找了一些方法,包括清除<code>NSURLCache</code>和写<code>js</code>进行清除,或者加载之前进行<code>reload</code>操作,发现都没效果,关掉网络还是可以加载出来😶后来发现想的复杂了,直接初始化<code>request</code>的时候缓存策略选择忽略本地缓存就好了,一声叹息…<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSURLRequest</span> *request = [[<span class="built_in">NSURLRequest</span> alloc] initWithURL:[<span class="built_in">NSURL</span> URLWithString:urlStr] cachePolicy:<span class="built_in">NSURLRequestReloadIgnoringLocalCacheData</span> timeoutInterval:HTTP_REQUSET_TIMEOUT_INTERVAL];</div><div class="line">[webView loadRequest:request];</div></pre></td></tr></table></figure></p>
@@ -455,6 +509,8 @@
     
     </summary>
     
+      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
+    
     
       <category term="DEBUG" scheme="https://jiangdaohong.github.io./tags/DEBUG/"/>
     
@@ -465,7 +521,7 @@
     <link href="https://jiangdaohong.github.io./2016/10/22/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E4%B8%AD%E7%9A%84GCD%E5%AE%9E%E6%88%98%E5%BA%94%E7%94%A8/"/>
     <id>https://jiangdaohong.github.io./2016/10/22/项目开发中的GCD实战应用/</id>
     <published>2016-10-22T11:08:13.000Z</published>
-    <updated>2016-11-13T04:23:19.000Z</updated>
+    <updated>2017-08-30T05:01:24.000Z</updated>
     
     <content type="html"><![CDATA[<p>整理一下项目中GCD的应用<br><a id="more"></a></p>
 <p>GCD是apple提供的一组C语言的API,主要用于实现一些特殊的功能,比如并发编程等,虽然是C语言的接口,但是经过block封装,调用十分方便,因此在项目中应用十分广泛,现在总结一下我个人在项目中的使用.</p>
@@ -484,6 +540,8 @@
     
     </summary>
     
+      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
+    
     
       <category term="skill" scheme="https://jiangdaohong.github.io./tags/skill/"/>
     
@@ -496,7 +554,7 @@
     <link href="https://jiangdaohong.github.io./2016/10/03/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E4%B8%ADKVC%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8/"/>
     <id>https://jiangdaohong.github.io./2016/10/03/项目开发中KVC的简单应用/</id>
     <published>2016-10-03T09:38:25.000Z</published>
-    <updated>2016-10-06T07:47:19.000Z</updated>
+    <updated>2017-08-30T05:01:37.000Z</updated>
     
     <content type="html"><![CDATA[<p>项目中有些时候使用KVC,可以节省很多的时间精力,实现快速开发</p>
 <a id="more"></a>
@@ -529,6 +587,8 @@
     
     </summary>
     
+      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
+    
     
       <category term="skill" scheme="https://jiangdaohong.github.io./tags/skill/"/>
     
@@ -539,7 +599,7 @@
     <link href="https://jiangdaohong.github.io./2016/10/02/%E6%AF%8F%E5%88%B0%E6%B7%B1%E5%A4%9C-%E6%80%BB%E6%98%AF%E6%9C%89%E8%AF%9D%E6%83%B3%E8%AF%B4%E8%AF%B4/"/>
     <id>https://jiangdaohong.github.io./2016/10/02/每到深夜-总是有话想说说/</id>
     <published>2016-10-02T14:30:17.000Z</published>
-    <updated>2016-10-02T14:40:10.000Z</updated>
+    <updated>2017-08-30T05:01:08.000Z</updated>
     
     <content type="html"><![CDATA[<p>随便写写字<br><a id="more"></a></p>
 <p>来杭州工作一年多了,记得上次十一,还在加班搞这个项目,一年过去了,还是这个项目,心累…做了很久的东西,没来得及上线就被砍了,虽说是搬砖,心里总还是不爽的.之前一直想写博客,但是网上大牛很多,博客写的很好,我写出来有什么用呢?内心还是希望记录一些东西.直到前一段时间比较空闲,就搭建了这个博客.</p>
@@ -553,6 +613,8 @@
     
     </summary>
     
+      <category term="随笔" scheme="https://jiangdaohong.github.io./categories/%E9%9A%8F%E7%AC%94/"/>
+    
     
       <category term="我说" scheme="https://jiangdaohong.github.io./tags/%E6%88%91%E8%AF%B4/"/>
     
@@ -563,7 +625,7 @@
     <link href="https://jiangdaohong.github.io./2016/10/02/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%85%B3%E4%BA%8Enull-resettable%E7%9A%84%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
     <id>https://jiangdaohong.github.io./2016/10/02/记一次关于null-resettable的性能优化/</id>
     <published>2016-10-02T12:14:19.000Z</published>
-    <updated>2016-10-06T07:48:57.000Z</updated>
+    <updated>2017-08-30T05:00:30.000Z</updated>
     
     <content type="html"><![CDATA[<p>最近在进行项目优化的时候遇到了关于null_resettable的坑,记录一下,由于之前代码不在了,简单模拟一下当时的情况.<br><a id="more"></a></p>
 <p>最近项目要正式上线,需要进行一定的性能方面的测试,由于之前的数据加载的方案几经变化,都没有出现严重的性能问题,也没有在意,结果一测试,结果让我大跌眼镜:性能简直差到天边d(･｀ω´･d*)!!!简单log一下看看那里耗时严重.</p>
@@ -588,6 +650,8 @@
     
     </summary>
     
+      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
+    
     
       <category term="Performance" scheme="https://jiangdaohong.github.io./tags/Performance/"/>
     
@@ -598,7 +662,7 @@
     <link href="https://jiangdaohong.github.io./2016/09/25/Xcode%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%89%93%E5%8C%85/"/>
     <id>https://jiangdaohong.github.io./2016/09/25/Xcode命令行打包/</id>
     <published>2016-09-25T12:59:52.000Z</published>
-    <updated>2016-09-25T13:36:16.000Z</updated>
+    <updated>2017-08-30T05:02:08.000Z</updated>
     
     <content type="html"><![CDATA[<p>记录一下使用命令行进行打包<br><a id="more"></a></p>
 <h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>最近公司进行内部测试,要求每天进行App打包上传,本来想搭建一个CI系统,但是实在没有精力(好吧,是没有成功╮(╯_╰)╭,搭建到一半下载git等插件的时候一直出问题,下次有时间再搞了),项目不大,但是每次打包要10分钟(里面有Swift混编,大坑),忍不了了,上网查了一下看到有一些编译优化指令,然后看CI的时候看到了自动打包命令,试了一下,打包时间可以缩短到3分钟以内,记录一下过程吧.</p>
@@ -626,6 +690,8 @@
     
     </summary>
     
+      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
+    
     
       <category term="Tips" scheme="https://jiangdaohong.github.io./tags/Tips/"/>
     
@@ -636,7 +702,7 @@
     <link href="https://jiangdaohong.github.io./2016/09/23/Reveal%E7%9C%9F%E6%9C%BA%E6%9F%A5%E7%9C%8Bapp/"/>
     <id>https://jiangdaohong.github.io./2016/09/23/Reveal真机查看app/</id>
     <published>2016-09-23T01:43:17.000Z</published>
-    <updated>2017-03-15T05:40:13.000Z</updated>
+    <updated>2017-08-30T04:59:56.000Z</updated>
     
     <content type="html"><![CDATA[<p>记录一下使用Reveal的基本使用<br><a id="more"></a></p>
 <h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ol>
@@ -677,6 +743,8 @@
     
     </summary>
     
+      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
+    
     
       <category term="DEBUG" scheme="https://jiangdaohong.github.io./tags/DEBUG/"/>
     
@@ -687,7 +755,7 @@
     <link href="https://jiangdaohong.github.io./2016/09/22/%E5%AE%89%E8%A3%85Chisel/"/>
     <id>https://jiangdaohong.github.io./2016/09/22/安装Chisel/</id>
     <published>2016-09-22T02:53:22.000Z</published>
-    <updated>2017-03-15T05:39:57.000Z</updated>
+    <updated>2017-08-30T04:59:46.000Z</updated>
     
     <content type="html"><![CDATA[<p>记录一下使用Chisel的安装过程以及基本的命令<br><a id="more"></a></p>
 <ol>
@@ -709,6 +777,8 @@
     
     </summary>
     
+      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
+    
     
       <category term="DEBUG" scheme="https://jiangdaohong.github.io./tags/DEBUG/"/>
     
@@ -729,26 +799,6 @@
     <summary type="html">
     
       &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;c
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>123</title>
-    <link href="https://jiangdaohong.github.io./2016/08/19/hello%20world/"/>
-    <id>https://jiangdaohong.github.io./2016/08/19/hello world/</id>
-    <published>2016-08-19T02:40:55.000Z</published>
-    <updated>2016-08-19T08:04:55.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>hello world</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;hello world&lt;/p&gt;
-
     
     </summary>
     

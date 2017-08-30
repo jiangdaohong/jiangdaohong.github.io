@@ -4,6 +4,23 @@
   
     
     <entry>
+      <title><![CDATA[SDWebImage源码阅读笔记]]></title>
+      <url>https://jiangdaohong.github.io./2017/08/21/SDWebImage%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</url>
+      <content type="html"><![CDATA[<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ol>
+<li>SDWebImage地址: <a href="https://github.com/rs/SDWebImage" target="_blank" rel="external">https://github.com/rs/SDWebImage</a></li>
+<li>版本: 4.1.0</li>
+<li>只分析 iOS OC 版本的相关实现, MacOS, watchOS等平台以及 Swift 版本暂不涉及, 代码实现大同小异<h3 id="项目目录结构及其功能"><a href="#项目目录结构及其功能" class="headerlink" title="项目目录结构及其功能"></a>项目目录结构及其功能</h3></li>
+<li><code>SDWebImageOperation</code> : 是一个<code>protocol</code>, 就定义了一个<code>cancle</code>方法; <code>SDWebImageCompat</code> 类: 主要是一些不同系统平台下的常用宏定义</li>
+<li>Downloader : 下载类,主要是对<code>NSOperation</code>以及<code>NSURLSessionTask</code>以及相关操作</li>
+<li>Cache : 缓存类, 主要是<code>SDImageCache</code>以及<code>SDImageCacheConfig</code>,内部涉及memory cache 和 disk cache的处理</li>
+<li>Utils : 工具类, 主要是管理调用上层接口,以及一些解压图片的工具,外加一个图片预取工具类</li>
+<li>Categories : 项目中使用系统类的扩展方法</li>
+<li>WebCache Categories : 一些 UI 控件的扩展方法,一般是我们直接调用的接口</li>
+</ol>
+<h3 id="SDWebImageCompat"><a href="#SDWebImageCompat" class="headerlink" title="SDWebImageCompat"></a>SDWebImageCompat</h3><h3 id="Downloader"><a href="#Downloader" class="headerlink" title="Downloader"></a>Downloader</h3><h3 id="Cache"><a href="#Cache" class="headerlink" title="Cache"></a>Cache</h3><h3 id="Utils"><a href="#Utils" class="headerlink" title="Utils"></a>Utils</h3><h3 id="Categories"><a href="#Categories" class="headerlink" title="Categories"></a>Categories</h3><h3 id="WebCache-Categories"><a href="#WebCache-Categories" class="headerlink" title="WebCache Categories"></a>WebCache Categories</h3>]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[使用Python自动签到V2EX]]></title>
       <url>https://jiangdaohong.github.io./2017/08/15/%E4%BD%BF%E7%94%A8Python%E8%87%AA%E5%8A%A8%E7%AD%BE%E5%88%B0V2EX/</url>
       <content type="html"><![CDATA[<p><a href="https://www.v2ex.com" target="_blank" rel="external">V2EX</a>是我经常登录的一个社区,里面有很多做开发的小伙伴.这个网站每天有个签到功能,作为一个潜水党,每天和网站的交互,第一件事情就是签到,但是每天手动签到好麻烦,github上面搜到一个脚本,简单解析一下.<br><a id="more"></a></p>
