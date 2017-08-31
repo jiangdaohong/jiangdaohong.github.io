@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://jiangdaohong.github.io./"/>
-  <updated>2017-08-30T04:58:54.000Z</updated>
+  <updated>2017-08-31T02:06:21.000Z</updated>
   <id>https://jiangdaohong.github.io./</id>
   
   <author>
@@ -16,36 +16,28 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>SDWebImage源码阅读笔记</title>
-    <link href="https://jiangdaohong.github.io./2017/08/21/SDWebImage%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/"/>
-    <id>https://jiangdaohong.github.io./2017/08/21/SDWebImage源码阅读笔记/</id>
-    <published>2017-08-21T08:56:51.000Z</published>
-    <updated>2017-08-30T04:58:54.000Z</updated>
+    <title>关于OC运行机制的几篇博客</title>
+    <link href="https://jiangdaohong.github.io./2017/08/31/%E5%85%B3%E4%BA%8EOC%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E7%9A%84%E5%87%A0%E7%AF%87%E5%8D%9A%E5%AE%A2/"/>
+    <id>https://jiangdaohong.github.io./2017/08/31/关于OC运行机制的几篇博客/</id>
+    <published>2017-08-31T01:29:26.000Z</published>
+    <updated>2017-08-31T02:06:21.000Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ol>
-<li>SDWebImage地址: <a href="https://github.com/rs/SDWebImage" target="_blank" rel="external">https://github.com/rs/SDWebImage</a></li>
-<li>版本: 4.1.0</li>
-<li>只分析 iOS OC 版本的相关实现, MacOS, watchOS等平台以及 Swift 版本暂不涉及, 代码实现大同小异<h3 id="项目目录结构及其功能"><a href="#项目目录结构及其功能" class="headerlink" title="项目目录结构及其功能"></a>项目目录结构及其功能</h3></li>
-<li><code>SDWebImageOperation</code> : 是一个<code>protocol</code>, 就定义了一个<code>cancle</code>方法; <code>SDWebImageCompat</code> 类: 主要是一些不同系统平台下的常用宏定义</li>
-<li>Downloader : 下载类,主要是对<code>NSOperation</code>以及<code>NSURLSessionTask</code>以及相关操作</li>
-<li>Cache : 缓存类, 主要是<code>SDImageCache</code>以及<code>SDImageCacheConfig</code>,内部涉及memory cache 和 disk cache的处理</li>
-<li>Utils : 工具类, 主要是管理调用上层接口,以及一些解压图片的工具,外加一个图片预取工具类</li>
-<li>Categories : 项目中使用系统类的扩展方法</li>
-<li>WebCache Categories : 一些 UI 控件的扩展方法,一般是我们直接调用的接口</li>
-</ol>
-<h3 id="SDWebImageCompat"><a href="#SDWebImageCompat" class="headerlink" title="SDWebImageCompat"></a>SDWebImageCompat</h3><h3 id="Downloader"><a href="#Downloader" class="headerlink" title="Downloader"></a>Downloader</h3><h3 id="Cache"><a href="#Cache" class="headerlink" title="Cache"></a>Cache</h3><h3 id="Utils"><a href="#Utils" class="headerlink" title="Utils"></a>Utils</h3><h3 id="Categories"><a href="#Categories" class="headerlink" title="Categories"></a>Categories</h3><h3 id="WebCache-Categories"><a href="#WebCache-Categories" class="headerlink" title="WebCache Categories"></a>WebCache Categories</h3>]]></content>
+    <content type="html"><![CDATA[<p>整理一下讲解OC语言相关博客<br><a id="more"></a></p>
+<h3 id="ibireme的博客"><a href="#ibireme的博客" class="headerlink" title="ibireme的博客"></a><a href="https://blog.ibireme.com/archive/" target="_blank" rel="external">ibireme的博客</a></h3><p><a href="https://blog.ibireme.com/2013/11/26/objective-c-messaging/" target="_blank" rel="external">Objective-C 中的消息与消息转发</a><br><a href="https://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="external">深入理解RunLoop</a><br><a href="https://blog.ibireme.com/2013/11/25/objc-object/" target="_blank" rel="external">Objective-C 中的类和对象</a></p>
+<h3 id="雷纯锋的技术博客"><a href="#雷纯锋的技术博客" class="headerlink" title="雷纯锋的技术博客"></a><a href="http://blog.leichunfeng.com/" target="_blank" rel="external">雷纯锋的技术博客</a></h3><p><a href="http://blog.leichunfeng.com/blog/2015/04/25/objective-c-object-model/" target="_blank" rel="external">Objective-C 对象模型</a><br><a href="http://blog.leichunfeng.com/blog/2015/05/02/objective-c-plus-load-vs-plus-initialize/" target="_blank" rel="external">Objective-C +load vs +initialize</a><br><a href="http://blog.leichunfeng.com/blog/2015/05/18/objective-c-category-implementation-principle/" target="_blank" rel="external">Objective-C Category 的实现原理</a><br><a href="http://blog.leichunfeng.com/blog/2015/05/31/objective-c-autorelease-pool-implementation-principle/" target="_blank" rel="external">Objective-C Autorelease Pool 的实现原理</a><br><a href="http://blog.leichunfeng.com/blog/2015/06/14/objective-c-method-swizzling-best-practice/" target="_blank" rel="external">Objective-C Method Swizzling 的最佳实践</a><br><a href="http://blog.leichunfeng.com/blog/2015/06/26/objective-c-associated-objects-implementation-principle/" target="_blank" rel="external">Objective-C Associated Objects 的实现原理</a><br><a href="http://blog.leichunfeng.com/blog/2016/06/20/objective-c-fast-enumeration-implementation-principle/" target="_blank" rel="external">Objective-C Fast Enumeration 的实现原理</a></p>
+<h3 id="OneV’s-Den"><a href="#OneV’s-Den" class="headerlink" title="OneV’s Den"></a><a href="https://onevcat.com/#blog" target="_blank" rel="external">OneV’s Den</a></h3><p><a href="https://onevcat.com/2013/05/talk-about-warning/" target="_blank" rel="external">谈谈Objective-C的警告</a><br><a href="https://onevcat.com/2012/04/objective-c-runtime/" target="_blank" rel="external">深入Objective-C的动态特性</a><br><a href="https://onevcat.com/2011/12/debug-2/" target="_blank" rel="external">Objective-C中的Debug表达式</a><br><a href="https://onevcat.com/2011/11/objc-block/" target="_blank" rel="external">Objective-C中的Block</a></p>
+<h3 id="sunnyxx"><a href="#sunnyxx" class="headerlink" title="sunnyxx"></a><a href="http://blog.sunnyxx.com" target="_blank" rel="external">sunnyxx</a></h3><p><a href="http://blog.sunnyxx.com/2016/08/13/reunderstanding-runtime-1/" target="_blank" rel="external">重识 Objective-C Runtime - 看透 Type 与 Value</a><br><a href="http://blog.sunnyxx.com/2016/08/13/reunderstanding-runtime-0/" target="_blank" rel="external">重识 Objective-C Runtime - Smalltalk 与 C 的融合</a><br><a href="http://blog.sunnyxx.com/2016/05/14/clang-attributes/" target="_blank" rel="external">Clang Attributes 黑魔法小记</a><br><a href="http://blog.sunnyxx.com/2016/04/22/objc-class-extension-tips/" target="_blank" rel="external">巧用 Class Extension 分离接口依赖</a><br><a href="http://blog.sunnyxx.com/2015/09/13/class-ivar-layout/" target="_blank" rel="external">Objective-C Class Ivar Layout 探索</a><br><a href="http://blog.sunnyxx.com/2015/06/12/objc-new-features-in-2015/" target="_blank" rel="external">2015 Objective-C 新特性</a><br><a href="http://blog.sunnyxx.com/2015/01/17/self-in-arc/" target="_blank" rel="external">ARC对self的内存管理</a><br><a href="http://blog.sunnyxx.com/2014/12/18/class-cluster/" target="_blank" rel="external">从NSArray看类簇</a></p>
+<h3 id="唐巧的博客"><a href="#唐巧的博客" class="headerlink" title="唐巧的博客"></a><a href="http://blog.devtang.com/" target="_blank" rel="external">唐巧的博客</a></h3><p><a href="http://blog.devtang.com/2016/07/30/ios-memory-management/" target="_blank" rel="external">理解 iOS 的内存管理</a><br><a href="http://blog.devtang.com/2013/10/15/objective-c-object-model/" target="_blank" rel="external">Objective-C对象模型及应用</a><br><a href="http://blog.devtang.com/2013/01/13/two-stage-creation-on-cocoa/" target="_blank" rel="external">谈ObjC对象的两段构造模式</a></p>
+]]></content>
     
     <summary type="html">
     
-      &lt;h3 id=&quot;说明&quot;&gt;&lt;a href=&quot;#说明&quot; class=&quot;headerlink&quot; title=&quot;说明&quot;&gt;&lt;/a&gt;说明&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;SDWebImage地址: &lt;a href=&quot;https://github.com/rs/SDWebImage&quot; target=
+      &lt;p&gt;整理一下讲解OC语言相关博客&lt;br&gt;
     
     </summary>
     
       <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
     
-    
-      <category term="源码阅读" scheme="https://jiangdaohong.github.io./tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/"/>
     
   </entry>
   
@@ -94,6 +86,68 @@
     
     
       <category term="Python" scheme="https://jiangdaohong.github.io./tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>FMDB常用操作</title>
+    <link href="https://jiangdaohong.github.io./2017/06/28/FMDB%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/"/>
+    <id>https://jiangdaohong.github.io./2017/06/28/FMDB常用操作/</id>
+    <published>2017-06-28T15:19:47.000Z</published>
+    <updated>2017-08-31T04:14:01.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>项目中比较多的用到了数据库，整理一下常用的数据库操作<br><a id="more"></a></p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>简单整理一些<code>FMDB</code>的一些常用操作.<br>需要了解的概念包括但不限于外连接，表别名，唯一键，升序，游标，like，between and，not null，unique，default，check，primary key， foreing key，union等等，更多查看<a href="http://www.sqlite.org/lang_keywords.html" target="_blank" rel="external">sqlite关键字</a></p>
+<h3 id="CRUD，连表查询，索引，事务，回滚"><a href="#CRUD，连表查询，索引，事务，回滚" class="headerlink" title="CRUD，连表查询，索引，事务，回滚"></a>CRUD，连表查询，索引，事务，回滚</h3><ol>
+<li><p>CRUD<br>创建数据库文件，一般有两种方法，一是新建一个文件，然后后缀名修改为自定义后缀，然后直接拖到项目的main bundle，还有一种是获取当前app的沙盒路径，然后在目录下面新建一个文件作为数据库文件.</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// create</span></div><div class="line"><span class="comment">// 第二种方法示例:</span></div><div class="line"><span class="comment">// 全局db路径</span></div><div class="line">	_dbPath = [path stringByAppendingPathComponent:kDBFileName];</div><div class="line">    <span class="built_in">NSError</span> *error = <span class="literal">nil</span>;</div><div class="line">    <span class="comment">// path 为初始化传入的路径，判断路径下面是否存在数据库文件</span></div><div class="line">    <span class="keyword">if</span> (![[<span class="built_in">NSFileManager</span> defaultManager] createDirectoryAtPath:path</div><div class="line">                                   withIntermediateDirectories:<span class="literal">YES</span></div><div class="line">                                                    attributes:<span class="literal">nil</span></div><div class="line">                                                         error:&amp;error]) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"init error:%@"</span>， error);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>建表</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">create table <span class="keyword">if</span> not exists t_Stuent (</div><div class="line">	sid				    text，</div><div class="line">    name               text，</div><div class="line">    insert_time        integer，</div><div class="line">    extended_data       blob，</div><div class="line">    primary key(sid)</div><div class="line"> );</div></pre></td></tr></table></figure>
+<p>插入</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 普通插入</span></div><div class="line"><span class="built_in">NSString</span> *sql = <span class="string">@"INSERT INTO aTable(itemInfoId,userName,userId,cacheTime) VALUES (?1,?2,?3,?4)"</span>;</div><div class="line"><span class="comment">// 插入或替换</span></div><div class="line"><span class="built_in">NSString</span> *sql = <span class="string">@"INSERT OR REPLACE INTO aTable(itemInfoId,userName,userId,cacheTime) VALUES (?1,?2,?3,?4)"</span>;</div><div class="line"><span class="comment">// 插入或忽略</span></div><div class="line"><span class="built_in">NSString</span> *sql = <span class="string">@"INSERT OR IGNORE INTO aTable(itemInfoId,userName,userId,cacheTime) VALUES (?1,?2,?3,?4)"</span>;</div><div class="line">[db executeUpdate:sql, item.itemInfoId,item.userName, item.userId, [<span class="built_in">NSDate</span> new]]</div></pre></td></tr></table></figure>
+<p>查询</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSString</span> *sql = <span class="string">@"SELECT * FROM aTable WHERE cacheTime &lt; ? and itemInfoId = ? and workspaceItemInfoId is not null ORDER BY cacheTime DESC LIMIT 0,20;"</span>;</div></pre></td></tr></table></figure>
+<p>更新</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSString</span> *sql = <span class="string">@"UPDATE aTable SET cacheTime = ? WHERE itemInfoId = ?;"</span></div></pre></td></tr></table></figure>
+<p>删除</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[db executeUpdate:<span class="string">@"DELETE FROM aTable WHERE itemInfoId = ?;"</span>, item.itemInfoId];</div><div class="line"><span class="comment">// 删除表</span></div><div class="line"><span class="string">@"DROP TABLE aTable"</span>;</div></pre></td></tr></table></figure>
+</li>
+<li><p>连表查询</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 一般查询</span></div><div class="line">select * from aTable,bTable where aTable.id=aTable.id;</div><div class="line"><span class="comment">// 内连接</span></div><div class="line">select a.name, b.name from aTable as a inner join bTable as b on a.id = b.id</div><div class="line"><span class="comment">// 左连接</span></div><div class="line">select * from aTable left outer join bTable on aTable.id=bTable.id</div><div class="line"><span class="comment">// 不支持右连接和全连接</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>索引<br><a href="http://www.cnblogs.com/huahuahu/p/sqlite-suo-yin-de-yuan-li-ji-ying-yong.html" target="_blank" rel="external">sqlite索引的原理</a></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 索引可以提高查询效率,但是生成索引需要更大的存储空间</span></div><div class="line">create index <span class="keyword">if</span> not exists idxName on t_Stuent(name);</div></pre></td></tr></table></figure>
+</li>
+<li><p>事务</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">FMDatabase *db;</div><div class="line"><span class="comment">// 开始事务,内部执行sql语句 begin exclusive transaction</span></div><div class="line">[db beginTransaction];</div><div class="line"><span class="comment">// 开始事务,内部执行sql语句 begin deferred transaction</span></div><div class="line">[db beginDeferredTransaction]</div><div class="line"><span class="comment">// 提交,内部执行sql语句 commit transaction</span></div><div class="line">[db1 commit];</div></pre></td></tr></table></figure>
+<p>两种开启事务的区别<a href="http://blog.csdn.net/collin1211/article/details/4671323" target="_blank" rel="external">SQLite语法 BEGIN TRANSACTION</a></p>
+</li>
+<li><p>回滚</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[[FMDatabaseQueue sharedInstance] inDeferredTransaction:^(FMDatabase *db, <span class="built_in">BOOL</span> *rollback) &#123;</div><div class="line"><span class="comment">// 出错, 执行回滚操作</span></div><div class="line"><span class="comment">// 内部执行 [self executeUpdate:@"rollback transaction"]</span></div><div class="line">        <span class="keyword">if</span> (error) &#123;</div><div class="line">            *rollback = <span class="literal">YES</span>;</div><div class="line">        &#125;</div><div class="line"> &#125;];</div></pre></td></tr></table></figure>
+</li>
+<li><p>数据库语句缓存</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 提高查询效率,实际使用字典进行缓存FMStatement</span></div><div class="line">[db setShouldCacheStatements:<span class="literal">YES</span>];</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="增加表字段，修改表名，修改数据库名称"><a href="#增加表字段，修改表名，修改数据库名称" class="headerlink" title="增加表字段，修改表名，修改数据库名称"></a>增加表字段，修改表名，修改数据库名称</h3><p>增加表字段<br><code>ALTER TABLE aTable ADD COLUMN name TEXT</code><br>更改表名称<br><code>ALTER TABLE &quot;aTable&quot; RENAME TO &quot;aTable_old_20170831&quot;;</code></p>
+<h3 id="表迁移数据"><a href="#表迁移数据" class="headerlink" title="表迁移数据"></a>表迁移数据</h3><p>因为sqlite不支持直接修改某一列数据,可以将表A重命名为临时表B,然后,新建一个A表,将B表数据拷贝到A表中,然后删除临时表B即可</p>
+<h3 id="pragma扩展语句"><a href="#pragma扩展语句" class="headerlink" title="pragma扩展语句"></a>pragma扩展语句</h3><blockquote>
+<p>PRAGMA语句是SQLITE数据的SQL扩展，是它独有的特性，主要用于修改SQLITE库或者内数据查询的操作。</p>
+</blockquote>
+<p><a href="http://www.cnblogs.com/songxingzhu/p/3992884.html" target="_blank" rel="external">SQLite中的PRAGMA语句攻略</a><br><code>pragma journal_mode = wal;</code><br>默认<code>delete</code>,开启<code>wal</code>模式之后,一般情况下写入性能更好.会生成两个文件：.shm和.wal<br><code>pragma synchronous = normal;</code><br>在sqlite3.0中默认为<code>full</code>,防止设备故障导致数据库损坏,但是读取性能差,<code>off</code>性能更好,但是对数据库保护不够,一般使用<code>normal</code>模式</p>
+<h3 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h3><p><a href="http://www.cocoachina.com/industry/20140522/8517.html" target="_blank" rel="external">加密你的SQLite</a><br>我选择的是<a href="https://github.com/sqlcipher/sqlcipher" target="_blank" rel="external">sqlcipher</a>,FMDB也有加密的分支,可以通过CocoaPods安装<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">target 'MyApp' do</div><div class="line">    pod 'FMDB/SQLCipher'</div><div class="line">end</div></pre></td></tr></table></figure></p>
+<p>初始化的时候调用db的<code>setKey:</code>就可以了</p>
+<h3 id="新的数据库方案"><a href="#新的数据库方案" class="headerlink" title="新的数据库方案"></a>新的数据库方案</h3><p>微信团队开源了一个数据库解决方案,叫做<code>[WCDB](https://github.com/Tencent/wcdb)</code>,性能和安全性都通过博客看,非常不错,可以阅读他们的以下文章,进行了解学习<br><a href="https://mp.weixin.qq.com/s?__biz=MzAwNDY1ODY2OQ==&amp;mid=2649286361&amp;idx=1&amp;sn=78bbcda7f41a14291ad71289e4821f71&amp;scene=21#wechat_redirect" target="_blank" rel="external">微信iOS SQLite源码优化实践</a><br><a href="https://mp.weixin.qq.com/s/N1tuHTyg3xVfbaSd4du-tw" target="_blank" rel="external">微信 SQLite 数据库修复实践</a><br><a href="https://mp.weixin.qq.com/s/tzy-fr55t1zqTbxOeKg4RA" target="_blank" rel="external">微信WCDB进化之路 - 开源与开始</a><br><a href="https://mp.weixin.qq.com/s/1XxcrsR2HKam9ytNk8vmGw" target="_blank" rel="external">微信移动端数据库组件WCDB系列（一）-iOS基础篇</a><br><a href="https://mp.weixin.qq.com/s/Ln7kNOn3zx589ACmn5ESQA" target="_blank" rel="external">微信移动端数据库组件WCDB系列（二） — 数据库修复三板斧</a><br><a href="https://mp.weixin.qq.com/s/FY2Y9x1_8TcXHDgTRXcTDA" target="_blank" rel="external">微信移动端数据库组件WCDB系列（三） — WINQ原理篇</a><br><a href="https://mp.weixin.qq.com/s/NFnYEXSxAaHBqpi7WofSPQ" target="_blank" rel="external">微信移动数据库组件WCDB（四） — Android 特性篇</a><br><a href="https://mp.weixin.qq.com/s/T62M4NJYJKrxLJfWkfQSlg" target="_blank" rel="external">为什么要从FMDB迁移到WCDB？</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;项目中比较多的用到了数据库，整理一下常用的数据库操作&lt;br&gt;
+    
+    </summary>
+    
+      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
+    
     
   </entry>
   
@@ -781,27 +835,6 @@
     
     
       <category term="DEBUG" scheme="https://jiangdaohong.github.io./tags/DEBUG/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Tips</title>
-    <link href="https://jiangdaohong.github.io./2016/08/19/tips/"/>
-    <id>https://jiangdaohong.github.io./2016/08/19/tips/</id>
-    <published>2016-08-19T09:59:16.000Z</published>
-    <updated>2016-08-20T11:18:50.000Z</updated>
-    
-    <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 主线程</div><div class="line">if (pthread_main_np() == 0) returnnil;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//处于开发阶段</div><div class="line">#ifdef DEBUG</div><div class="line">#define DHLog(...) NSLog(VA_ARGS)</div><div class="line">#else</div><div class="line">//处于发布阶段</div><div class="line">#define DHLog(...)</div><div class="line">#endif</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//Format</div><div class="line">#define F(string, args...)                  [NSString stringWithFormat:string, args]</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;c
-    
-    </summary>
-    
     
   </entry>
   

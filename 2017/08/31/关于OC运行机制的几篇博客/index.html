@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="源码阅读," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -96,28 +96,16 @@
 
 
 
-<meta name="description" content="说明
-SDWebImage地址: https://github.com/rs/SDWebImage
-版本: 4.1.0
-只分析 iOS OC 版本的相关实现, MacOS, watchOS等平台以及 Swift 版本暂不涉及, 代码实现大同小异项目目录结构及其功能
-SDWebImageOperation : 是一个protocol, 就定义了一个cancle方法; SDWebImageCompat">
+<meta name="description" content="整理一下讲解OC语言相关博客">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SDWebImage源码阅读笔记">
-<meta property="og:url" content="https://jiangdaohong.github.io./2017/08/21/SDWebImage源码阅读笔记/index.html">
+<meta property="og:title" content="关于OC运行机制的几篇博客">
+<meta property="og:url" content="https://jiangdaohong.github.io./2017/08/31/关于OC运行机制的几篇博客/index.html">
 <meta property="og:site_name" content="见习魔法师">
-<meta property="og:description" content="说明
-SDWebImage地址: https://github.com/rs/SDWebImage
-版本: 4.1.0
-只分析 iOS OC 版本的相关实现, MacOS, watchOS等平台以及 Swift 版本暂不涉及, 代码实现大同小异项目目录结构及其功能
-SDWebImageOperation : 是一个protocol, 就定义了一个cancle方法; SDWebImageCompat">
-<meta property="og:updated_time" content="2017-08-30T04:58:54.000Z">
+<meta property="og:description" content="整理一下讲解OC语言相关博客">
+<meta property="og:updated_time" content="2017-08-31T02:06:21.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SDWebImage源码阅读笔记">
-<meta name="twitter:description" content="说明
-SDWebImage地址: https://github.com/rs/SDWebImage
-版本: 4.1.0
-只分析 iOS OC 版本的相关实现, MacOS, watchOS等平台以及 Swift 版本暂不涉及, 代码实现大同小异项目目录结构及其功能
-SDWebImageOperation : 是一个protocol, 就定义了一个cancle方法; SDWebImageCompat">
+<meta name="twitter:title" content="关于OC运行机制的几篇博客">
+<meta name="twitter:description" content="整理一下讲解OC语言相关博客">
 
 
 
@@ -146,13 +134,13 @@ SDWebImageOperation : 是一个protocol, 就定义了一个cancle方法; SDWebIm
 
 
 
-  <link rel="canonical" href="https://jiangdaohong.github.io./2017/08/21/SDWebImage源码阅读笔记/"/>
+  <link rel="canonical" href="https://jiangdaohong.github.io./2017/08/31/关于OC运行机制的几篇博客/"/>
 
 
 
 
 
-  <title>SDWebImage源码阅读笔记 | 见习魔法师</title>
+  <title>关于OC运行机制的几篇博客 | 见习魔法师</title>
   
 
 
@@ -295,7 +283,7 @@ SDWebImageOperation : 是一个protocol, 就定义了一个cancle方法; SDWebIm
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://jiangdaohong.github.io./2017/08/21/SDWebImage源码阅读笔记/">
+    <link itemprop="mainEntityOfPage" href="https://jiangdaohong.github.io./2017/08/31/关于OC运行机制的几篇博客/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jiangdaohong">
@@ -312,7 +300,7 @@ SDWebImageOperation : 是一个protocol, 就定义了一个cancle方法; SDWebIm
 
         
         
-          <h1 class="post-title" itemprop="name headline">SDWebImage源码阅读笔记</h1>
+          <h1 class="post-title" itemprop="name headline">关于OC运行机制的几篇博客</h1>
         
 
         <div class="post-meta">
@@ -324,8 +312,8 @@ SDWebImageOperation : 是一个protocol, 就定义了一个cancle方法; SDWebIm
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-21T16:56:51+08:00">
-                2017-08-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-31T09:29:26+08:00">
+                2017-08-31
               </time>
             
 
@@ -384,18 +372,13 @@ SDWebImageOperation : 是一个protocol, 就定义了一个cancle方法; SDWebIm
       
 
       
-        <h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ol>
-<li>SDWebImage地址: <a href="https://github.com/rs/SDWebImage" target="_blank" rel="external">https://github.com/rs/SDWebImage</a></li>
-<li>版本: 4.1.0</li>
-<li>只分析 iOS OC 版本的相关实现, MacOS, watchOS等平台以及 Swift 版本暂不涉及, 代码实现大同小异<h3 id="项目目录结构及其功能"><a href="#项目目录结构及其功能" class="headerlink" title="项目目录结构及其功能"></a>项目目录结构及其功能</h3></li>
-<li><code>SDWebImageOperation</code> : 是一个<code>protocol</code>, 就定义了一个<code>cancle</code>方法; <code>SDWebImageCompat</code> 类: 主要是一些不同系统平台下的常用宏定义</li>
-<li>Downloader : 下载类,主要是对<code>NSOperation</code>以及<code>NSURLSessionTask</code>以及相关操作</li>
-<li>Cache : 缓存类, 主要是<code>SDImageCache</code>以及<code>SDImageCacheConfig</code>,内部涉及memory cache 和 disk cache的处理</li>
-<li>Utils : 工具类, 主要是管理调用上层接口,以及一些解压图片的工具,外加一个图片预取工具类</li>
-<li>Categories : 项目中使用系统类的扩展方法</li>
-<li>WebCache Categories : 一些 UI 控件的扩展方法,一般是我们直接调用的接口</li>
-</ol>
-<h3 id="SDWebImageCompat"><a href="#SDWebImageCompat" class="headerlink" title="SDWebImageCompat"></a>SDWebImageCompat</h3><h3 id="Downloader"><a href="#Downloader" class="headerlink" title="Downloader"></a>Downloader</h3><h3 id="Cache"><a href="#Cache" class="headerlink" title="Cache"></a>Cache</h3><h3 id="Utils"><a href="#Utils" class="headerlink" title="Utils"></a>Utils</h3><h3 id="Categories"><a href="#Categories" class="headerlink" title="Categories"></a>Categories</h3><h3 id="WebCache-Categories"><a href="#WebCache-Categories" class="headerlink" title="WebCache Categories"></a>WebCache Categories</h3>
+        <p>整理一下讲解OC语言相关博客<br><a id="more"></a></p>
+<h3 id="ibireme的博客"><a href="#ibireme的博客" class="headerlink" title="ibireme的博客"></a><a href="https://blog.ibireme.com/archive/" target="_blank" rel="external">ibireme的博客</a></h3><p><a href="https://blog.ibireme.com/2013/11/26/objective-c-messaging/" target="_blank" rel="external">Objective-C 中的消息与消息转发</a><br><a href="https://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="external">深入理解RunLoop</a><br><a href="https://blog.ibireme.com/2013/11/25/objc-object/" target="_blank" rel="external">Objective-C 中的类和对象</a></p>
+<h3 id="雷纯锋的技术博客"><a href="#雷纯锋的技术博客" class="headerlink" title="雷纯锋的技术博客"></a><a href="http://blog.leichunfeng.com/" target="_blank" rel="external">雷纯锋的技术博客</a></h3><p><a href="http://blog.leichunfeng.com/blog/2015/04/25/objective-c-object-model/" target="_blank" rel="external">Objective-C 对象模型</a><br><a href="http://blog.leichunfeng.com/blog/2015/05/02/objective-c-plus-load-vs-plus-initialize/" target="_blank" rel="external">Objective-C +load vs +initialize</a><br><a href="http://blog.leichunfeng.com/blog/2015/05/18/objective-c-category-implementation-principle/" target="_blank" rel="external">Objective-C Category 的实现原理</a><br><a href="http://blog.leichunfeng.com/blog/2015/05/31/objective-c-autorelease-pool-implementation-principle/" target="_blank" rel="external">Objective-C Autorelease Pool 的实现原理</a><br><a href="http://blog.leichunfeng.com/blog/2015/06/14/objective-c-method-swizzling-best-practice/" target="_blank" rel="external">Objective-C Method Swizzling 的最佳实践</a><br><a href="http://blog.leichunfeng.com/blog/2015/06/26/objective-c-associated-objects-implementation-principle/" target="_blank" rel="external">Objective-C Associated Objects 的实现原理</a><br><a href="http://blog.leichunfeng.com/blog/2016/06/20/objective-c-fast-enumeration-implementation-principle/" target="_blank" rel="external">Objective-C Fast Enumeration 的实现原理</a></p>
+<h3 id="OneV’s-Den"><a href="#OneV’s-Den" class="headerlink" title="OneV’s Den"></a><a href="https://onevcat.com/#blog" target="_blank" rel="external">OneV’s Den</a></h3><p><a href="https://onevcat.com/2013/05/talk-about-warning/" target="_blank" rel="external">谈谈Objective-C的警告</a><br><a href="https://onevcat.com/2012/04/objective-c-runtime/" target="_blank" rel="external">深入Objective-C的动态特性</a><br><a href="https://onevcat.com/2011/12/debug-2/" target="_blank" rel="external">Objective-C中的Debug表达式</a><br><a href="https://onevcat.com/2011/11/objc-block/" target="_blank" rel="external">Objective-C中的Block</a></p>
+<h3 id="sunnyxx"><a href="#sunnyxx" class="headerlink" title="sunnyxx"></a><a href="http://blog.sunnyxx.com" target="_blank" rel="external">sunnyxx</a></h3><p><a href="http://blog.sunnyxx.com/2016/08/13/reunderstanding-runtime-1/" target="_blank" rel="external">重识 Objective-C Runtime - 看透 Type 与 Value</a><br><a href="http://blog.sunnyxx.com/2016/08/13/reunderstanding-runtime-0/" target="_blank" rel="external">重识 Objective-C Runtime - Smalltalk 与 C 的融合</a><br><a href="http://blog.sunnyxx.com/2016/05/14/clang-attributes/" target="_blank" rel="external">Clang Attributes 黑魔法小记</a><br><a href="http://blog.sunnyxx.com/2016/04/22/objc-class-extension-tips/" target="_blank" rel="external">巧用 Class Extension 分离接口依赖</a><br><a href="http://blog.sunnyxx.com/2015/09/13/class-ivar-layout/" target="_blank" rel="external">Objective-C Class Ivar Layout 探索</a><br><a href="http://blog.sunnyxx.com/2015/06/12/objc-new-features-in-2015/" target="_blank" rel="external">2015 Objective-C 新特性</a><br><a href="http://blog.sunnyxx.com/2015/01/17/self-in-arc/" target="_blank" rel="external">ARC对self的内存管理</a><br><a href="http://blog.sunnyxx.com/2014/12/18/class-cluster/" target="_blank" rel="external">从NSArray看类簇</a></p>
+<h3 id="唐巧的博客"><a href="#唐巧的博客" class="headerlink" title="唐巧的博客"></a><a href="http://blog.devtang.com/" target="_blank" rel="external">唐巧的博客</a></h3><p><a href="http://blog.devtang.com/2016/07/30/ios-memory-management/" target="_blank" rel="external">理解 iOS 的内存管理</a><br><a href="http://blog.devtang.com/2013/10/15/objective-c-object-model/" target="_blank" rel="external">Objective-C对象模型及应用</a><br><a href="http://blog.devtang.com/2013/01/13/two-stage-creation-on-cocoa/" target="_blank" rel="external">谈ObjC对象的两段构造模式</a></p>
+
       
     </div>
     
@@ -409,12 +392,6 @@ SDWebImageOperation : 是一个protocol, 就定义了一个cancle方法; SDWebIm
     
 
     <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/源码阅读/" rel="tag"># 源码阅读</a>
-          
-        </div>
       
 
       
@@ -510,7 +487,7 @@ SDWebImageOperation : 是一个protocol, 就定义了一个cancle方法; SDWebIm
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -574,7 +551,7 @@ SDWebImageOperation : 是一个protocol, 就定义了一个cancle方法; SDWebIm
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#项目目录结构及其功能"><span class="nav-number">2.</span> <span class="nav-text">项目目录结构及其功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SDWebImageCompat"><span class="nav-number">3.</span> <span class="nav-text">SDWebImageCompat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Downloader"><span class="nav-number">4.</span> <span class="nav-text">Downloader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cache"><span class="nav-number">5.</span> <span class="nav-text">Cache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Utils"><span class="nav-number">6.</span> <span class="nav-text">Utils</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Categories"><span class="nav-number">7.</span> <span class="nav-text">Categories</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WebCache-Categories"><span class="nav-number">8.</span> <span class="nav-text">WebCache Categories</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ibireme的博客"><span class="nav-number">1.</span> <span class="nav-text">ibireme的博客</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#雷纯锋的技术博客"><span class="nav-number">2.</span> <span class="nav-text">雷纯锋的技术博客</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OneV’s-Den"><span class="nav-number">3.</span> <span class="nav-text">OneV’s Den</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sunnyxx"><span class="nav-number">4.</span> <span class="nav-text">sunnyxx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#唐巧的博客"><span class="nav-number">5.</span> <span class="nav-text">唐巧的博客</span></a></li></ol></div>
             
 
           </div>
