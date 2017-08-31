@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="skill," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -96,16 +96,16 @@
 
 
 
-<meta name="description" content="项目中有些时候使用KVC,可以节省很多的时间精力,实现快速开发">
+<meta name="description" content="最近公司刚搬到滨江，也刚发布了项目，加之前一段时间参加了一个线下的iOS逆向开发者聚会，大家聊了一个关于职业规划的问题，有些感受。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="项目开发中KVC的简单应用">
-<meta property="og:url" content="https://jiangdaohong.github.io./2016/10/03/项目开发中KVC的简单应用/index.html">
+<meta property="og:title" content="最近生活的总结">
+<meta property="og:url" content="https://jiangdaohong.github.io./2017/08/31/最近生活的总结/index.html">
 <meta property="og:site_name" content="见习魔法师">
-<meta property="og:description" content="项目中有些时候使用KVC,可以节省很多的时间精力,实现快速开发">
-<meta property="og:updated_time" content="2017-08-30T05:01:37.000Z">
+<meta property="og:description" content="最近公司刚搬到滨江，也刚发布了项目，加之前一段时间参加了一个线下的iOS逆向开发者聚会，大家聊了一个关于职业规划的问题，有些感受。">
+<meta property="og:updated_time" content="2017-08-31T07:03:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="项目开发中KVC的简单应用">
-<meta name="twitter:description" content="项目中有些时候使用KVC,可以节省很多的时间精力,实现快速开发">
+<meta name="twitter:title" content="最近生活的总结">
+<meta name="twitter:description" content="最近公司刚搬到滨江，也刚发布了项目，加之前一段时间参加了一个线下的iOS逆向开发者聚会，大家聊了一个关于职业规划的问题，有些感受。">
 
 
 
@@ -134,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="https://jiangdaohong.github.io./2016/10/03/项目开发中KVC的简单应用/"/>
+  <link rel="canonical" href="https://jiangdaohong.github.io./2017/08/31/最近生活的总结/"/>
 
 
 
 
 
-  <title>项目开发中KVC的简单应用 | 见习魔法师</title>
+  <title>最近生活的总结 | 见习魔法师</title>
   
 
 
@@ -283,7 +283,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://jiangdaohong.github.io./2016/10/03/项目开发中KVC的简单应用/">
+    <link itemprop="mainEntityOfPage" href="https://jiangdaohong.github.io./2017/08/31/最近生活的总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jiangdaohong">
@@ -300,7 +300,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">项目开发中KVC的简单应用</h1>
+          <h1 class="post-title" itemprop="name headline">最近生活的总结</h1>
         
 
         <div class="post-meta">
@@ -312,8 +312,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-03T17:38:25+08:00">
-                2016-10-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-31T14:05:29+08:00">
+                2017-08-31
               </time>
             
 
@@ -335,8 +335,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
+                  <a href="/categories/随笔/" itemprop="url" rel="index">
+                    <span itemprop="name">随笔</span>
                   </a>
                 </span>
 
@@ -372,28 +372,14 @@
       
 
       
-        <p>项目中有些时候使用KVC,可以节省很多的时间精力,实现快速开发</p>
-<a id="more"></a>
-<p>前一段时间有同学问我,能不能在不自定义UI的情况下,修改ActionSheet指定title的颜色,当时说很简单啊,Runtime获取实例变量列表,找到设置标题颜色的key,使用KVC就可以搞定.</p>
-<h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><p>编译条件: Xcode7.3.1;Project Deployment Target:iOS8.0.</p>
-<h3 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h3><ol>
-<li><p>初始化一个ActionSheet.</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">UIActionSheet</span> *actionSheet = [[<span class="built_in">UIActionSheet</span> alloc] initWithTitle:<span class="string">@"title"</span> delegate:<span class="literal">nil</span> cancelButtonTitle:<span class="string">@"cancle"</span> destructiveButtonTitle:<span class="string">@"destructive"</span> otherButtonTitles:<span class="string">@"other"</span>,<span class="string">@"other1"</span>, <span class="literal">nil</span>];</div></pre></td></tr></table></figure>
-</li>
-<li><p>获取实例变量列表,可以为NSObject添加一个Category方法,用于打印列表,具体实现如下:</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)printIvarList</div><div class="line">&#123;</div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">    Ivar *ivars = class_copyIvarList([<span class="keyword">self</span> <span class="keyword">class</span>], &amp;count);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;count; i++) &#123;</div><div class="line">        Ivar ivar = ivars[i];</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"name:%s------type:%s"</span>, ivar_getName(ivar),ivar_getTypeEncoding(ivar));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>结果如下:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">name:_alertController------type:@<span class="string">"UIAlertController"</span></div><div class="line">name:_presenter------type:@<span class="string">"_UIAlertControllerShimPresenter"</span></div><div class="line">name:_retainedSelf------type:@<span class="string">"UIActionSheet"</span></div><div class="line">name:_actions------type:@<span class="string">"NSMutableArray"</span></div><div class="line">name:_cancelIndex------type:q</div><div class="line">name:_firstOtherButtonIndex------type:q</div><div class="line">name:_destructiveButtonIndex------type:q</div><div class="line">name:_actionSheetStyle------type:q</div><div class="line">name:_context------type:@</div><div class="line">name:_hasPreparedAlertActions------type:B</div><div class="line">name:_isPresented------type:B</div><div class="line">name:_alertControllerShouldDismiss------type:B</div><div class="line">name:_handlingAlertActionShouldDismiss------type:B</div><div class="line">name:_dismissingAlertController------type:B</div><div class="line">name:_delegate------type:@<span class="string">"&lt;UIActionSheetDelegate&gt;"</span>**</div></pre></td></tr></table></figure>
-<p> 一看结果,好气哦,<code>UIAlertController</code>这个类是iOS8之后才允许使用的,算了,换用这个类重新打印一下吧,经过测试,<code>UIAlertAction</code>这个类含有可以设置标题的属性,属性列表大概是酱紫的:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">name:_checked------type:B</div><div class="line">name:_isPreferred------type:B</div><div class="line">name:_imageTintColor------type:@"UIColor"</div><div class="line">name:_titleTextColor------type:@"UIColor"</div><div class="line">name:_style------type:q</div><div class="line">name:_handler------type:@?</div><div class="line">name:_simpleHandler------type:@?</div><div class="line">name:_image------type:@"UIImage"</div><div class="line">name:_shouldDismissHandler------type:@?</div><div class="line">name:__descriptiveText------type:@"NSString"</div><div class="line">name:_contentViewController------type:@"UIViewController"</div><div class="line">name:_keyCommandInput------type:@"NSString"</div><div class="line">name:_keyCommandModifierFlags------type:q</div><div class="line">name:__representer------type:@"&lt;UIAlertActionViewRepresentation_Internal&gt;"</div><div class="line">name:__alertController------type:@"UIAlertController"</div></pre></td></tr></table></figure>
-<p> 里面找一下,_titleTextColor就是它了.</p>
-</li>
-<li><p>找到了就试一下喽.</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[ac1 setValue:[<span class="built_in">UIColor</span> redColor] forKeyPath:<span class="string">@"_titleTextColor"</span>];</div></pre></td></tr></table></figure>
-</li>
-<li><p>run一下,完美.</p>
-</li>
-<li>其他.<br> 通过第2步,可以看到在iOS8上使用<code>UIActionSheet</code>也是可以达到同样的效果的,因为其中有_actions可以得到一个<code>UIAlertAction</code>的数组,重复上述步骤即可完成,以后适配iOS7的应用越来越少了,不考虑iOS7的适配,使用KVC可以便捷地实现这种UI效果,还是不错的.</li>
+        <p>最近公司刚搬到滨江，也刚发布了项目，加之前一段时间参加了一个线下的iOS逆向开发者聚会，大家聊了一个关于职业规划的问题，有些感受。<br><a id="more"></a></p>
+<h3 id="最近在干什么"><a href="#最近在干什么" class="headerlink" title="最近在干什么"></a>最近在干什么</h3><p>最近主要在开发关于女性抗衰老方向的APP，没什么特别的，就是一些业务代码，越发感受到一个项目框架的设计对项目的影响力。这个项目是从原来的APP移植过来的，所以大部分的代码都是相同的，但是部分需求差异性比较大，最初的项目是我自己刚毕业的时候搭建的，设计的时候没什么深层次的考虑，虽然也在近两年的开发中不断调整，但是已经有种积重难返的感觉了，所以再思考怎么将项目模块化。<br>生活方法最大的变化应该是三个月前搬到滨江住，房子发了，房租也贵了，买不起房子······但是跟两个同学住一起还是很开心，平时吃吃饭喝喝酒，好像回到了大学。<br>前两周参加了一个开发者聚会，见到了传说中的狗神和AloneMonkey，还有几个大公司的开发者，谈了一下职业规划的问题，大家有的准备转产品，有的还是想搞技术，也说了工作中的疑惑，还是引发了不少思考。附上狗神的关于创业的文章，他在聚会上提出一个观点：长期进行一项你认为好的投资，比如学英语之类，以后可能会有大帮助，比如他现在就因为英语好而可以短期转岗。<br><a href="http://iosre.com/t/topic/4152" target="_blank" rel="external"><strong>我的失败与伟大 —— 纪念历时18个月的初次创业</strong></a></p>
+<h3 id="关于技术"><a href="#关于技术" class="headerlink" title="关于技术"></a>关于技术</h3><p>聚会上比谈的比较多的一个问题是：学习技术的广度和深度如何平衡？<br>我在学习过程中也遇到这个问题，并且走了不少弯路，比如现在流行全栈工程师，那就需要学习前端、后台和APP知识。所有在大学的时候也是东看看西看看，学会了各种软件的安装与卸载，着实浪费了不少时间，到最后才发现，数据结构和算法，数据库，计算机网络等基础知识才是最重要的。<br>大家也各抒己见，以自己的经历为例，谈了下自己的看法。<br>A君（资深逆向工程师）认为学习技术应先精后广，在学习过程中不断追问，加深对知识的理解，逐渐对一门技术精通，而在这个过程中，会遇到很多困难，会学习很多其他知识，自然知识的广度也会拓展，而且真正掌握一门技术之后再学习其他知识也是事半功倍的。我比较赞同这种，盲目贪多求全往往是丢了西瓜捡了芝麻。<br>B君（手机淘宝架构师）则认为学习技术先广后精。想精深一门技术难度大，而知识更新地很快，往往深入研究之后再研究其他的，精力会跟不上技术的迭代。平时只需要了解这个知识，然后到具体业务瓶颈，再进行深入研究。<br>C君（某公司主程）的想法是实用主义。他在工作中只关心这个技术带来的价值，简言之：能不能挣钱。他举了个例子，他们公司之前做的im模块是外包的，然后经常出问题，由于是静态库的形式接入的，每次出问题都要找原来开发的公司修复，一次5k rmb，他学习了逆向技术，搞定了这个问题，给公司节省了数百万的资金；还有一个例子就是之前项目打包每次都是手动，尤其是安卓，发包需要多渠道打包，既没有技术含量，又很繁琐，于是他写了个脚本，解决了这个问题，得到了大家的赞赏。<br>基本主流的就这三种看法。<br>关于未来怎么发展，狗神阐述了他的看法，他是要做一个问题的解决者。<br>何谓「问题解决者」？<br>他举例说明：他之前在部队工作，之后进行创业，并没有什么让大企业认可的简历。然而他还是被阿里录用了，原因在于当时刚好缺少一个懂逆向的资深开发，他满足需求，能解决他们业务中的逆向问题；最近阿里需要拓展国际业务，需要抽调既英文好，沟通能力佳，又技术好的人，人事找到了他，虽然到公司不足一年是不允许转岗的，但是缺乏人手，他刚好符合需求。<br>同时他还举了一个例子，说有个小伙子之前没学过逆向，买了他的书，学习非常刻苦，一年之内技术大进。然后他创业的时候需要搞个微信机器人，做自动回复功能，他就找了那个小伙子，小伙子一天做出来这个功能，后来陌陌需要逆向开发的人，狗神就把小伙子推荐到那里了，之后又推荐到盘古团队。小伙子的经历也说明了，需要掌握两门不同的技术，然后能实际解决别人的问题，才是有价值的。<br>然后狗神觉得自己的技术也达到了一定的程度，面临两个选择，一是继续搞技术，iOS应用层的逆向已经是如入无人之境了，之后就要研究内核相关了；另一个选择是做产品。他选择了做不同的事情，做产品，所以最近经常看一些名人推荐的书籍，努力提高自己。<br>说了这么多，重要的是，不要停止学习，不要停止思考。<br>KISS</p>
+<h3 id="关于生活"><a href="#关于生活" class="headerlink" title="关于生活"></a>关于生活</h3><p>生活上还是很空白，每天上班，吃饭，码代码，面基。简单，甚至有些无缺了。想想年初的目标，好像都快忘了呢，买的书也没看完，在结合大神们的学习经历，真是羞愧，年龄差不多，人和人的差距就是这么大。以前没周末都跟家里打电话，最近也不怎么打了，国庆节马上到了，回家一次吧。学习上，准备制定个近期的学习目标。</p>
+<h3 id="近期目标"><a href="#近期目标" class="headerlink" title="近期目标"></a>近期目标</h3><ol>
+<li>阅读一个开源库代码</li>
+<li>复习学习一下数据结构和算法</li>
+<li>学习一下Python<br>以上学习最好记笔记或者写博客，向上吧，少年！</li>
 </ol>
 
       
@@ -410,12 +396,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/skill/" rel="tag"># skill</a>
-          
-        </div>
-      
 
       
       
@@ -425,8 +405,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/10/02/每到深夜-总是有话想说说/" rel="next" title="每到深夜,总是有话想说说">
-                <i class="fa fa-chevron-left"></i> 每到深夜,总是有话想说说
+              <a href="/2017/08/31/关于OC运行机制的几篇博客/" rel="next" title="关于OC运行机制的几篇博客">
+                <i class="fa fa-chevron-left"></i> 关于OC运行机制的几篇博客
               </a>
             
           </div>
@@ -434,10 +414,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/10/22/项目开发中的GCD实战应用/" rel="prev" title="项目开发中的GCD实战应用">
-                项目开发中的GCD实战应用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -578,7 +554,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#备注"><span class="nav-number">1.</span> <span class="nav-text">备注</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主要步骤"><span class="nav-number">2.</span> <span class="nav-text">主要步骤</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#最近在干什么"><span class="nav-number">1.</span> <span class="nav-text">最近在干什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于技术"><span class="nav-number">2.</span> <span class="nav-text">关于技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于生活"><span class="nav-number">3.</span> <span class="nav-text">关于生活</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#近期目标"><span class="nav-number">4.</span> <span class="nav-text">近期目标</span></a></li></ol></div>
             
 
           </div>
