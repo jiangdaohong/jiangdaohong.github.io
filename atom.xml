@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://jiangdaohong.github.io./"/>
-  <updated>2017-08-31T07:03:27.000Z</updated>
+  <updated>2017-09-01T08:55:03.000Z</updated>
   <id>https://jiangdaohong.github.io./</id>
   
   <author>
@@ -14,6 +14,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用dumpdecrypted砸壳微信</title>
+    <link href="https://jiangdaohong.github.io./2017/09/01/%E4%BD%BF%E7%94%A8dumpdecrypted%E7%A0%B8%E5%A3%B3%E5%BE%AE%E4%BF%A1/"/>
+    <id>https://jiangdaohong.github.io./2017/09/01/使用dumpdecrypted砸壳微信/</id>
+    <published>2017-09-01T07:58:46.000Z</published>
+    <updated>2017-09-01T08:55:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>查看APP UI使用Reveal，但是想看一些代码的头文件，则需要使用class-dump。之前看一些APP的头文件偷懒都是直接在某助手上直接下载的砸壳成功的文件，今天有时间，手动试一下砸壳，参考文章：<a href="http://www.blogfshare.com/dumpdecrypted-app.html" target="_blank" rel="external"><br>iOS安全—dumpdecrypted APP砸壳</a><br><a id="more"></a></p>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>设备：iPhone5c 9.0.2 已越狱<br>Cycript：0.9.594<br>微信：6.5.12<br><a href="https://github.com/stefanesser/dumpdecrypted/" target="_blank" rel="external">dumpdecrypted地址</a></p>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><p>要砸壳，首先要找到APP，然后通过dumpdecrypted生成的动态库，进行注入，然后自动砸壳，之后拷贝出砸壳后的文件就好了。<br>首先，找到微信，需要借助<code>Cycript</code>，这是什么玩意呢？<a href="http://www.cycript.org" target="_blank" rel="external">官网</a>有说</p>
+<blockquote>
+<p>Cycript allows developers to explore and modify running applications on<br>either iOS or Mac OS X using a hybrid of Objective-C++ and JavaScript syntax<br>through an interactive console that features syntax highlighting and tab<br>completion.(It also runs standalone on Android and Linux and provides access<br>to Java, but without injection.)</p>
+</blockquote>
+<p>通过这个东西的几个命令可以方便的找到微信的pid。详细语法可以以后看，今天先砸了微信再说。<br>在<code>Cydia</code>中搜索<code>Cycript</code>，进行安装，之后ssh到设备，输入<code>cycript</code>，terminal输出<code>cy#</code>，表示安装成功，进行一个测试，在<code>SpringBoard</code>中弹出一个AlertView，成功。然后查看微信的pid，是<code>7351</code>。<br>查看<code>NSDocumentDirectory</code>的<code>A路径</code>备用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">ssh root@192.168.1.17</div><div class="line">root@192.168.1.17&apos;s password:</div><div class="line">Silence:~ root# cycript</div><div class="line">cy#</div><div class="line">Silence:~ root# ps -e | grep SpringBoard</div><div class="line"> 7248 ??         0:27.37 /System/Library/CoreServices/SpringBoard.app/SpringBoard</div><div class="line"> 7335 ttys000    0:00.01 grep SpringBoard</div><div class="line">Silence:~ root# cycript -p 7248</div><div class="line">cy# a = [[UIAlertView alloc] initWithTitle:@&quot;Hello World&quot; message:@&quot;Test&quot; delegate:nil cancelButtonTitle:@&quot;Cancle&quot; otherButtonTitles:nil] </div><div class="line">#&quot;&lt;UIAlertView: 0x170768d0; frame = (0 0; 0 0); layer = &lt;CALayer: 0x19a885a0&gt;&gt;&quot;</div><div class="line">cy# [a show] </div><div class="line">cy# </div><div class="line">Silence:~ root# ps aux | grep WeChat</div><div class="line">mobile    7351   0.6  6.1   762096  63004   ??  Ss    2:57PM   0:18.49 /var/mobile/Containers/Bundle/Application/6881D1C5-06FE-492A-B05C-9C4A1BD06443/WeChat.app/WeChat</div><div class="line">root      7440   0.0  0.0   538336    496 s000  S+    3:26PM   0:00.01 grep WeChat</div><div class="line">Silence:~ root# cycript -p 7351</div><div class="line">cy# [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomans:NSUserDomainMask][0] </div><div class="line">#&quot;file:///var/mobile/Containers/Data/Application/F855AB52-3333-4B75-8676-866C8B1F1D67/Documents/&quot;</div><div class="line">cy# ^Z</div><div class="line">[1]+  Stopped(SIGTSTP)        cycript -p 7351</div></pre></td></tr></table></figure></p>
+<p>下载<code>dumpdecrypted</code>，使用<code>make</code>进行编译，生成<code>dumpdecrypted.dylib</code>，使用<code>scp 本地路径 root@设备ip:A路径</code>，将库文件拷贝到iPhone中。<code>ls</code>查看文件夹下面又这个文件，拷贝成功。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">scp /Users/aaa/Downloads/dumpdecrypted-master/dumpdecrypted.dylib root@192.168.1.17:/var/mobile/Containers/Data/Application/F855AB52-3333-4B75-8676-866C8B1F1D67/Documents/</div><div class="line">root@192.168.1.17&apos;s password:</div><div class="line">dumpdecrypted.dylib                           100%  193KB 192.9KB/s   00:00 </div><div class="line">Silence:~ root#</div><div class="line">Display all 305 possibilities? (y or n)</div><div class="line">Silence:~ root# cd /var/mobile/Containers/Data/Application/F855AB52-3333-4B75-8</div><div class="line">676-866C8B1F1D67/Documents/</div><div class="line">Silence:/var/mobile/Containers/Data/Application/F855AB52-3333-4B75-8676-866C8B1</div><div class="line">F1D67/Documents root# ls -l</div><div class="line">total 220</div><div class="line">drwxr-xr-x  6 mobile mobile    272 Sep  1 14:57 00000000000000000000000000000000</div><div class="line">drwxr-xr-x 24 mobile mobile   1258 Aug  2 16:02 00f8dadbcfd42004516b055fefefd0f1</div><div class="line">-rw-r--r--  1 mobile mobile    286 Jun 20 17:23 Ksid</div><div class="line">-rw-r--r--  1 mobile mobile   1200 Sep  1 14:57 LocalInfo.lst</div><div class="line">drwxr-xr-x 11 mobile mobile    476 Sep  1 14:57 MMResourceMgr</div><div class="line">drwxr-xr-x  2 mobile mobile   1360 Aug 16 10:36 MMappedKV</div><div class="line">drwxr-xr-x  4 mobile mobile    170 Sep  1 14:57 MemoryStat</div><div class="line">-rw-r--r--  1 mobile mobile     15 Sep  1 15:00 SafeMode.dat</div><div class="line">-rw-r--r--  1 mobile mobile      4 Sep  1 14:57 db.globalconfig</div><div class="line">-rwxr-xr-x  1 root   mobile 197528 Sep  1 15:30 dumpdecrypted.dylib</div><div class="line">-rw-r--r--  1 mobile mobile    285 Jul 27 19:30 heavy_user_id_mapping.dat</div><div class="line">-rw-r--r--  1 mobile mobile    448 Jun 20 17:23 mmupdateinfo.archive</div></pre></td></tr></table></figure></p>
+<p>然后砸壳，在动态库目录下执行命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">DYLD_INSERT_LIBRARIES=dumpdecrypted.dylib /var/mobile/Con</div><div class="line">tainers/Bundle/Application/6881D1C5-06FE-492A-B05C-9C4A1BD06443/WeChat.app/WeChat </div><div class="line">mach-o decryption dumper</div><div class="line">DISCLAIMER: This tool is only meant for security research purposes, not for application crackers.</div><div class="line">[+] detected 32bit ARM binary in memory.</div><div class="line">[+] offset to cryptid found: @0xe0a4c(from 0xe0000) = a4c</div><div class="line">[+] Found encrypted data at address 00004000 of length 55377920 bytes - type 1.</div><div class="line">[+] Opening /private/var/mobile/Containers/Bundle/Application/6881D1C5-06FE-492A-B05C-9C4A1BD06443/WeChat.app/WeChat for reading.</div><div class="line">[+] Reading header</div><div class="line">[+] Detecting header type</div><div class="line">[+] Executable is a plain MACH-O image</div><div class="line">[+] Opening WeChat.decrypted for writing.</div><div class="line">[+] Copying the not encrypted start of the file</div><div class="line">[+] Dumping the decrypted data into the file</div><div class="line">[+] Copying the not encrypted remainder of the file</div><div class="line">[+] Setting the LC_ENCRYPTION_INFO-&gt;cryptid to 0 at offset a4c</div><div class="line">[+] Closing original file</div><div class="line">[+] Closing dump file</div><div class="line">Silence:/var/mobile/Containers/Data/Application/F855AB52-3333-4B75-8676-866C8B1</div><div class="line">F1D67/Documents</div></pre></td></tr></table></figure></p>
+<p><code>ls</code>查看，多了一个文件<code>WeChat.decrypted</code>，将这个文件拷贝到Mac上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">root# ls</div><div class="line">00000000000000000000000000000000  MMappedKV    dumpdecrypted.dylib</div><div class="line">00f8dadbcfd42004516b055fefefd0f1  MemoryStat    heavy_user_id_mapping.dat</div><div class="line">Ksid  SafeMode.dat    mmupdateinfo.archive</div><div class="line">LocalInfo.lst  WeChat.decrypted</div><div class="line">MMResourceMgr  db.globalconfig</div><div class="line">Silence:/var/mobile/Containers/Data/Application/F855AB52-3333-4B75-8676-866C8B1</div><div class="line">scp root@192.168.1.17:/var/mobile/Containers/Data/Application/F855AB52-3333-4B75-8676-866C8B1F1D67/Documents/WeChat.decrypted /Users/aaa/Desktop/WeChat</div></pre></td></tr></table></figure></p>
+<p>然后使用class-dump查看头文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">class-dump -H /Users/aaa/Desktop/WeChat/WeChat.decrypted -o /Users/aaa/Desktop/WeChat/H</div></pre></td></tr></table></figure></p>
+<p>也可以把砸壳文件直接丢到<code>Hopper</code>搜索查看感兴趣的API。<br>砸壳完成。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;查看APP UI使用Reveal，但是想看一些代码的头文件，则需要使用class-dump。之前看一些APP的头文件偷懒都是直接在某助手上直接下载的砸壳成功的文件，今天有时间，手动试一下砸壳，参考文章：&lt;a href=&quot;http://www.blogfshare.com/dumpdecrypted-app.html&quot;&gt;&lt;br&gt;iOS安全—dumpdecrypted APP砸壳&lt;/a&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="逆向" scheme="https://jiangdaohong.github.io./categories/%E9%80%86%E5%90%91/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>最近生活的总结</title>
@@ -777,59 +809,6 @@
     
     
       <category term="Tips" scheme="https://jiangdaohong.github.io./tags/Tips/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Reveal真机查看app</title>
-    <link href="https://jiangdaohong.github.io./2016/09/23/Reveal%E7%9C%9F%E6%9C%BA%E6%9F%A5%E7%9C%8Bapp/"/>
-    <id>https://jiangdaohong.github.io./2016/09/23/Reveal真机查看app/</id>
-    <published>2016-09-23T01:43:17.000Z</published>
-    <updated>2017-08-30T04:59:56.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>记录一下使用Reveal的基本使用<br><a id="more"></a></p>
-<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ol>
-<li>使用设备:iPhone5C,系统版本iOS9.0.2</li>
-<li>Reveal版本:1.6.3</li>
-<li>Cydia版本:1.1.26;Reveal Loader版本:1.0.0-1</li>
-<li>Xcode版本:7.3.1</li>
-</ol>
-<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ol>
-<li>一台越狱iOS设备</li>
-<li>Cydia下载Reveal Loader,如果你是iOS最新的操作系统,建议下载最新的插件,<a href="https://github.com/heardrwt/RevealLoader" target="_blank" rel="external">下载地址</a></li>
-<li>下载<a href="http://revealapp.com/download/" target="_blank" rel="external">Reveal</a>,查看官方使用说明</li>
-<li>一定保证Reveal和越狱设备在同一网络环境下</li>
-</ol>
-<h3 id="真机查看app步骤"><a href="#真机查看app步骤" class="headerlink" title="真机查看app步骤"></a>真机查看app步骤</h3><ol>
-<li>下载需要查看的app,这里演示查看系统的播客app</li>
-<li>打开系统设置,找到Reveal,在里面找到需要查看的app, enable,界面如下图所示.<br><img src="http://ww1.sinaimg.cn/large/72f96cbajw1f861nvo8guj20hs0vkjt2.jpg" alt="Reveal界面"><br><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f861ldv4ozj20hs0vkq5w.jpg" alt="reveal插件界面"></li>
-<li>打开app</li>
-<li>打开Reveal,选择连接查看的app,如下图<br><img src="http://ww1.sinaimg.cn/large/72f96cbajw1f861pa9znxj20ia03qaam.jpg" alt="连接Reveal"></li>
-<li>这样就可以查看app了,可以看到,播客app中间部分使用的控件名称以及布局方式<br><img src="http://ww2.sinaimg.cn/large/72f96cbagw1f861qucaq1j21kw0v213g.jpg" alt="查看app界面"></li>
-</ol>
-<h3 id="使用Reveal查看自己的app的简单方式"><a href="#使用Reveal查看自己的app的简单方式" class="headerlink" title="使用Reveal查看自己的app的简单方式"></a>使用Reveal查看自己的app的简单方式</h3><p>使用Reveal查看自己的app的方式很简单,只需要配置一下断点即可,官方给出了教程,可以点击<a href="http://support.revealapp.com/kb/getting-started/load-the-reveal-server-via-an-xcode-breakpoint" target="_blank" rel="external">这里</a>查看.</p>
-<h3 id="简单记录利用符号断点查看App步骤"><a href="#简单记录利用符号断点查看App步骤" class="headerlink" title="简单记录利用符号断点查看App步骤"></a>简单记录利用符号断点查看App步骤</h3><ol>
-<li>打开Xcode,选择<strong>View</strong> <strong>→ Navigators</strong> <strong>→ Show Breakpoint Navigator</strong></li>
-<li>点击 <strong>+</strong> 按钮,选择<strong>Add Symbolic Breakpoint</strong>,如下图<br><img src="http://ww1.sinaimg.cn/large/72f96cbagw1f862aw5twjj20ea06wabf.jpg" alt="添加图片"></li>
-<li><p>进行断点编辑,如下图<br><img src="http://ww3.sinaimg.cn/large/72f96cbagw1f862cendfrj20q40egq6w.jpg" alt="编辑断点"><br>  断点命令:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">expr (Class)NSClassFromString(@"IBARevealLoader") == nil ? (void )dlopen("/Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/RevealServer.framework/RevealServer", 0x2) : ((void)0)</div></pre></td></tr></table></figure>
-<p>如果命令无效,参看<a href="http://support.revealapp.com/kb/getting-started/load-the-reveal-server-via-an-xcode-breakpoint" target="_blank" rel="external">官方教程</a></p>
-</li>
-<li>进行断点设置,如下图<br><img src="http://ww1.sinaimg.cn/large/72f96cbagw1f862fq6wfbj20s80ccgpf.jpg" alt="断点设置"></li>
-<li>运行Xcode,接下来的步骤是重复真机查看app步骤4-5步.</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;记录一下使用Reveal的基本使用&lt;br&gt;
-    
-    </summary>
-    
-      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
-    
-    
-      <category term="DEBUG" scheme="https://jiangdaohong.github.io./tags/DEBUG/"/>
     
   </entry>
   

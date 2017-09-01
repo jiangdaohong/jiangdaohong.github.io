@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="查看APP UI使用Reveal，但是想看一些代码的头文件，则需要使用class-dump。之前看一些APP的头文件偷懒都是直接在某助手上直接下载的砸壳成功的文件，今天有时间，手动试一下砸壳，参考文章：iOS安全—dumpdecrypted APP砸壳">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用dumpdecrypted砸壳微信">
+<meta property="og:url" content="https://jiangdaohong.github.io./2017/09/01/使用dumpdecrypted砸壳微信/index.html">
+<meta property="og:site_name" content="见习魔法师">
+<meta property="og:description" content="查看APP UI使用Reveal，但是想看一些代码的头文件，则需要使用class-dump。之前看一些APP的头文件偷懒都是直接在某助手上直接下载的砸壳成功的文件，今天有时间，手动试一下砸壳，参考文章：iOS安全—dumpdecrypted APP砸壳">
+<meta property="og:updated_time" content="2017-09-01T08:55:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用dumpdecrypted砸壳微信">
+<meta name="twitter:description" content="查看APP UI使用Reveal，但是想看一些代码的头文件，则需要使用class-dump。之前看一些APP的头文件偷懒都是直接在某助手上直接下载的砸壳成功的文件，今天有时间，手动试一下砸壳，参考文章：iOS安全—dumpdecrypted APP砸壳">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jiangdaohong.github.io./2017/09/01/使用dumpdecrypted砸壳微信/"/>
+
+
+
+
+
+  <title>使用dumpdecrypted砸壳微信 | 见习魔法师</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">见习魔法师</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jiangdaohong.github.io./2017/09/01/使用dumpdecrypted砸壳微信/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jiangdaohong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/10709553?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="见习魔法师">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用dumpdecrypted砸壳微信</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-01T15:58:46+08:00">
+                2017-09-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/逆向/" itemprop="url" rel="index">
+                    <span itemprop="name">逆向</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>查看APP UI使用Reveal，但是想看一些代码的头文件，则需要使用class-dump。之前看一些APP的头文件偷懒都是直接在某助手上直接下载的砸壳成功的文件，今天有时间，手动试一下砸壳，参考文章：<a href="http://www.blogfshare.com/dumpdecrypted-app.html" target="_blank" rel="external"><br>iOS安全—dumpdecrypted APP砸壳</a><br><a id="more"></a></p>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>设备：iPhone5c 9.0.2 已越狱<br>Cycript：0.9.594<br>微信：6.5.12<br><a href="https://github.com/stefanesser/dumpdecrypted/" target="_blank" rel="external">dumpdecrypted地址</a></p>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><p>要砸壳，首先要找到APP，然后通过dumpdecrypted生成的动态库，进行注入，然后自动砸壳，之后拷贝出砸壳后的文件就好了。<br>首先，找到微信，需要借助<code>Cycript</code>，这是什么玩意呢？<a href="http://www.cycript.org" target="_blank" rel="external">官网</a>有说</p>
+<blockquote>
+<p>Cycript allows developers to explore and modify running applications on<br>either iOS or Mac OS X using a hybrid of Objective-C++ and JavaScript syntax<br>through an interactive console that features syntax highlighting and tab<br>completion.(It also runs standalone on Android and Linux and provides access<br>to Java, but without injection.)</p>
+</blockquote>
+<p>通过这个东西的几个命令可以方便的找到微信的pid。详细语法可以以后看，今天先砸了微信再说。<br>在<code>Cydia</code>中搜索<code>Cycript</code>，进行安装，之后ssh到设备，输入<code>cycript</code>，terminal输出<code>cy#</code>，表示安装成功，进行一个测试，在<code>SpringBoard</code>中弹出一个AlertView，成功。然后查看微信的pid，是<code>7351</code>。<br>查看<code>NSDocumentDirectory</code>的<code>A路径</code>备用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">ssh root@192.168.1.17</div><div class="line">root@192.168.1.17&apos;s password:</div><div class="line">Silence:~ root# cycript</div><div class="line">cy#</div><div class="line">Silence:~ root# ps -e | grep SpringBoard</div><div class="line"> 7248 ??         0:27.37 /System/Library/CoreServices/SpringBoard.app/SpringBoard</div><div class="line"> 7335 ttys000    0:00.01 grep SpringBoard</div><div class="line">Silence:~ root# cycript -p 7248</div><div class="line">cy# a = [[UIAlertView alloc] initWithTitle:@&quot;Hello World&quot; message:@&quot;Test&quot; delegate:nil cancelButtonTitle:@&quot;Cancle&quot; otherButtonTitles:nil] </div><div class="line">#&quot;&lt;UIAlertView: 0x170768d0; frame = (0 0; 0 0); layer = &lt;CALayer: 0x19a885a0&gt;&gt;&quot;</div><div class="line">cy# [a show] </div><div class="line">cy# </div><div class="line">Silence:~ root# ps aux | grep WeChat</div><div class="line">mobile    7351   0.6  6.1   762096  63004   ??  Ss    2:57PM   0:18.49 /var/mobile/Containers/Bundle/Application/6881D1C5-06FE-492A-B05C-9C4A1BD06443/WeChat.app/WeChat</div><div class="line">root      7440   0.0  0.0   538336    496 s000  S+    3:26PM   0:00.01 grep WeChat</div><div class="line">Silence:~ root# cycript -p 7351</div><div class="line">cy# [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomans:NSUserDomainMask][0] </div><div class="line">#&quot;file:///var/mobile/Containers/Data/Application/F855AB52-3333-4B75-8676-866C8B1F1D67/Documents/&quot;</div><div class="line">cy# ^Z</div><div class="line">[1]+  Stopped(SIGTSTP)        cycript -p 7351</div></pre></td></tr></table></figure></p>
+<p>下载<code>dumpdecrypted</code>，使用<code>make</code>进行编译，生成<code>dumpdecrypted.dylib</code>，使用<code>scp 本地路径 root@设备ip:A路径</code>，将库文件拷贝到iPhone中。<code>ls</code>查看文件夹下面又这个文件，拷贝成功。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">scp /Users/aaa/Downloads/dumpdecrypted-master/dumpdecrypted.dylib root@192.168.1.17:/var/mobile/Containers/Data/Application/F855AB52-3333-4B75-8676-866C8B1F1D67/Documents/</div><div class="line">root@192.168.1.17&apos;s password:</div><div class="line">dumpdecrypted.dylib                           100%  193KB 192.9KB/s   00:00 </div><div class="line">Silence:~ root#</div><div class="line">Display all 305 possibilities? (y or n)</div><div class="line">Silence:~ root# cd /var/mobile/Containers/Data/Application/F855AB52-3333-4B75-8</div><div class="line">676-866C8B1F1D67/Documents/</div><div class="line">Silence:/var/mobile/Containers/Data/Application/F855AB52-3333-4B75-8676-866C8B1</div><div class="line">F1D67/Documents root# ls -l</div><div class="line">total 220</div><div class="line">drwxr-xr-x  6 mobile mobile    272 Sep  1 14:57 00000000000000000000000000000000</div><div class="line">drwxr-xr-x 24 mobile mobile   1258 Aug  2 16:02 00f8dadbcfd42004516b055fefefd0f1</div><div class="line">-rw-r--r--  1 mobile mobile    286 Jun 20 17:23 Ksid</div><div class="line">-rw-r--r--  1 mobile mobile   1200 Sep  1 14:57 LocalInfo.lst</div><div class="line">drwxr-xr-x 11 mobile mobile    476 Sep  1 14:57 MMResourceMgr</div><div class="line">drwxr-xr-x  2 mobile mobile   1360 Aug 16 10:36 MMappedKV</div><div class="line">drwxr-xr-x  4 mobile mobile    170 Sep  1 14:57 MemoryStat</div><div class="line">-rw-r--r--  1 mobile mobile     15 Sep  1 15:00 SafeMode.dat</div><div class="line">-rw-r--r--  1 mobile mobile      4 Sep  1 14:57 db.globalconfig</div><div class="line">-rwxr-xr-x  1 root   mobile 197528 Sep  1 15:30 dumpdecrypted.dylib</div><div class="line">-rw-r--r--  1 mobile mobile    285 Jul 27 19:30 heavy_user_id_mapping.dat</div><div class="line">-rw-r--r--  1 mobile mobile    448 Jun 20 17:23 mmupdateinfo.archive</div></pre></td></tr></table></figure></p>
+<p>然后砸壳，在动态库目录下执行命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">DYLD_INSERT_LIBRARIES=dumpdecrypted.dylib /var/mobile/Con</div><div class="line">tainers/Bundle/Application/6881D1C5-06FE-492A-B05C-9C4A1BD06443/WeChat.app/WeChat </div><div class="line">mach-o decryption dumper</div><div class="line">DISCLAIMER: This tool is only meant for security research purposes, not for application crackers.</div><div class="line">[+] detected 32bit ARM binary in memory.</div><div class="line">[+] offset to cryptid found: @0xe0a4c(from 0xe0000) = a4c</div><div class="line">[+] Found encrypted data at address 00004000 of length 55377920 bytes - type 1.</div><div class="line">[+] Opening /private/var/mobile/Containers/Bundle/Application/6881D1C5-06FE-492A-B05C-9C4A1BD06443/WeChat.app/WeChat for reading.</div><div class="line">[+] Reading header</div><div class="line">[+] Detecting header type</div><div class="line">[+] Executable is a plain MACH-O image</div><div class="line">[+] Opening WeChat.decrypted for writing.</div><div class="line">[+] Copying the not encrypted start of the file</div><div class="line">[+] Dumping the decrypted data into the file</div><div class="line">[+] Copying the not encrypted remainder of the file</div><div class="line">[+] Setting the LC_ENCRYPTION_INFO-&gt;cryptid to 0 at offset a4c</div><div class="line">[+] Closing original file</div><div class="line">[+] Closing dump file</div><div class="line">Silence:/var/mobile/Containers/Data/Application/F855AB52-3333-4B75-8676-866C8B1</div><div class="line">F1D67/Documents</div></pre></td></tr></table></figure></p>
+<p><code>ls</code>查看，多了一个文件<code>WeChat.decrypted</code>，将这个文件拷贝到Mac上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">root# ls</div><div class="line">00000000000000000000000000000000  MMappedKV    dumpdecrypted.dylib</div><div class="line">00f8dadbcfd42004516b055fefefd0f1  MemoryStat    heavy_user_id_mapping.dat</div><div class="line">Ksid  SafeMode.dat    mmupdateinfo.archive</div><div class="line">LocalInfo.lst  WeChat.decrypted</div><div class="line">MMResourceMgr  db.globalconfig</div><div class="line">Silence:/var/mobile/Containers/Data/Application/F855AB52-3333-4B75-8676-866C8B1</div><div class="line">scp root@192.168.1.17:/var/mobile/Containers/Data/Application/F855AB52-3333-4B75-8676-866C8B1F1D67/Documents/WeChat.decrypted /Users/aaa/Desktop/WeChat</div></pre></td></tr></table></figure></p>
+<p>然后使用class-dump查看头文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">class-dump -H /Users/aaa/Desktop/WeChat/WeChat.decrypted -o /Users/aaa/Desktop/WeChat/H</div></pre></td></tr></table></figure></p>
+<p>也可以把砸壳文件直接丢到<code>Hopper</code>搜索查看感兴趣的API。<br>砸壳完成。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    jiangdaohong
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://jiangdaohong.github.io./2017/09/01/使用dumpdecrypted砸壳微信/" title="使用dumpdecrypted砸壳微信">https://jiangdaohong.github.io./2017/09/01/使用dumpdecrypted砸壳微信/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/31/最近生活的总结/" rel="next" title="最近生活的总结">
+                <i class="fa fa-chevron-left"></i> 最近生活的总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars0.githubusercontent.com/u/10709553?v=3&s=460"
+               alt="jiangdaohong" />
+          <p class="site-author-name" itemprop="name">jiangdaohong</p>
+           
+              <p class="site-description motion-element" itemprop="description">KISS</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/jiangdaohong" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/SilenceVoid1" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                    
+                      Twitter
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/jiangdaohong" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      微博
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#步骤"><span class="nav-number">2.</span> <span class="nav-text">步骤</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">jiangdaohong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
