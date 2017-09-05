@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://jiangdaohong.github.io./"/>
-  <updated>2017-09-01T08:55:03.000Z</updated>
+  <updated>2017-09-05T07:19:50.000Z</updated>
   <id>https://jiangdaohong.github.io./</id>
   
   <author>
@@ -14,6 +14,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>NexT主题设置</title>
+    <link href="https://jiangdaohong.github.io./2017/09/05/NexT%E4%B8%BB%E9%A2%98%E8%AE%BE%E7%BD%AE/"/>
+    <id>https://jiangdaohong.github.io./2017/09/05/NexT主题设置/</id>
+    <published>2017-09-05T02:05:55.000Z</published>
+    <updated>2017-09-05T07:19:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近博客主题换成<a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="external">NexT</a>，记录一下主题使用过程中遇到的小问题。<br><a id="more"></a></p>
+<h3 id="谷歌字体问题"><a href="#谷歌字体问题" class="headerlink" title="谷歌字体问题"></a>谷歌字体问题</h3><p>有天打开本地服务器预览站点，发现加载非常慢，开发者工具中发现加载字体404了。然后查了一下，禁用font就好了，或者替换为可用的链接。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">font</span>:</div><div class="line">  <span class="selector-tag">enable</span>: <span class="selector-tag">false</span></div></pre></td></tr></table></figure></p>
+<h3 id="添加favicon"><a href="#添加favicon" class="headerlink" title="添加favicon"></a>添加favicon</h3><p>之前没注意网站的favicon，现在添加了···一张白色的图片，实在不知道用什么。<a href="http://www.faviconico.org" target="_blank" rel="external">faviconico.org</a>可以在线制作，32*32的就好了。然后我把文件放在主题下面的images文件夹<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">favicon: images/favicon.ico</div></pre></td></tr></table></figure></p>
+<h3 id="头像"><a href="#头像" class="headerlink" title="头像"></a>头像</h3><p>头像也放在上面的文件夹了，之前用的github的头像URL链接。</p>
+<h3 id="关于页面"><a href="#关于页面" class="headerlink" title="关于页面"></a>关于页面</h3><p>在5.1.2版本中，如果设置了<code>&lt;h&gt;</code>标签，会是<code>post</code>类型的文章会自动生成目录，<code>sidebar</code>的<code>dispalay</code>属性是<code>post</code>，这样的话，在关于页面使用标题，会自动打开侧边栏，本渣的解决方法是，自己写html，找不到好的方法啊。</p>
+<h3 id="404页面"><a href="#404页面" class="headerlink" title="404页面"></a>404页面</h3><p>没有绑定一级域名，github默认分配的域名是不支持显示404页面的，所以要想显示自定义404页面，买买买解决。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近博客主题换成&lt;a href=&quot;https://github.com/iissnan/hexo-theme-next&quot;&gt;NexT&lt;/a&gt;，记录一下主题使用过程中遇到的小问题。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Hexo" scheme="https://jiangdaohong.github.io./categories/Hexo/"/>
+    
+    
+      <category term="blog" scheme="https://jiangdaohong.github.io./tags/blog/"/>
+    
+      <category term="hexo" scheme="https://jiangdaohong.github.io./tags/hexo/"/>
+    
+  </entry>
   
   <entry>
     <title>使用dumpdecrypted砸壳微信</title>
@@ -769,46 +799,6 @@
     
     
       <category term="Performance" scheme="https://jiangdaohong.github.io./tags/Performance/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Xcode命令行打包</title>
-    <link href="https://jiangdaohong.github.io./2016/09/25/Xcode%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%89%93%E5%8C%85/"/>
-    <id>https://jiangdaohong.github.io./2016/09/25/Xcode命令行打包/</id>
-    <published>2016-09-25T12:59:52.000Z</published>
-    <updated>2017-08-30T05:02:08.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>记录一下使用命令行进行打包<br><a id="more"></a></p>
-<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>最近公司进行内部测试,要求每天进行App打包上传,本来想搭建一个CI系统,但是实在没有精力(好吧,是没有成功╮(╯_╰)╭,搭建到一半下载git等插件的时候一直出问题,下次有时间再搞了),项目不大,但是每次打包要10分钟(里面有Swift混编,大坑),忍不了了,上网查了一下看到有一些编译优化指令,然后看CI的时候看到了自动打包命令,试了一下,打包时间可以缩短到3分钟以内,记录一下过程吧.</p>
-<h3 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h3><ol>
-<li>Xcode中修改编译选项,修改为发布版证书和描述文件,或者修改编译Target</li>
-<li>终端进入项目所在文件夹</li>
-<li>执行命令xcodebuild clean</li>
-<li><p>继续执行命令</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xcodebuild -workspace appname.xcworkspace -scheme appname -configuration Release -derivedDataPath build</div></pre></td></tr></table></figure>
-<p>这是有workspace的项目的指令,需要将appname替换为你的项目名<br>如果未使用workspace,用下面的命令就可以了</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xcrun -sdk iphoneos PackageApplication -v build/Release-iphoneos/app.app -o /path/appname.ipa</div></pre></td></tr></table></figure>
-<p>后面的是输出路径以及打包app的名字</p>
-</li>
-<li><p>项目使用workspace,进行ipa输出,执行命令</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xcrun -sdk iphoneos PackageApplication -v /ProjectPath/build/Build/Products/Release-iphoneos/appname.app -o /path/appname.ipa</div></pre></td></tr></table></figure>
-<p>ProjectPath替换为你项目的路径,保证此路径下面有Release-iphoneos目录</p>
-</li>
-<li>发布项目,暂时手动发布😢</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;记录一下使用命令行进行打包&lt;br&gt;
-    
-    </summary>
-    
-      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
-    
-    
-      <category term="Tips" scheme="https://jiangdaohong.github.io./tags/Tips/"/>
     
   </entry>
   
