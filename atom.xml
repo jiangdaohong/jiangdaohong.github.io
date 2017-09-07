@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://jiangdaohong.github.io./"/>
-  <updated>2017-09-05T07:19:50.000Z</updated>
+  <updated>2017-09-05T08:16:05.000Z</updated>
   <id>https://jiangdaohong.github.io./</id>
   
   <author>
@@ -20,14 +20,14 @@
     <link href="https://jiangdaohong.github.io./2017/09/05/NexT%E4%B8%BB%E9%A2%98%E8%AE%BE%E7%BD%AE/"/>
     <id>https://jiangdaohong.github.io./2017/09/05/NexT主题设置/</id>
     <published>2017-09-05T02:05:55.000Z</published>
-    <updated>2017-09-05T07:19:50.000Z</updated>
+    <updated>2017-09-05T08:16:05.000Z</updated>
     
     <content type="html"><![CDATA[<p>最近博客主题换成<a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="external">NexT</a>，记录一下主题使用过程中遇到的小问题。<br><a id="more"></a></p>
 <h3 id="谷歌字体问题"><a href="#谷歌字体问题" class="headerlink" title="谷歌字体问题"></a>谷歌字体问题</h3><p>有天打开本地服务器预览站点，发现加载非常慢，开发者工具中发现加载字体404了。然后查了一下，禁用font就好了，或者替换为可用的链接。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">font</span>:</div><div class="line">  <span class="selector-tag">enable</span>: <span class="selector-tag">false</span></div></pre></td></tr></table></figure></p>
 <h3 id="添加favicon"><a href="#添加favicon" class="headerlink" title="添加favicon"></a>添加favicon</h3><p>之前没注意网站的favicon，现在添加了···一张白色的图片，实在不知道用什么。<a href="http://www.faviconico.org" target="_blank" rel="external">faviconico.org</a>可以在线制作，32*32的就好了。然后我把文件放在主题下面的images文件夹<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">favicon: images/favicon.ico</div></pre></td></tr></table></figure></p>
 <h3 id="头像"><a href="#头像" class="headerlink" title="头像"></a>头像</h3><p>头像也放在上面的文件夹了，之前用的github的头像URL链接。</p>
 <h3 id="关于页面"><a href="#关于页面" class="headerlink" title="关于页面"></a>关于页面</h3><p>在5.1.2版本中，如果设置了<code>&lt;h&gt;</code>标签，会是<code>post</code>类型的文章会自动生成目录，<code>sidebar</code>的<code>dispalay</code>属性是<code>post</code>，这样的话，在关于页面使用标题，会自动打开侧边栏，本渣的解决方法是，自己写html，找不到好的方法啊。</p>
-<h3 id="404页面"><a href="#404页面" class="headerlink" title="404页面"></a>404页面</h3><p>没有绑定一级域名，github默认分配的域名是不支持显示404页面的，所以要想显示自定义404页面，买买买解决。</p>
+<h3 id="404页面"><a href="#404页面" class="headerlink" title="404页面"></a>404页面</h3><p>没有绑定一级域名，github默认分配的域名是不支持显示404页面的，所以要想显示自定义404页面，买买买解决。<br>但是<a href="https://neveryu.github.io/page/3/fdsa" target="_blank" rel="external">这个人的博客</a>可以，搞不清楚。</p>
 ]]></content>
     
     <summary type="html">

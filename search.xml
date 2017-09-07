@@ -11,7 +11,7 @@
 <h3 id="添加favicon"><a href="#添加favicon" class="headerlink" title="添加favicon"></a>添加favicon</h3><p>之前没注意网站的favicon，现在添加了···一张白色的图片，实在不知道用什么。<a href="http://www.faviconico.org" target="_blank" rel="external">faviconico.org</a>可以在线制作，32*32的就好了。然后我把文件放在主题下面的images文件夹<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">favicon: images/favicon.ico</div></pre></td></tr></table></figure></p>
 <h3 id="头像"><a href="#头像" class="headerlink" title="头像"></a>头像</h3><p>头像也放在上面的文件夹了，之前用的github的头像URL链接。</p>
 <h3 id="关于页面"><a href="#关于页面" class="headerlink" title="关于页面"></a>关于页面</h3><p>在5.1.2版本中，如果设置了<code>&lt;h&gt;</code>标签，会是<code>post</code>类型的文章会自动生成目录，<code>sidebar</code>的<code>dispalay</code>属性是<code>post</code>，这样的话，在关于页面使用标题，会自动打开侧边栏，本渣的解决方法是，自己写html，找不到好的方法啊。</p>
-<h3 id="404页面"><a href="#404页面" class="headerlink" title="404页面"></a>404页面</h3><p>没有绑定一级域名，github默认分配的域名是不支持显示404页面的，所以要想显示自定义404页面，买买买解决。</p>
+<h3 id="404页面"><a href="#404页面" class="headerlink" title="404页面"></a>404页面</h3><p>没有绑定一级域名，github默认分配的域名是不支持显示404页面的，所以要想显示自定义404页面，买买买解决。<br>但是<a href="https://neveryu.github.io/page/3/fdsa" target="_blank" rel="external">这个人的博客</a>可以，搞不清楚。</p>
 ]]></content>
     </entry>
     
