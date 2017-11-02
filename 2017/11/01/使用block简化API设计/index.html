@@ -54,7 +54,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="3D touch," />
+  <meta name="keywords" content="skill," />
 
 
 
@@ -70,21 +70,16 @@
 
 
 
-<meta name="description" content="看到一些APP peek操作的时候会显示标题,模仿一下喽.">
+<meta name="description" content="使用 block 简化 API 设计的小技巧。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="为peek view添加显示标题">
-<meta property="og:url" content="https://jiangdaohong.github.io./2016/12/11/为peek-view添加显示标题/index.html">
+<meta property="og:title" content="使用block简化API设计">
+<meta property="og:url" content="https://jiangdaohong.github.io./2017/11/01/使用block简化API设计/index.html">
 <meta property="og:site_name" content="见习魔法师">
-<meta property="og:description" content="看到一些APP peek操作的时候会显示标题,模仿一下喽.">
-<meta property="og:image" content="http://ww2.sinaimg.cn/large/006tNc79gw1fan1wxdu44j305k027jr7.jpg">
-<meta property="og:image" content="http://ww2.sinaimg.cn/large/006tNc79gw1fan1xn1ka9j305k025t8k.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/006tNc79gw1fan1zf8f1aj305k01wjr6.jpg">
-<meta property="og:image" content="http://ww4.sinaimg.cn/large/006tNc79gw1fan1zufo7fj305k01yjr7.jpg">
-<meta property="og:updated_time" content="2017-08-30T05:01:17.000Z">
+<meta property="og:description" content="使用 block 简化 API 设计的小技巧。">
+<meta property="og:updated_time" content="2017-11-02T12:14:31.771Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="为peek view添加显示标题">
-<meta name="twitter:description" content="看到一些APP peek操作的时候会显示标题,模仿一下喽.">
-<meta name="twitter:image" content="http://ww2.sinaimg.cn/large/006tNc79gw1fan1wxdu44j305k027jr7.jpg">
+<meta name="twitter:title" content="使用block简化API设计">
+<meta name="twitter:description" content="使用 block 简化 API 设计的小技巧。">
 
 
 
@@ -113,13 +108,13 @@
 
 
 
-  <link rel="canonical" href="https://jiangdaohong.github.io./2016/12/11/为peek-view添加显示标题/"/>
+  <link rel="canonical" href="https://jiangdaohong.github.io./2017/11/01/使用block简化API设计/"/>
 
 
 
 
 
-  <title>为peek view添加显示标题 | 见习魔法师</title>
+  <title>使用block简化API设计 | 见习魔法师</title>
   
 
 
@@ -262,7 +257,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://jiangdaohong.github.io./2016/12/11/为peek-view添加显示标题/">
+    <link itemprop="mainEntityOfPage" href="https://jiangdaohong.github.io./2017/11/01/使用block简化API设计/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jiangdaohong">
@@ -279,7 +274,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">为peek view添加显示标题</h2>
+          <h2 class="post-title" itemprop="name headline">使用block简化API设计</h2>
         
 
         <div class="post-meta">
@@ -291,8 +286,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-11T18:50:05+08:00">
-                2016-12-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-01T19:46:30+08:00">
+                2017-11-01
               </time>
             
 
@@ -351,13 +346,12 @@
       
 
       
-        <p>看到一些APP peek操作的时候会显示标题,模仿一下喽.<br><a id="more"></a></p>
-<p>在玩APP的时候发现一些APP的peek出来的页面不太一样,显示的是有标题的,比如知乎首页和微博评论的按钮peek操作:</p>
-<p><div align="center"><br><img src="http://ww2.sinaimg.cn/large/006tNc79gw1fan1wxdu44j305k027jr7.jpg" alt="weibo_peek"><br><img src="http://ww2.sinaimg.cn/large/006tNc79gw1fan1xn1ka9j305k025t8k.jpg" alt="weibo_pop"><br><img src="http://ww1.sinaimg.cn/large/006tNc79gw1fan1zf8f1aj305k01wjr6.jpg" alt="zhihu_peek"><br><img src="http://ww4.sinaimg.cn/large/006tNc79gw1fan1zufo7fj305k01yjr7.jpg" alt="weibo_pop"></div></p>
-<p><div><br>简单分析一下:微博应该是用了navigation controller,而知乎则在pop的页面多了一个top视图,当peek的时候,可以看到多了一个标题的视图,真是简单粗暴.<br>实现一个微博的效果,简单Swift写一下:<br>peek页面</div></p>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>: <span class="title">UIViewController</span> </span>&#123;</div><div class="line">    <span class="keyword">internal</span> <span class="keyword">let</span> tableView = <span class="type">UITableView</span>(frame: <span class="type">UIScreen</span>.mainScreen().bounds, style: <span class="type">UITableViewStyle</span>.<span class="type">Plain</span>)</div><div class="line">    </div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        <span class="comment">// Do any additional setup after loading the view, typically from a nib.</span></div><div class="line">        view.backgroundColor = <span class="type">UIColor</span>.greenColor()</div><div class="line">        tableView.delegate = <span class="keyword">self</span>;</div><div class="line">        tableView.dataSource = <span class="keyword">self</span>;</div><div class="line">        tableView.tableFooterView = <span class="type">UIView</span>()</div><div class="line">        view .addSubview(tableView)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">ViewController</span> : <span class="title">UITableViewDelegate</span>,<span class="title">UITableViewDataSource</span>,<span class="title">UIViewControllerPreviewingDelegate</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, numberOfRowsInSection section: Int)</span></span> -&gt; <span class="type">Int</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath)</span></span> -&gt; <span class="type">UITableViewCell</span> &#123;</div><div class="line">        <span class="keyword">var</span> tableViewCell = tableView.dequeueReusableCellWithIdentifier(<span class="string">"tableviewcell"</span>)</div><div class="line">        <span class="keyword">if</span> tableViewCell == <span class="literal">nil</span> &#123;</div><div class="line">            tableViewCell = <span class="type">UITableViewCell</span>(style: <span class="type">UITableViewCellStyle</span>.<span class="type">Default</span>, reuseIdentifier: <span class="string">"tableviewcell"</span>)</div><div class="line">            tableViewCell?.textLabel?.text = (<span class="string">"第"</span> + <span class="string">"\(indexPath.row)"</span> + <span class="string">"行"</span>)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> traitCollection.forceTouchCapability == <span class="type">UIForceTouchCapability</span>.<span class="type">Available</span> &#123;</div><div class="line">            registerForPreviewingWithDelegate(<span class="keyword">self</span>, sourceView: tableViewCell!)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> tableViewCell!</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/// UIViewControllerPreviewingDelegate</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">tableView</span><span class="params">(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)</span></span> &#123;</div><div class="line">        navigationController?.pushViewController(<span class="type">DetailViewController</span>(), animated: <span class="literal">true</span>)</div><div class="line">        tableView.deselectRowAtIndexPath(indexPath, animated: <span class="literal">true</span>)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">previewingContext</span><span class="params">(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint)</span></span> -&gt; <span class="type">UIViewController</span>? &#123;</div><div class="line">    <span class="comment">/// 预览的应该包装一个UINavigationController,才会有title</span></div><div class="line">        <span class="keyword">let</span> navc = <span class="type">UINavigationController</span>()</div><div class="line">        navc.addChildViewController(<span class="type">DetailViewController</span>())</div><div class="line">        <span class="keyword">return</span> navc;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">previewingContext</span><span class="params">(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController)</span></span> &#123;</div><div class="line">    <span class="comment">/// pop的页面是UINavigationController的第一个子控制器</span></div><div class="line">        showViewController(viewControllerToCommit.childViewControllers[<span class="number">0</span>], sender: <span class="keyword">self</span>)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>pop的页面:<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DetailViewController</span>: <span class="title">UIViewController</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line"></div><div class="line">        <span class="comment">// Do any additional setup after loading the view.</span></div><div class="line">        view.backgroundColor = <span class="type">UIColor</span>.cyanColor()</div><div class="line">        title = <span class="string">"评论"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这样就可以了.</p>
+        <p>使用 block 简化 API 设计的小技巧。<br><a id="more"></a></p>
+<p>在做项目的过程中，常常会遇到这种情况：需要做一些类似的操作，但是又有一些差别，以数据库查询为例，经常需要查询符合某种条件的所有用户，比如性别为男的用户，或者年龄大于45的用户等。通常遇到这种情况，是根据查询条件写多个查询，然后分多个 API 进行实现。大概是下面这个样子：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">+ (<span class="built_in">NSArray</span>&lt;UserInfo *&gt; *)db_selectMale &#123;</div><div class="line">    <span class="built_in">NSString</span> *sql = <span class="string">@"SELECT userInfo FROM UserInfo_t where gender = 1;"</span>;</div><div class="line">    ...</div><div class="line">    <span class="keyword">return</span> @[];</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (<span class="built_in">NSArray</span>&lt;UserInfo *&gt; *)db_selectAgeMoreThan:(<span class="built_in">NSUInteger</span>)age &#123;</div><div class="line">    <span class="built_in">NSString</span> *sql = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"SELECT userInfo FROM UserInfo_t where age &gt; %@;"</span>, @(age)];</div><div class="line">    ...</div><div class="line">    <span class="keyword">return</span> @[];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果查询条件更多的话，是不是写的接口更多了呢？<br>仔细看一下的话，就会发现，实际上每次查询都是根据一定条件来进行查询，之后的数据组合方式是一样的，那进行优化的方向就是如何传递查询条件。一个是直接写查询的 sql 语句，这样写就失去了效率。系统的 API 在这方面已经给出了范例。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[ary sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) &#123;</div><div class="line">// 写排序条件，返回结果</div><div class="line">    return obj1 &gt; obj2;</div><div class="line">&#125;];</div></pre></td></tr></table></figure></p>
+<p>通过 block 将排序的条件直接返回给数组。<br>那我们就可以简单这么写：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">+ (<span class="built_in">NSArray</span>&lt;UserInfo *&gt; *)db_selectAllCondation:(UserInfo *(^)(UserInfo *info))condation &#123;</div><div class="line">    __block <span class="built_in">NSMutableArray</span> *ary = [<span class="built_in">NSMutableArray</span> array];</div><div class="line">    </div><div class="line">    __block <span class="built_in">NSString</span> *sql = <span class="string">@"SELECT userInfo FROM UserInfo_t;"</span>;</div><div class="line">    __block FMResultSet *result = <span class="literal">nil</span>;</div><div class="line">    [[FMDatabaseQueue sharedInstance] inDatabase:^(FMDatabase *db) &#123;</div><div class="line">        result = [db executeQuery:sql];</div><div class="line">        <span class="keyword">while</span> ([result next]) &#123;</div><div class="line">            UserInfo *info = [UserInfo yy_modelWithJSON:[result dataForColumn:<span class="string">@"userInfo"</span>]];</div><div class="line">            UserInfo *result = condation(info);</div><div class="line">            <span class="keyword">if</span> (result) &#123;</div><div class="line">                [ary addObject:result];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        [result close];</div><div class="line">    &#125;];</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> ary;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样，上面两个 API 就可以使用这个 API 实现。<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">+ (<span class="built_in">NSArray</span>&lt;UserInfo *&gt; *)db_selectMale &#123;</div><div class="line">    <span class="keyword">return</span> [<span class="keyword">self</span> db_selectAllCondation:^UserInfo *(UserInfo *info) &#123;</div><div class="line">        <span class="keyword">if</span> (info.gender == <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> info;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">nil</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (<span class="built_in">NSArray</span>&lt;UserInfo *&gt; *)db_selectAgeMoreThan:(<span class="built_in">NSUInteger</span>)age &#123;</div><div class="line">    <span class="keyword">return</span> [<span class="keyword">self</span> db_selectAllCondation:^UserInfo *(UserInfo *info) &#123;</div><div class="line">        <span class="keyword">if</span> (info.age &gt; age) &#123;</div><div class="line">            <span class="keyword">return</span> info;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">nil</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样查询的条件就可以和 API 独立，并且不影响查询的灵活性。<br>实际上这样的 API 设计在流行的第三方框架中很常见，比如自动布局框架<a href="https://github.com/SnapKit/Masonry" target="_blank" rel="external">Masonry</a>。</p>
 
       
     </div>
@@ -378,7 +372,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://jiangdaohong.github.io./2016/12/11/为peek-view添加显示标题/" title="为peek view添加显示标题">https://jiangdaohong.github.io./2016/12/11/为peek-view添加显示标题/</a>
+    <a href="https://jiangdaohong.github.io./2017/11/01/使用block简化API设计/" title="使用block简化API设计">https://jiangdaohong.github.io./2017/11/01/使用block简化API设计/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -393,7 +387,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/3D-touch/" rel="tag"># 3D touch</a>
+            <a href="/tags/skill/" rel="tag"># skill</a>
           
         </div>
       
@@ -406,8 +400,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/10/APP国际化笔记/" rel="next" title="APP本地化笔记">
-                <i class="fa fa-chevron-left"></i> APP本地化笔记
+              <a href="/2017/09/28/博客收集/" rel="next" title="博客收集">
+                <i class="fa fa-chevron-left"></i> 博客收集
               </a>
             
           </div>
@@ -415,10 +409,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/07/iOS端加载PDF文件实践/" rel="prev" title="iOS端加载PDF文件实践">
-                iOS端加载PDF文件实践 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>

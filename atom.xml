@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://jiangdaohong.github.io./"/>
-  <updated>2017-09-07T12:41:34.000Z</updated>
+  <updated>2017-11-02T12:14:31.771Z</updated>
   <id>https://jiangdaohong.github.io./</id>
   
   <author>
@@ -14,6 +14,61 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用block简化API设计</title>
+    <link href="https://jiangdaohong.github.io./2017/11/01/%E4%BD%BF%E7%94%A8block%E7%AE%80%E5%8C%96API%E8%AE%BE%E8%AE%A1/"/>
+    <id>https://jiangdaohong.github.io./2017/11/01/使用block简化API设计/</id>
+    <published>2017-11-01T11:46:30.000Z</published>
+    <updated>2017-11-02T12:14:31.771Z</updated>
+    
+    <content type="html"><![CDATA[<p>使用 block 简化 API 设计的小技巧。<br><a id="more"></a></p>
+<p>在做项目的过程中，常常会遇到这种情况：需要做一些类似的操作，但是又有一些差别，以数据库查询为例，经常需要查询符合某种条件的所有用户，比如性别为男的用户，或者年龄大于45的用户等。通常遇到这种情况，是根据查询条件写多个查询，然后分多个 API 进行实现。大概是下面这个样子：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">+ (<span class="built_in">NSArray</span>&lt;UserInfo *&gt; *)db_selectMale &#123;</div><div class="line">    <span class="built_in">NSString</span> *sql = <span class="string">@"SELECT userInfo FROM UserInfo_t where gender = 1;"</span>;</div><div class="line">    ...</div><div class="line">    <span class="keyword">return</span> @[];</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (<span class="built_in">NSArray</span>&lt;UserInfo *&gt; *)db_selectAgeMoreThan:(<span class="built_in">NSUInteger</span>)age &#123;</div><div class="line">    <span class="built_in">NSString</span> *sql = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"SELECT userInfo FROM UserInfo_t where age &gt; %@;"</span>, @(age)];</div><div class="line">    ...</div><div class="line">    <span class="keyword">return</span> @[];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果查询条件更多的话，是不是写的接口更多了呢？<br>仔细看一下的话，就会发现，实际上每次查询都是根据一定条件来进行查询，之后的数据组合方式是一样的，那进行优化的方向就是如何传递查询条件。一个是直接写查询的 sql 语句，这样写就失去了效率。系统的 API 在这方面已经给出了范例。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[ary sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) &#123;</div><div class="line">// 写排序条件，返回结果</div><div class="line">    return obj1 &gt; obj2;</div><div class="line">&#125;];</div></pre></td></tr></table></figure></p>
+<p>通过 block 将排序的条件直接返回给数组。<br>那我们就可以简单这么写：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">+ (<span class="built_in">NSArray</span>&lt;UserInfo *&gt; *)db_selectAllCondation:(UserInfo *(^)(UserInfo *info))condation &#123;</div><div class="line">    __block <span class="built_in">NSMutableArray</span> *ary = [<span class="built_in">NSMutableArray</span> array];</div><div class="line">    </div><div class="line">    __block <span class="built_in">NSString</span> *sql = <span class="string">@"SELECT userInfo FROM UserInfo_t;"</span>;</div><div class="line">    __block FMResultSet *result = <span class="literal">nil</span>;</div><div class="line">    [[FMDatabaseQueue sharedInstance] inDatabase:^(FMDatabase *db) &#123;</div><div class="line">        result = [db executeQuery:sql];</div><div class="line">        <span class="keyword">while</span> ([result next]) &#123;</div><div class="line">            UserInfo *info = [UserInfo yy_modelWithJSON:[result dataForColumn:<span class="string">@"userInfo"</span>]];</div><div class="line">            UserInfo *result = condation(info);</div><div class="line">            <span class="keyword">if</span> (result) &#123;</div><div class="line">                [ary addObject:result];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        [result close];</div><div class="line">    &#125;];</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> ary;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样，上面两个 API 就可以使用这个 API 实现。<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">+ (<span class="built_in">NSArray</span>&lt;UserInfo *&gt; *)db_selectMale &#123;</div><div class="line">    <span class="keyword">return</span> [<span class="keyword">self</span> db_selectAllCondation:^UserInfo *(UserInfo *info) &#123;</div><div class="line">        <span class="keyword">if</span> (info.gender == <span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">return</span> info;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">nil</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (<span class="built_in">NSArray</span>&lt;UserInfo *&gt; *)db_selectAgeMoreThan:(<span class="built_in">NSUInteger</span>)age &#123;</div><div class="line">    <span class="keyword">return</span> [<span class="keyword">self</span> db_selectAllCondation:^UserInfo *(UserInfo *info) &#123;</div><div class="line">        <span class="keyword">if</span> (info.age &gt; age) &#123;</div><div class="line">            <span class="keyword">return</span> info;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">nil</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样查询的条件就可以和 API 独立，并且不影响查询的灵活性。<br>实际上这样的 API 设计在流行的第三方框架中很常见，比如自动布局框架<a href="https://github.com/SnapKit/Masonry" target="_blank" rel="external">Masonry</a>。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;使用 block 简化 API 设计的小技巧。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
+    
+    
+      <category term="skill" scheme="https://jiangdaohong.github.io./tags/skill/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>博客收集</title>
+    <link href="https://jiangdaohong.github.io./2017/09/28/%E5%8D%9A%E5%AE%A2%E6%94%B6%E9%9B%86/"/>
+    <id>https://jiangdaohong.github.io./2017/09/28/博客收集/</id>
+    <published>2017-09-28T01:30:53.000Z</published>
+    <updated>2017-11-02T12:25:13.038Z</updated>
+    
+    <content type="html"><![CDATA[<p>备忘录<br><a id="more"></a></p>
+<h3 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h3><p><a href="https://imququ.com/" target="_blank" rel="external">访问速度很快，专注前端</a></p>
+<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><p><a href="http://frozengene.github.io" target="_blank" rel="external">基于LLVM开发编译器</a></p>
+<h3 id="不断更新看到的文章"><a href="#不断更新看到的文章" class="headerlink" title="不断更新看到的文章"></a>不断更新看到的文章</h3><h4 id="多线程相关"><a href="#多线程相关" class="headerlink" title="多线程相关"></a>多线程相关</h4><p><a href="http://blog.xcodev.com/posts/operation-queue-intro/" target="_blank" rel="external">http://blog.xcodev.com/posts/operation-queue-intro/</a><br><a href="http://blog.xcodev.com/posts/gcd-intro/" target="_blank" rel="external">http://blog.xcodev.com/posts/gcd-intro/</a><br><a href="http://blog.csdn.net/jacobkong/article/details/47858563" target="_blank" rel="external">http://blog.csdn.net/jacobkong/article/details/47858563</a><br><a href="http://www.dreamingwish.com/article/ios-multi-threaded-programming-the-thread-management.html" target="_blank" rel="external">http://www.dreamingwish.com/article/ios-multi-threaded-programming-the-thread-management.html</a><br><a href="http://www.dreamingwish.com/article/gcd-practice-io-race.html" target="_blank" rel="external">http://www.dreamingwish.com/article/gcd-practice-io-race.html</a><br><a href="https://github.com/ChenYilong/ParseSourceCodeStudy/blob/master/01_Parse的多线程处理思路/Parse的底层多线程处理思路.md#使用dispatch-semaphore控制并发线程数量" target="_blank" rel="external">https://github.com/ChenYilong/ParseSourceCodeStudy/blob/master/01_Parse的多线程处理思路/Parse的底层多线程处理思路.md#使用dispatch-semaphore控制并发线程数量</a><br><a href="https://mp.weixin.qq.com/s?__biz=MzAxNDAzMzk0MQ==&amp;mid=203702345&amp;idx=1&amp;sn=226f6f784d37b89718f6949c9214e1e6&amp;scene=1&amp;srcid=kl2ZmcSfYHuB6bMvYPEq#rd" target="_blank" rel="external">https://mp.weixin.qq.com/s?__biz=MzAxNDAzMzk0MQ==&amp;mid=203702345&amp;idx=1&amp;sn=226f6f784d37b89718f6949c9214e1e6&amp;scene=1&amp;srcid=kl2ZmcSfYHuB6bMvYPEq#rd</a></p>
+<h4 id="mmap"><a href="#mmap" class="headerlink" title="mmap"></a>mmap</h4><p><a href="http://www.knowsky.com/980422.html" target="_blank" rel="external">http://www.knowsky.com/980422.html</a></p>
+<h4 id="ccache"><a href="#ccache" class="headerlink" title="ccache"></a>ccache</h4><p><a href="http://www.cnblogs.com/fishbay/p/7217398.html" target="_blank" rel="external">http://www.cnblogs.com/fishbay/p/7217398.html</a></p>
+<h4 id="webview获取内容高度常用方法的差别"><a href="#webview获取内容高度常用方法的差别" class="headerlink" title="webview获取内容高度常用方法的差别"></a>webview获取内容高度常用方法的差别</h4><p><a href="http://blog.csdn.net/fengjun10000/article/details/52668574" target="_blank" rel="external">http://blog.csdn.net/fengjun10000/article/details/52668574</a></p>
+<h4 id="iOS-crash文件符号化"><a href="#iOS-crash文件符号化" class="headerlink" title="iOS crash文件符号化"></a>iOS crash文件符号化</h4><p><a href="http://wufawei.com/2014/03/symbolicating-ios-crash-logs/" target="_blank" rel="external">http://wufawei.com/2014/03/symbolicating-ios-crash-logs/</a></p>
+<h4 id="代码混淆"><a href="#代码混淆" class="headerlink" title="代码混淆"></a>代码混淆</h4><p><a href="https://github.com/wg689/Security-And-CodeConfuse" target="_blank" rel="external">https://github.com/wg689/Security-And-CodeConfuse</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;备忘录&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>NexT主题设置</title>
@@ -777,77 +832,6 @@
       <category term="skill" scheme="https://jiangdaohong.github.io./tags/skill/"/>
     
       <category term="GCD" scheme="https://jiangdaohong.github.io./tags/GCD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>项目开发中KVC的简单应用</title>
-    <link href="https://jiangdaohong.github.io./2016/10/03/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E4%B8%ADKVC%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8/"/>
-    <id>https://jiangdaohong.github.io./2016/10/03/项目开发中KVC的简单应用/</id>
-    <published>2016-10-03T09:38:25.000Z</published>
-    <updated>2017-08-30T05:01:37.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>项目中有些时候使用KVC,可以节省很多的时间精力,实现快速开发</p>
-<a id="more"></a>
-<p>前一段时间有同学问我,能不能在不自定义UI的情况下,修改ActionSheet指定title的颜色,当时说很简单啊,Runtime获取实例变量列表,找到设置标题颜色的key,使用KVC就可以搞定.</p>
-<h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><p>编译条件: Xcode7.3.1;Project Deployment Target:iOS8.0.</p>
-<h3 id="主要步骤"><a href="#主要步骤" class="headerlink" title="主要步骤"></a>主要步骤</h3><ol>
-<li><p>初始化一个ActionSheet.</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">UIActionSheet</span> *actionSheet = [[<span class="built_in">UIActionSheet</span> alloc] initWithTitle:<span class="string">@"title"</span> delegate:<span class="literal">nil</span> cancelButtonTitle:<span class="string">@"cancle"</span> destructiveButtonTitle:<span class="string">@"destructive"</span> otherButtonTitles:<span class="string">@"other"</span>,<span class="string">@"other1"</span>, <span class="literal">nil</span>];</div></pre></td></tr></table></figure>
-</li>
-<li><p>获取实例变量列表,可以为NSObject添加一个Category方法,用于打印列表,具体实现如下:</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)printIvarList</div><div class="line">&#123;</div><div class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">    Ivar *ivars = class_copyIvarList([<span class="keyword">self</span> <span class="keyword">class</span>], &amp;count);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;count; i++) &#123;</div><div class="line">        Ivar ivar = ivars[i];</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"name:%s------type:%s"</span>, ivar_getName(ivar),ivar_getTypeEncoding(ivar));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>结果如下:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">name:_alertController------type:@<span class="string">"UIAlertController"</span></div><div class="line">name:_presenter------type:@<span class="string">"_UIAlertControllerShimPresenter"</span></div><div class="line">name:_retainedSelf------type:@<span class="string">"UIActionSheet"</span></div><div class="line">name:_actions------type:@<span class="string">"NSMutableArray"</span></div><div class="line">name:_cancelIndex------type:q</div><div class="line">name:_firstOtherButtonIndex------type:q</div><div class="line">name:_destructiveButtonIndex------type:q</div><div class="line">name:_actionSheetStyle------type:q</div><div class="line">name:_context------type:@</div><div class="line">name:_hasPreparedAlertActions------type:B</div><div class="line">name:_isPresented------type:B</div><div class="line">name:_alertControllerShouldDismiss------type:B</div><div class="line">name:_handlingAlertActionShouldDismiss------type:B</div><div class="line">name:_dismissingAlertController------type:B</div><div class="line">name:_delegate------type:@<span class="string">"&lt;UIActionSheetDelegate&gt;"</span>**</div></pre></td></tr></table></figure>
-<p> 一看结果,好气哦,<code>UIAlertController</code>这个类是iOS8之后才允许使用的,算了,换用这个类重新打印一下吧,经过测试,<code>UIAlertAction</code>这个类含有可以设置标题的属性,属性列表大概是酱紫的:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">name:_checked------type:B</div><div class="line">name:_isPreferred------type:B</div><div class="line">name:_imageTintColor------type:@"UIColor"</div><div class="line">name:_titleTextColor------type:@"UIColor"</div><div class="line">name:_style------type:q</div><div class="line">name:_handler------type:@?</div><div class="line">name:_simpleHandler------type:@?</div><div class="line">name:_image------type:@"UIImage"</div><div class="line">name:_shouldDismissHandler------type:@?</div><div class="line">name:__descriptiveText------type:@"NSString"</div><div class="line">name:_contentViewController------type:@"UIViewController"</div><div class="line">name:_keyCommandInput------type:@"NSString"</div><div class="line">name:_keyCommandModifierFlags------type:q</div><div class="line">name:__representer------type:@"&lt;UIAlertActionViewRepresentation_Internal&gt;"</div><div class="line">name:__alertController------type:@"UIAlertController"</div></pre></td></tr></table></figure>
-<p> 里面找一下,_titleTextColor就是它了.</p>
-</li>
-<li><p>找到了就试一下喽.</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[ac1 setValue:[<span class="built_in">UIColor</span> redColor] forKeyPath:<span class="string">@"_titleTextColor"</span>];</div></pre></td></tr></table></figure>
-</li>
-<li><p>run一下,完美.</p>
-</li>
-<li>其他.<br> 通过第2步,可以看到在iOS8上使用<code>UIActionSheet</code>也是可以达到同样的效果的,因为其中有_actions可以得到一个<code>UIAlertAction</code>的数组,重复上述步骤即可完成,以后适配iOS7的应用越来越少了,不考虑iOS7的适配,使用KVC可以便捷地实现这种UI效果,还是不错的.</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;项目中有些时候使用KVC,可以节省很多的时间精力,实现快速开发&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
-    
-    
-      <category term="skill" scheme="https://jiangdaohong.github.io./tags/skill/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>每到深夜,总是有话想说说</title>
-    <link href="https://jiangdaohong.github.io./2016/10/02/%E6%AF%8F%E5%88%B0%E6%B7%B1%E5%A4%9C-%E6%80%BB%E6%98%AF%E6%9C%89%E8%AF%9D%E6%83%B3%E8%AF%B4%E8%AF%B4/"/>
-    <id>https://jiangdaohong.github.io./2016/10/02/每到深夜-总是有话想说说/</id>
-    <published>2016-10-02T14:30:17.000Z</published>
-    <updated>2017-08-30T05:01:08.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>随便写写字<br><a id="more"></a></p>
-<p>来杭州工作一年多了,记得上次十一,还在加班搞这个项目,一年过去了,还是这个项目,心累…做了很久的东西,没来得及上线就被砍了,虽说是搬砖,心里总还是不爽的.之前一直想写博客,但是网上大牛很多,博客写的很好,我写出来有什么用呢?内心还是希望记录一些东西.直到前一段时间比较空闲,就搭建了这个博客.</p>
-<p>除了想有个地方说说话,之前记录多很多零散的东西,都保存在笔记软件里面,前一段才发现,里面实在太乱了,正好借着整理一下,以后查阅也方便.</p>
-<p>就这样,话唠.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;随便写写字&lt;br&gt;
-    
-    </summary>
-    
-      <category term="随笔" scheme="https://jiangdaohong.github.io./categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-      <category term="我说" scheme="https://jiangdaohong.github.io./tags/%E6%88%91%E8%AF%B4/"/>
     
   </entry>
   
