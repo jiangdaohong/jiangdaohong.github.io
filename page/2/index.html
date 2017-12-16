@@ -258,6 +258,163 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jiangdaohong.github.io./2017/06/24/NSProxy简介以及使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jiangdaohong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="见习魔法师">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/24/NSProxy简介以及使用/" itemprop="url">NSProxy简介以及使用</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-24T18:16:28+08:00">
+                2017-06-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>在<code>Objective-C</code>中,大部分类都是继承自<code>NSObject</code>,但它并不是唯一的<code>root class</code>,还有一个就是<code>NSProxy</code>这个类,看一下API中它的介绍:</p>
+<blockquote>
+<p>NSProxy is an abstract superclass defining an API for objects that act as stand-ins for other objects or for objects that don’t exist yet. Typically, a message to a proxy is forwarded to the real object or causes the proxy to load (or transform itself into) the real object. Subclasses of NSProxy can be used to implement transparent distributed messaging or for lazy instantiation of objects that are expensive to create.<br>NSProxy implements the basic methods required of a root class, including those defined in the NSObject protocol. However, as an abstract class it doesn’t provide an initialization method, and it raises an exception upon receiving any message it doesn’t respond to. A concrete subclass must therefore provide an initialization or creation method and override the forwardInvocation: and methodSignatureForSelector: methods to handle messages that it doesn’t implement itself. A subclass’s implementation of forwardInvocation: should do whatever is needed to process the invocation, such as forwarding the invocation over the network or loading the real object and passing it the invocation. methodSignatureForSelector: is required to provide argument type information for a given message; a subclass’s implementation should be able to determine the argument types for the messages it needs to forward and should construct an NSMethodSignature object accordingly. See the NSDistantObject , NSInvocation, and NSMethodSignature class specifications for more information.</p>
+</blockquote>
+<p>简单来说:</p>
+<ol>
+<li><code>NSProxy</code>是一个抽象基类, 主要是 <code>stand-ins</code>, 用于消息转发, 使用时需要子类化</li>
+<li>这个类没有指定初始化方法, 子类化之后必须提供初始化方法,</li>
+<li>使用时候需要实现基类以及<code>NSObject协议</code>的一些方法,<code>forwardInvocation:``methodSignatureForSelector:</code>, 这两个方法需要重载</li>
+</ol>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>上文可以看到, 这个类主要是在消息转发中扮演一个<code>中间人</code>的角色,实际项目中,看到的应用重要有这些:</p>
+<ol>
+<li>实现一个weak proxy, 防止<code>retain cycle</code>, 这里有一份实现的代码:<a href="https://github.com/ibireme/YYText/blob/master/YYText/Utility/YYTextWeakProxy.m" target="_blank" rel="external">YYTextWeakProxy.m</a>, 使用这个类, 可以在调用<code>NSTimer</code>等的时候让<code>timer</code>保留一个weak reference, 从源码中可以看到,定义了<code>@property (nullable, nonatomic, weak, readonly) id target;</code>, 这个<code>target</code>在初始化方法中对传入的对象弱引用,并实现<code>respondsToSelector:</code>, weak对象调用方法之前都会先调用这个方法,如果被释放掉的话就不会执行接下来的方法调用,从而实现weak proxy.</li>
+<li>实现多继承<br><a href="http://ios.jobbole.com/87856/" target="_blank" rel="external">NSProxy——少见却神奇的类</a>, 这篇文件介绍了使用<code>NSProxy</code>实现多继承的一种方法.</li>
+<li>其他一些实践,比如有人做AOP用到它,链接地址<a href="http://www.jianshu.com/p/a7187e014c03" target="_blank" rel="external">用 NSProxy 实现面向切面编程</a>,<a href="http://blog.csdn.net/yanghua_kobe/article/details/8395535" target="_blank" rel="external">NSProxy实现AOP方便为iOS应用实现异常处理策略</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://jiangdaohong.github.io./2017/05/14/浅谈iOS复杂表优化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1559,152 +1716,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://jiangdaohong.github.io./2016/10/22/项目开发中的GCD实战应用/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jiangdaohong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="见习魔法师">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/10/22/项目开发中的GCD实战应用/" itemprop="url">项目开发中的GCD实战应用</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-22T19:08:13+08:00">
-                2016-10-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>整理一下项目中GCD的应用<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/10/22/项目开发中的GCD实战应用/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1755,7 +1766,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
