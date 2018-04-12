@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title><![CDATA[理解尾递归]]></title>
+      <url>https://jiangdaohong.github.io./2018/03/12/%E7%90%86%E8%A7%A3%E5%B0%BE%E9%80%92%E5%BD%92/</url>
+      <content type="html"><![CDATA[<p><a href="https://www.zhihu.com/question/20761771" target="_blank" rel="external">知乎上关于尾递归的讨论</a></p>
+<blockquote>
+<p>尾递归就是操作的<strong>最后一步</strong>是调用自身的递归。</p>
+</blockquote>
+<p>觉得上面的论述十分清晰，以<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431756044276a15558a759ec43de8e30eb0ed169fb11000" target="_blank" rel="external">廖雪峰的官方网站-递归函数</a>里面的例子为例：<br>求一个数字的阶乘<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fact</span><span class="params">(n)</span>:</span></div><div class="line">	<span class="keyword">if</span> n == <span class="number">1</span>:</div><div class="line">		<span class="keyword">return</span> <span class="number">1</span></div><div class="line">	<span class="comment"># 最后一步调用不是调用自身，而是一个数字和自身调用结果乘积的表达式</span></div><div class="line">	<span class="keyword">return</span> n * fact(n<span class="number">-1</span>)</div></pre></td></tr></table></figure></p>
+<p>优化为尾递归<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fact</span><span class="params">(n)</span>:</span></div><div class="line">	<span class="keyword">return</span> fact_inter(n,<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fact_inter</span><span class="params">(n, m)</span>:</span></div><div class="line">	<span class="keyword">if</span> n == <span class="number">1</span></div><div class="line">		<span class="keyword">return</span> m</div><div class="line">	<span class="comment"># 最后一步调用是调用自身</span></div><div class="line">	<span class="keyword">return</span> fact_inter(n - <span class="number">1</span>, m * n)</div></pre></td></tr></table></figure></p>
+<p>尾递归在一些编译器中会做优化，防止栈内存爆掉。因为尾递归调用之后不依赖上次调用的环境（资源），如上述代码最后一步，<code>每次调用</code>都会把计算的值存储在变量 m 中，不会等到最后一层调用完毕之后再释放资源。</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[关于仪式感]]></title>
       <url>https://jiangdaohong.github.io./2017/12/31/%E5%85%B3%E4%BA%8E%E4%BB%AA%E5%BC%8F%E6%84%9F/</url>
       <content type="html"><![CDATA[<p>2017 年就要过去了，还是要总结一下。<br><a id="more"></a></p>

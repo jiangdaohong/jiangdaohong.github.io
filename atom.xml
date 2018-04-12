@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://jiangdaohong.github.io./"/>
-  <updated>2017-12-31T13:54:00.952Z</updated>
+  <updated>2018-03-12T08:55:51.330Z</updated>
   <id>https://jiangdaohong.github.io./</id>
   
   <author>
@@ -14,6 +14,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>理解尾递归</title>
+    <link href="https://jiangdaohong.github.io./2018/03/12/%E7%90%86%E8%A7%A3%E5%B0%BE%E9%80%92%E5%BD%92/"/>
+    <id>https://jiangdaohong.github.io./2018/03/12/理解尾递归/</id>
+    <published>2018-03-12T08:42:39.000Z</published>
+    <updated>2018-03-12T08:55:51.330Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://www.zhihu.com/question/20761771" target="_blank" rel="external">知乎上关于尾递归的讨论</a></p>
+<blockquote>
+<p>尾递归就是操作的<strong>最后一步</strong>是调用自身的递归。</p>
+</blockquote>
+<p>觉得上面的论述十分清晰，以<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431756044276a15558a759ec43de8e30eb0ed169fb11000" target="_blank" rel="external">廖雪峰的官方网站-递归函数</a>里面的例子为例：<br>求一个数字的阶乘<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fact</span><span class="params">(n)</span>:</span></div><div class="line">	<span class="keyword">if</span> n == <span class="number">1</span>:</div><div class="line">		<span class="keyword">return</span> <span class="number">1</span></div><div class="line">	<span class="comment"># 最后一步调用不是调用自身，而是一个数字和自身调用结果乘积的表达式</span></div><div class="line">	<span class="keyword">return</span> n * fact(n<span class="number">-1</span>)</div></pre></td></tr></table></figure></p>
+<p>优化为尾递归<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fact</span><span class="params">(n)</span>:</span></div><div class="line">	<span class="keyword">return</span> fact_inter(n,<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fact_inter</span><span class="params">(n, m)</span>:</span></div><div class="line">	<span class="keyword">if</span> n == <span class="number">1</span></div><div class="line">		<span class="keyword">return</span> m</div><div class="line">	<span class="comment"># 最后一步调用是调用自身</span></div><div class="line">	<span class="keyword">return</span> fact_inter(n - <span class="number">1</span>, m * n)</div></pre></td></tr></table></figure></p>
+<p>尾递归在一些编译器中会做优化，防止栈内存爆掉。因为尾递归调用之后不依赖上次调用的环境（资源），如上述代码最后一步，<code>每次调用</code>都会把计算的值存储在变量 m 中，不会等到最后一层调用完毕之后再释放资源。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://www.zhihu.com/question/20761771&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;知乎上关于尾递归的讨论&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;尾递归就是操作的&lt;strong&gt;最后一步
+    
+    </summary>
+    
+      <category term="Python" scheme="https://jiangdaohong.github.io./categories/Python/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>关于仪式感</title>
@@ -743,43 +772,6 @@
     
     
       <category term="Animation" scheme="https://jiangdaohong.github.io./tags/Animation/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>初窥JSPatch</title>
-    <link href="https://jiangdaohong.github.io./2016/11/20/%E5%88%9D%E7%AA%A5JSPatch/"/>
-    <id>https://jiangdaohong.github.io./2016/11/20/初窥JSPatch/</id>
-    <published>2016-11-20T09:28:23.000Z</published>
-    <updated>2017-08-30T05:01:31.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Hotfix是解决线上bug的重要手段之一,iOS开发中,如今流行的成熟解决方法之一就是JSPatch,本文主要是对JSPatch应用进行一定的介绍,并未做原理分析.<br><a id="more"></a></p>
-<p>谈起hotfix,是个不小的话题,而JSPatch以他灵活,使用方便而且功能强大的特点,使它成为解决线上重大bug的”黑武器”,强大,危险.所以在开头要说明,不用使用JSPatch来修改一些小的错误,只有发生重大bug的时候才使用,原子弹固然威力大,但造成的后果也是影响深远的.一些界面可以采用其他方案替代,提高app的动态性,比如使用web view等方式,这里不做深究.下面开始介绍JSPatch.</p>
-<p>JSPatch是微信读书团队的大神<a href="https://github.com/bang590/" target="_blank" rel="external">bang</a>的<a href="https://github.com/bang590/JSPatch" target="_blank" rel="external">开源项目</a>,所以你是可以看到这个项目的核心源码,你可以通过CocoaPods集成到项目中,也可以手动集成,也可以通过SDK的方式集成,<a href="http://www.jspatch.com/Docs/intro" target="_blank" rel="external">这里</a>是JSPatch Platform的集成说明文档,简单来讲,如果你要自己搭建后台,进行修复包的部署等工作,直接使用开源代码即可,这种比较适用于大公司或者业务敏感,个性化定制功能的公司,而对公司来说,作为一般性需求或者只是在个人项目中使用的话,完全可以借助平台,而且平台也提供了付费功能.对于日请求量小于1w的用户是免费的.需要进行灰度测试,在线监控等功能,需要进行付费.</p>
-<h3 id="集成"><a href="#集成" class="headerlink" title="集成"></a>集成</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod 'JSPatch'</div></pre></td></tr></table></figure>
-<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">[JSPatch startWithAppKey:<span class="string">@"Your AppKey"</span>];</div><div class="line"><span class="comment">// 可以多次调用用来同步服务器状态</span></div><div class="line">[JSPatch sync];</div><div class="line"><span class="comment">// 程序启动的时候开启JSEngine</span></div><div class="line">[JPEngine startEngine];</div><div class="line"><span class="comment">// 执行js代码</span></div><div class="line"><span class="comment">// 官方示例</span></div><div class="line"><span class="comment">// 直接调用js</span></div><div class="line">[JPEngine evaluateScript:<span class="string">@"\</span></div><div class="line"> var alertView = require('UIAlertView').alloc().init();\</div><div class="line"> alertView.setTitle('Alert');\</div><div class="line"> alertView.setMessage('AlertView from js'); \</div><div class="line"> alertView.addButtonWithTitle('OK');\</div><div class="line"> alertView.show(); \</div><div class="line">"];</div><div class="line"></div><div class="line"><span class="comment">// 执行网络js代码</span></div><div class="line">[<span class="built_in">NSURLConnection</span> sendAsynchronousRequest:[<span class="built_in">NSURLRequest</span> requestWithURL:[<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://cnbang.net/test.js"</span>]] queue:[<span class="built_in">NSOperationQueue</span> mainQueue] completionHandler:^(<span class="built_in">NSURLResponse</span> *response, <span class="built_in">NSData</span> *data, <span class="built_in">NSError</span> *connectionError) &#123;</div><div class="line">    <span class="built_in">NSString</span> *script = [[<span class="built_in">NSString</span> alloc] initWithData:data encoding:<span class="built_in">NSUTF8StringEncoding</span>];</div><div class="line">    [JPEngine evaluateScript:script];</div><div class="line">&#125;];</div><div class="line"></div><div class="line"><span class="comment">// 执行本地js代码</span></div><div class="line"><span class="built_in">NSString</span> *sourcePath = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"sample"</span> ofType:<span class="string">@"js"</span>];</div><div class="line"><span class="built_in">NSString</span> *script = [<span class="built_in">NSString</span> stringWithContentsOfFile:sourcePath encoding:<span class="built_in">NSUTF8StringEncoding</span> error:<span class="literal">nil</span>];</div><div class="line">[JPEngine evaluateScript:script];</div></pre></td></tr></table></figure>
-<h3 id="API示例"><a href="#API示例" class="headerlink" title="API示例"></a>API示例</h3><p>调用OC类之前需要调用<code>require(class name)</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">requare(`UIView`)</div><div class="line">var view = UIView.alloc().init()</div></pre></td></tr></table></figure></p>
-<p>也可使用的时候再进行声明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">require(`UIColor`).redColor()</div></pre></td></tr></table></figure></p>
-<p>参数传递<br>和OC用法一样,直接进行传递即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var view = UIView.alloc().init();</div><div class="line">var superView = UIView.alloc().init()</div><div class="line">superView.addSubview(view)</div></pre></td></tr></table></figure></p>
-<p>defineClass<br>defineClass(classDeclaration, [properties,] instanceMethods, classMethods)<br>@param classDeclaration: 字符串，类名/父类名和Protocol<br>@param properties: 新增property，字符串数组，可省略<br>@param instanceMethods: 要添加或覆盖的实例方法<br>@param classMethods: 要添加或覆盖的类方法</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// OC</span></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">JPTestObject</span></span></div><div class="line"></div><div class="line">-(<span class="keyword">void</span>)tableView:(<span class="built_in">UITableView</span> *)tableView didSelectRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</div><div class="line">&#125;</div><div class="line">	<span class="keyword">@end</span></div><div class="line"><span class="comment">// JS</span></div><div class="line">defineClass(<span class="string">"JPTableViewController"</span>, &#123; tableView_didSelectRowAtIndexPath: function(tableView, indexPath) &#123;</div><div class="line">	  ...</div><div class="line">&#125;,</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<p>把JSPatch的Log添加到自己的日志里面<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[JSPatch setLogger:^(<span class="built_in">NSString</span> *msg) &#123;</div><div class="line">    <span class="comment">//msg 是 JSPatch log 字符串，用你自定义的logger打出</span></div><div class="line">    YOUR_APP_LOG(<span class="string">@"%@"</span>, msg);</div><div class="line">&#125;];</div></pre></td></tr></table></figure></p>
-<p>官方修复线上bug示例<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"> <span class="class"><span class="keyword">@implementation</span> <span class="title">XRTableViewController</span></span></div><div class="line"> ⁃ (<span class="keyword">void</span>)tableView:(<span class="built_in">UITableView</span> *)tableView didSelectRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath</div><div class="line">	&#123;</div><div class="line">	<span class="built_in">NSString</span> *content = <span class="keyword">self</span>.dataSource[[indexPath row]]; <span class="comment">//可能会超出数组范围导致crash</span></div><div class="line">	XRViewController *controller = [[JPViewController alloc] initWithContent:content];</div><div class="line">	[<span class="keyword">self</span>.navigationController pushViewController:controller];</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div><div class="line"><span class="comment">//main.js</span></div><div class="line">defineClass(<span class="string">"XRTableViewController"</span>, &#123;</div><div class="line">  tableView_didSelectRowAtIndexPath: function(tableView, indexPath) &#123;</div><div class="line">    var row = indexPath.row()</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.dataSource().length &gt; row) &#123;  <span class="comment">//加上判断越界的逻辑</span></div><div class="line">      var content = <span class="keyword">self</span>.dataArr()[row];</div><div class="line">      var controller = XRViewController.alloc().initWithContent(content);</div><div class="line">      <span class="keyword">self</span>.navigationController().pushViewController(controller);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
-<p>脚本删除<br>如果是通过JSPatch Platform,在操作界面进行删除脚本即可;如果是自搭建平台,需要调用<code>JPCleaner</code>的clean方法,进行指定类的或者全部代码进行清除.<br>更多基本用法查阅官方文档:<a href="https://github.com/bang590/JSPatch/wiki/JSPatch-基础用法" target="_blank" rel="external">JSPatch基础用法</a></p>
-<h3 id="传输安全问题"><a href="#传输安全问题" class="headerlink" title="传输安全问题"></a>传输安全问题</h3><p>由于JSPatch是通过运行时进行消息分发,因此功能强大, 因此一旦被黑客攻击,下发恶意补丁包,那app基本就会被彻底攻破,因此在使用JSPatch SDK的时候,对js文件进行了<a href="https://en.wikipedia.org/wiki/RSA" target="_blank" rel="external">RSA加密</a><br>主要流程就是对服务端进行js文件的MD5加密,然后使用RSA私钥对MD5进行一次加密,一起下发给客户端;<br>客户端拿到数据之后,RSA公钥进行解密,拿到MD5值,然后自己进行计算下载的js文件的MD5,进行校验,判断是否被修改,进行分情况处理.</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://www.jspatch.com/Docs/intro" target="_blank" rel="external">JSPatch</a>官方文档说明;<br><a href="https://github.com/bang590/JSPatch" target="_blank" rel="external">JSPatch github源代码</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Hotfix是解决线上bug的重要手段之一,iOS开发中,如今流行的成熟解决方法之一就是JSPatch,本文主要是对JSPatch应用进行一定的介绍,并未做原理分析.&lt;br&gt;
-    
-    </summary>
-    
-      <category term="iOS" scheme="https://jiangdaohong.github.io./categories/iOS/"/>
-    
-    
-      <category term="skill" scheme="https://jiangdaohong.github.io./tags/skill/"/>
     
   </entry>
   
